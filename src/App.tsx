@@ -3,6 +3,8 @@ import Home from "./Home";
 import VideoProduction from "./VideoProduction";
 import SoftwareDevelopment from "./SoftwareDevelopment";
 import PrivacyPolicy from "./PrivacyPolicy";
+import ProjectPolicy from "./ProjectPolicy";
+import License from "./License";
 
 const App: React.FC = () => {
   return (
@@ -12,6 +14,8 @@ const App: React.FC = () => {
         <Route path="/video" element={<VideoProduction />} />
         <Route path="/software" element={<SoftwareDevelopment />} />
         <Route path="/policy/privacy" element={<PrivacyPolicy />} />
+        <Route path="/policy/project" element={<ProjectPolicy />} />
+        <Route path="/policy/license" element={<License />} />
       </Routes>
     </Router>
   );

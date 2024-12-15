@@ -3,19 +3,20 @@ import React, { useState } from "react";
 const NewsSection: React.FC = () => {
   const newsItems = [
     {
+      title: "Webページリリース",
+      date: "2024.12.15",
+      content: "等Webサイトをオープンしました！",
+    },
+    {
       title: "お知らせ",
       date: "2024.10.20",
-      content: "議事録メーカーを開発しました。当プロジェクトとしてリリースする予定は未定ですが、導入支援は承ります。",
+      content:
+        "議事録メーカーを開発しました。当プロジェクトとしてリリースする予定は未定ですが、導入支援は承ります。",
     },
     {
       title: "お知らせ",
       date: "2024.10.20",
       content: "Xにて公式マークを取得しました。",
-    },
-    {
-      title: "お知らせ",
-      date: "2024.10.20",
-      content: "Webサイトを開設しました。",
     },
     {
       title: "お知らせ",

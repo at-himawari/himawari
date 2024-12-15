@@ -3,6 +3,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import NewsSection from "./components/NewsSection";
 
 const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -51,34 +52,8 @@ const Home: React.FC = () => {
         ))}
       </section>
 
-      {/* News Section */}
-      <section id="news" className="py-12 bg-gray-100">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-bold text-gray-800">ニュース</h3>
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white shadow rounded-lg p-6">
-              <p className="text-orange-500 font-bold">お知らせ</p>
-              <p className="text-gray-700 mt-2">2024.10.20</p>
-              <p className="mt-4 text-gray-600">議事録メーカーを開発しました。当プロジェクトとしてリリースする予定は未定ですが、導入支援は承ります。</p>
-            </div>
-            <div className="bg-white shadow rounded-lg p-6">
-              <p className="text-orange-500 font-bold">お知らせ</p>
-              <p className="text-gray-700 mt-2">2024.10.20</p>
-              <p className="mt-4 text-gray-600">Xにて公式マークを取得しました。</p>
-            </div>
-            <div className="bg-white shadow rounded-lg p-6">
-              <p className="text-orange-500 font-bold">お知らせ</p>
-              <p className="text-gray-700 mt-2">2024.10.20</p>
-              <p className="mt-4 text-gray-600">Webサイトを開設しました。</p>
-            </div>
-            <div className="bg-white shadow rounded-lg p-6">
-              <p className="text-orange-500 font-bold">お知らせ</p>
-              <p className="text-gray-700 mt-2">2024.10.20</p>
-              <p className="mt-4 text-gray-600">AI面接コーチをリリースしました。</p>
-            </div>
-          </div>
-        </div>
-      </section>
+          {/* News Section */}
+          <NewsSection></NewsSection>
 
       {/* Profile Section */}
       <section id="profile" className="py-12">

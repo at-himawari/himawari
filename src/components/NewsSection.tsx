@@ -29,7 +29,7 @@ const NewsSection: React.FC = () => {
     },
   ];
 
-  const itemsPerPage = 3;
+  const itemsPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(newsItems.length / itemsPerPage);

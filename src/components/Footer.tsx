@@ -10,7 +10,8 @@ const Footer: React.FC = () => {
             <h4 className="text-lg font-bold">Himawari Project</h4>
             <ul className="mt-4 space-y-2">
               <li><a href="/software" className="hover:underline">ソフトウェア開発</a></li>
-              <li><a href="/video" className="hover:underline">映像制作</a></li>
+                      <li><a href="/video" className="hover:underline">映像制作</a></li>
+                      <li><a href="https://blog.at-himawari.com/cms/">ブログ</a></li>
             </ul>
           </div>
           <div>
@@ -22,7 +23,7 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-bold">利用規約</h4>
             <ul className="mt-4 space-y-2">
-              <li><a href="#" className="hover:underline">プライバシーポリシー</a></li>
+              <li><a href="/policy/privacy" className="hover:underline">プライバシーポリシー</a></li>
               <li><a href="#" className="hover:underline">ライセンス</a></li>
               <li><a href="#" className="hover:underline">プロジェクトポリシー</a></li>
             </ul>

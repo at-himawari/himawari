@@ -39,7 +39,9 @@ const VideoProduction: React.FC = () => (
           className="mt-8 w-full h-auto rounded-lg shadow-lg mb-2"
         />
         <div className="mt-12">
-          <h3 className="text-xl font-bold text-orange-500">サービスコスト例</h3>
+          <h3 className="text-xl font-bold text-orange-500">
+            サービスコスト例
+          </h3>
           <p className="text-gray-600 text-lg mt-2">Service Costs</p>
           <div className="overflow-x-auto mt-6">
             <table className="table-auto w-full border-collapse border border-gray-300">
@@ -98,6 +100,20 @@ const VideoProduction: React.FC = () => (
             </table>
           </div>
         </div>
+      </div>
+    </section>
+    <section id="videoCost" className="py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-2xl font-bold text-orange-500">お問い合わせ</h2>
+        <p className="text-gray-600 text-lg mt-2">Contact</p>
+        <p>
+          <a
+            href="https://forms.gle/TCJRQaArJ2oMQU7NA"
+            className="text-blue-600 underline"
+          >
+            こちらからご依頼ください
+          </a>
+        </p>
       </div>
     </section>
     <Footer></Footer>

@@ -1,5 +1,6 @@
 import React from "react";
 import { FaXTwitter, FaGithub, FaInstagram, FaYoutube } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
   return (
@@ -9,17 +10,20 @@ const Footer: React.FC = () => {
           <h4 className="text-lg font-bold">Himawari Project</h4>
           <ul className="mt-4 space-y-2">
             <li>
-              <a href="/software" className="hover:underline">
+              <Link to="/software" className="hover:underline">
                 ソフトウェア開発
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/video" className="hover:underline">
+              <Link to="/video" className="hover:underline">
                 映像制作
-              </a>
+              </Link>
             </li>
             <li>
               <a href="https://blog.at-himawari.com/cms/">ブログ</a>
+            </li>
+            <li>
+              <a href="https://forms.gle/D8WSByjAnYGGtoGw9">お問い合わせ</a>
             </li>
           </ul>
         </div>
@@ -40,19 +44,19 @@ const Footer: React.FC = () => {
           <h4 className="text-lg font-bold">利用規約</h4>
           <ul className="mt-4 space-y-2">
             <li>
-              <a href="/policy/privacy" className="hover:underline">
+              <Link to="/policy/privacy" className="hover:underline">
                 プライバシーポリシー
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/policy/license" className="hover:underline">
+              <Link to="/policy/license" className="hover:underline">
                 ライセンス
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/policy/project" className="hover:underline">
+              <Link to="/policy/project" className="hover:underline">
                 プロジェクトポリシー
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

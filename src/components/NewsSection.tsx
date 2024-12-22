@@ -5,7 +5,7 @@ const NewsSection: React.FC = () => {
     {
       title: "Webページリリース",
       date: "2024.12.15",
-      content: "等Webサイトをオープンしました！",
+      content: "当Webサイトをオープンしました！",
     },
     {
       title: "お知らせ",

@@ -37,3 +37,4 @@ jobs:
           source: ./dist/ # ローカルビルドフォルダ
           target: /www/ # サーバー上のアップロード先ディレクトリ
           port: 22 # SFTPのポート（通常22）
+          debug: true

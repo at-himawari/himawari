@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # メインブランチにプッシュされた時に実行
+
 jobs:
   deploy:
     name: Deploy to Sakura
@@ -13,14 +14,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup FTP deploy tool
-        uses: SamKirkland/FTP-Deploy-Action@v4
+      - name: Install Node.js and dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18 # 使用するNode.jsのバージョン
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build # Viteのビルドコマンド
 
       - name: Deploy to Sakura
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0 # 正しいバージョンを指定
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./build  # アップロードするローカルディレクトリ
+          local-dir: ./dist # Viteのビルド結果ディレクトリ
           server-dir: ${{ secrets.FTP_REMOTE_PATH }}

@@ -26,7 +26,7 @@ jobs:
         run: npm run build # Viteのビルドコマンド
 
       - name: Verify build output
-        run: ls -al ./dist # ビルド結果を確認
+        run: ls -al ./dist/ # ビルド結果を確認
 
       - name: Deploy to Sakura via SFTP
         uses: appleboy/scp-action@v0.1.3

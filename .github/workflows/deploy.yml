@@ -34,7 +34,7 @@ jobs:
           host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          source: ./dist # ローカルビルドフォルダ
+          source: ./dist/ # ローカルビルドフォルダ
           target: ${{ secrets.FTP_REMOTE_PATH }} # サーバー上のアップロード先ディレクトリ
           port: 22 # SFTPのポート（通常22）
           debug: true

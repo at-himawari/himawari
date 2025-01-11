@@ -1,0 +1,26 @@
+name: Deploy to Sakura Rental Server
+
+on:
+  push:
+    branches:
+      - main  # メインブランチにプッシュされた時に実行
+jobs:
+  deploy:
+    name: Deploy to Sakura
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup FTP deploy tool
+        uses: SamKirkland/FTP-Deploy-Action@v4
+
+      - name: Deploy to Sakura
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./build  # アップロードするローカルディレクトリ
+          server-dir: ${{ secrets.FTP_REMOTE_PATH }}

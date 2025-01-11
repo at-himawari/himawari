@@ -38,3 +38,4 @@ jobs:
           target: ${{ secrets.FTP_REMOTE_PATH }} # サーバー上のアップロード先ディレクトリ
           port: 22 # SFTPのポート（通常22）
           debug: true
+          strip-components: 1 # dist フォルダを除外し中身のみ配置

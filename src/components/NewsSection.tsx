@@ -3,6 +3,12 @@ import React, { useState } from "react";
 const NewsSection: React.FC = () => {
   const newsItems = [
     {
+      title: "お知らせ",
+      date: "2025.1.11",
+      content:
+        "当サイトのソースコードを公開しました。https://github.com/at-himawari/himawari",
+    },
+    {
       title: "Webページリリース",
       date: "2024.12.15",
       content: "当Webサイトをオープンしました！",

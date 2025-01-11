@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to Sakura
+    name: Deploy to Sakura via SFTP
     runs-on: ubuntu-latest
 
     steps:
@@ -28,11 +28,12 @@ jobs:
       - name: Verify build output
         run: ls -al ./dist # ビルド結果を確認
 
-      - name: Deploy to Sakura
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      - name: Deploy to Sakura via SFTP
+        uses: appleboy/scp-action@v0.1.3
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/ # 必ずスラッシュで終わる
-          server-dir: ${{ secrets.FTP_REMOTE_PATH }}
+          source: ./dist/ # ローカルビルドフォルダ
+          target: /www/ # サーバー上のアップロード先ディレクトリ
+          port: 22 # SFTPのポート（通常22）

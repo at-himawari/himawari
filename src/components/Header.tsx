@@ -11,6 +11,7 @@ const Header: React.FC = () => {
               src="/himawari.png"
               alt="Himawari Project Logo"
               className="h-8 mr-3"
+              loading="lazy"
             />
             <h1 className="text-2xl">
               <span className="font-bold text-orange-500">H</span>

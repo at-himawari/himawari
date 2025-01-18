@@ -3,6 +3,12 @@ import React, { useState } from "react";
 const NewsSection: React.FC = () => {
   const newsItems = [
     {
+      title: "YouTube",
+      date: "2025.1.18",
+      content:
+        "北海道大学総合博物館探索してきました。https://youtu.be/BcSbeY-UHYY?si=40hMQSsTRoOIupgX",
+    },
+    {
       title: "お知らせ",
       date: "2025.1.11",
       content:

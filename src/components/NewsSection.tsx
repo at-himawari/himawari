@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { newsItems, NewsItem } from "../data/newsData";
 
 const NewsSection: React.FC = () => {
-  const itemsPerPage = 4;
+  const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(newsItems.length / itemsPerPage);

@@ -1,0 +1,52 @@
+export interface NewsItem {
+    title: string;
+    date: string;
+    content: string;
+  }
+  
+export const newsItems: NewsItem[] = [
+    {
+        title: "Webページリリース",
+        date: "2025.1.26",
+        content:
+            "プロダクト欄に、｢βCafè｣と｢Youtube｣を追加しました。",
+      },
+    {
+      title: "YouTube",
+      date: "2025.1.18",
+      content:
+        "北海道大学総合博物館探索してきました。https://youtu.be/BcSbeY-UHYY?si=40hMQSsTRoOIupgX",
+    },
+    {
+      title: "お知らせ",
+      date: "2025.1.11",
+      content:
+        "当サイトのソースコードを公開しました。https://github.com/at-himawari/himawari",
+    },
+    {
+      title: "Webページリリース",
+      date: "2024.12.15",
+      content: "当Webサイトをオープンしました！",
+    },
+    {
+      title: "お知らせ",
+      date: "2024.10.20",
+      content:
+        "議事録メーカーを開発しました。当プロジェクトとしてリリースする予定は未定ですが、導入支援は承ります。",
+    },
+    {
+      title: "お知らせ",
+      date: "2024.10.20",
+      content: "Xにて公式マークを取得しました。",
+    },
+    {
+      title: "お知らせ",
+      date: "2024.10.20",
+      content: "AI面接コーチをリリースしました。",
+    },
+    {
+      title: "お知らせ",
+      date: "2024.10.21",
+      content: "新しいサービスを追加しました。",
+    },
+  ];

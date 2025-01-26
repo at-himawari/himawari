@@ -10,13 +10,13 @@ const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [
     {
-      image: "/software.jpg",
+      image: "/software_img.jpg",
       title: "ソフトウェア開発",
       text: "自社パッケージ導入・新規システム開発",
       link: "/software",
     },
     {
-      image: "/video.jpg",
+      image: "/video_img.jpg",
       title: "映像制作",
       text: "YouTube用動画編集/イベント動画制作",
       link: "/video",

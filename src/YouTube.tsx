@@ -4,9 +4,21 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import VideoCard from "./components/VideoCard";
 import { liveVideos, airVideos } from "./data/videos";
+import { Helmet } from "react-helmet-async";
 
 const Youtube: React.FC = () => (
   <>
+    <Helmet>
+      <title>Himawari Project - YouTube </title>
+      <meta property="og:title" content="YouTube" />
+      <meta
+        property="og:description"
+        content="ライブ配信したり、飛行機の搭乗動画を撮ったり様々なジャンルでやってます。"
+      />
+      <meta property="og:image" content="https://at-himawari.com/avator.jpg" />
+      <meta property="og:url" content="https://at-himawari.com/youtube" />
+      <meta property="og:type" content="website" />
+    </Helmet>
     <Header />
 
     {/* 既存のセクション */}

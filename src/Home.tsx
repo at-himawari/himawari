@@ -41,7 +41,7 @@ const Home: React.FC = () => {
         />
         <meta
           property="og:image"
-          content="https://at-himawari.com/avator.png"
+          content="https://at-himawari.com/avatar.png"
         />
         <meta property="og:url" content="https://at-himawari.com/" />
         <meta property="og:type" content="website" />

@@ -12,7 +12,7 @@ const ProjectPolicy: React.FC = () => (
         property="og:description"
         content="Himawari Projectのプロジェクトポリシーを説明します"
       />
-      <meta property="og:image" content="https://at-himawari.com/avator.jpg" />
+      <meta property="og:image" content="https://at-himawari.com/avatar.jpg" />
       <meta property="og:url" content="https://at-himawari.com/project" />
       <meta property="og:type" content="website" />
     </Helmet>

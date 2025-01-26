@@ -12,7 +12,7 @@ const PrivacyPolicy: React.FC = () => (
         property="og:description"
         content="Himawari Projectのプライバシーポリシーを説明します"
       />
-      <meta property="og:image" content="https://at-himawari.com/avator.jpg" />
+      <meta property="og:image" content="https://at-himawari.com/avatar.jpg" />
       <meta property="og:url" content="https://at-himawari.com/privacy" />
       <meta property="og:type" content="website" />
     </Helmet>

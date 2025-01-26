@@ -12,7 +12,7 @@ const VideoProduction: React.FC = () => (
         property="og:description"
         content="Himawari Projectはエンジニアファーストな開発を行います。"
       />
-      <meta property="og:image" content="https://at-himawari.com/avator.jpg" />
+      <meta property="og:image" content="https://at-himawari.com/avatar.jpg" />
       <meta property="og:url" content="https://at-himawari.com/software" />
       <meta property="og:type" content="website" />
     </Helmet>

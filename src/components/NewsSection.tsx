@@ -1,47 +1,7 @@
 import React, { useState } from "react";
+import { newsItems, NewsItem } from "../data/newsdata";
 
 const NewsSection: React.FC = () => {
-  const newsItems = [
-    {
-      title: "YouTube",
-      date: "2025.1.18",
-      content:
-        "北海道大学総合博物館探索してきました。https://youtu.be/BcSbeY-UHYY?si=40hMQSsTRoOIupgX",
-    },
-    {
-      title: "お知らせ",
-      date: "2025.1.11",
-      content:
-        "当サイトのソースコードを公開しました。https://github.com/at-himawari/himawari",
-    },
-    {
-      title: "Webページリリース",
-      date: "2024.12.15",
-      content: "当Webサイトをオープンしました！",
-    },
-    {
-      title: "お知らせ",
-      date: "2024.10.20",
-      content:
-        "議事録メーカーを開発しました。当プロジェクトとしてリリースする予定は未定ですが、導入支援は承ります。",
-    },
-    {
-      title: "お知らせ",
-      date: "2024.10.20",
-      content: "Xにて公式マークを取得しました。",
-    },
-    {
-      title: "お知らせ",
-      date: "2024.10.20",
-      content: "AI面接コーチをリリースしました。",
-    },
-    {
-      title: "お知らせ",
-      date: "2024.10.21",
-      content: "新しいサービスを追加しました。",
-    },
-  ];
-
   const itemsPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -59,7 +19,7 @@ const NewsSection: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h3 className="text-2xl font-bold text-gray-800">ニュース</h3>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayedItems.map((item, index) => (
+          {displayedItems.map((item: NewsItem, index: number) => (
             <div key={index} className="bg-white shadow rounded-lg p-6">
               <p className="text-orange-500 font-bold">{item.title}</p>
               <p className="text-gray-700 mt-2">{item.date}</p>
@@ -68,7 +28,7 @@ const NewsSection: React.FC = () => {
           ))}
         </div>
 
-        {/* Pagination Controls */}
+        {/* ページネーションコントロール */}
         <div className="mt-8 flex justify-center space-x-4">
           {Array.from({ length: totalPages }).map((_, index) => (
             <button

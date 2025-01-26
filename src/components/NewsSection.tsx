@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { newsItems, NewsItem } from "../data/newsdata";
+import { newsItems, NewsItem } from "../data/newsData";
 
 const NewsSection: React.FC = () => {
   const itemsPerPage = 4;

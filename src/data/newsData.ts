@@ -8,8 +8,7 @@ export const newsItems: NewsItem[] = [
     {
         title: "Webページリリース",
         date: "2025.1.26",
-        content:
-            "プロダクト欄に、｢βCafè｣と｢Youtube｣を追加しました。",
+        content:"プロダクト欄に、｢βCafè｣と｢Youtube｣を追加しました。",
       },
     {
       title: "YouTube",

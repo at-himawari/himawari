@@ -17,11 +17,11 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/video" element={<VideoProduction />} />
         <Route path="/software" element={<SoftwareDevelopment />} />
-        <Route path="/policy/privacy" element={<PrivacyPolicy />} />
-        <Route path="/policy/project" element={<ProjectPolicy />} />
-        <Route path="/policy/license" element={<License />} />
-        <Route path="/youtube/bcafe" element={<Bcafe />} />
-        <Route path="/youtube/channel" element={<Youtube />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/project" element={<ProjectPolicy />} />
+        <Route path="/license" element={<License />} />
+        <Route path="/bcafe" element={<Bcafe />} />
+        <Route path="/youtube" element={<Youtube />} />
       </Routes>
     </Router>
   );

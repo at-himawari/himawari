@@ -38,6 +38,16 @@ const Footer: React.FC = () => {
                 AI面接コーチ
               </a>
             </li>
+            <li>
+              <Link to="/youtube/bcafe" className="hover:underline">
+                βcafè
+              </Link>
+            </li>
+            <li>
+              <Link to="/youtube/channel" className="hover:underline">
+                YouTube
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
@@ -100,7 +110,7 @@ const Footer: React.FC = () => {
         </a>
       </div>
       <div className="mt-8 text-center text-sm text-gray-400">
-        © 2024 Himawari Project
+        © 2024-2025 Himawari Project
       </div>
     </footer>
   );

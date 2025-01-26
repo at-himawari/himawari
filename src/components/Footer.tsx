@@ -39,12 +39,12 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li>
-              <Link to="/youtube/bcafe" className="hover:underline">
+              <Link to="/bcafe" className="hover:underline">
                 βcafè
               </Link>
             </li>
             <li>
-              <Link to="/youtube/channel" className="hover:underline">
+              <Link to="/youtube" className="hover:underline">
                 YouTube
               </Link>
             </li>
@@ -54,17 +54,17 @@ const Footer: React.FC = () => {
           <h4 className="text-lg font-bold">利用規約</h4>
           <ul className="mt-4 space-y-2">
             <li>
-              <Link to="/policy/privacy" className="hover:underline">
+              <Link to="/privacy" className="hover:underline">
                 プライバシーポリシー
               </Link>
             </li>
             <li>
-              <Link to="/policy/license" className="hover:underline">
+              <Link to="/license" className="hover:underline">
                 ライセンス
               </Link>
             </li>
             <li>
-              <Link to="/policy/project" className="hover:underline">
+              <Link to="/project" className="hover:underline">
                 プロジェクトポリシー
               </Link>
             </li>

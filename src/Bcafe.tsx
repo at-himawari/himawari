@@ -4,9 +4,21 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import VideoCard from "./components/VideoCard";
 import { liveVideos, nextLive } from "./data/videos";
+import { Helmet } from "react-helmet-async";
 
 const Bcafe: React.FC = () => (
   <>
+    <Helmet>
+      <title>Himawari Project - βcafè </title>
+      <meta property="og:title" content="βcafè" />
+      <meta
+        property="og:description"
+        content="疲れたあなたとともに、会話をしていきます。毎週金曜日よる９時〜"
+      />
+      <meta property="og:image" content="https://at-himawari.com/bcafe.jpg" />
+      <meta property="og:url" content="https://at-himawari.com/bcafe" />
+      <meta property="og:type" content="website" />
+    </Helmet>
     <Header />
 
     {/* 既存のセクション */}

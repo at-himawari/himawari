@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import NewsSection from "./components/NewsSection";
+import { Helmet } from "react-helmet-async";
 
 const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [
     {
-      image: "/software.png",
+      image: "/software.jpg",
       title: "ソフトウェア開発",
       text: "自社パッケージ導入・新規システム開発",
       link: "/software",
@@ -31,6 +32,20 @@ const Home: React.FC = () => {
 
   return (
     <div className="font-sans overflow-x-hidden">
+      <Helmet>
+        <title>Himawari Project</title>
+        <meta property="og:title" content="Himawari Project" />
+        <meta
+          property="og:description"
+          content="映像とITの融合領域にチャレンジするプロジェクト"
+        />
+        <meta
+          property="og:image"
+          content="https://at-himawari.com/avator.png"
+        />
+        <meta property="og:url" content="https://at-himawari.com/" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       {/* Header */}
       <Header></Header>
       {/* Hero Section - Slideshow */}
@@ -71,7 +86,7 @@ const Home: React.FC = () => {
           <h3 className="text-2xl font-bold text-gray-800">プロフィール</h3>
           <div className="mt-6 flex items-center">
             <img
-              src="/avatar.png"
+              src="/avatar.jpg"
               alt="Avatar"
               className="h-16 w-16 rounded-full mr-4"
               loading="lazy"

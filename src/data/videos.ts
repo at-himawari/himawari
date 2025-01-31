@@ -6,9 +6,9 @@ export interface Video {
 }
 
 export const nextLive: Video = {
-    title:"【βカフェ】金曜日･re:Fresh",
-    description:"疲れたあなたとともに、会話をしていきます。コメント欄に悩み事や相談事を書いてください。",
-    videoUrl:"https://youtube.com/live/SJWttmmzffA?feature=share"
+    title:"【βcafè】deepseekを試していくよ！",
+    description:"deepseekの導入を試します。最後には、技術のことだけでなく自分語りもしてみたので見てくださいね！",
+    videoUrl:"https://youtu.be/tKwym4tr3_0"
 }
   
 export const liveVideos:Video[] = [

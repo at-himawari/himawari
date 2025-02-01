@@ -48,6 +48,14 @@ const Footer: React.FC = () => {
                 YouTube
               </Link>
             </li>
+            <li>
+              <a
+                href="https://llm.at-himawari.com/"
+                className="hover:underline"
+              >
+                Phi-3:mini
+              </a>
+            </li>
           </ul>
         </div>
         <div>

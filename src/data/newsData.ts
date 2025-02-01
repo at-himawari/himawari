@@ -5,6 +5,11 @@ export interface NewsItem {
   }
   
 export const newsItems: NewsItem[] = [
+  {
+    title: "お知らせ",
+    date: "2025.2.1",
+    content:"LLM Phi-3:miniをリリースしました。https://llm.at-himawari.com",
+  },
     {
         title: "Webページリリース",
         date: "2025.1.26",

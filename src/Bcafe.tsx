@@ -46,7 +46,7 @@ const Bcafe: React.FC = () => (
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold text-red-600 mb-6">次回の放送</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {nextLive.videoUrl ? (
+          {nextLive.videoUrl === "" ? (
             <VideoCard
               key="next"
               title={nextLive.title}

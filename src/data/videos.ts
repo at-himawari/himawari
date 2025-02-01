@@ -6,12 +6,17 @@ export interface Video {
 }
 
 export const nextLive: Video = {
-    title:"【βcafè】deepseekを試していくよ！",
-    description:"deepseekの導入を試します。最後には、技術のことだけでなく自分語りもしてみたので見てくださいね！",
-    videoUrl:"https://youtu.be/tKwym4tr3_0"
+    title: "",
+    description: "",
+    videoUrl: ""
 }
   
-export const liveVideos:Video[] = [
+export const liveVideos: Video[] = [
+    {
+        title:"【βcafè】deepseekを試していくよ！",
+        description:"deepseekの導入を試します。最後には、技術のことだけでなく自分語りもしてみたので見てくださいね！",
+        videoUrl:"https://youtu.be/tKwym4tr3_0"
+    },
     {
       title: "2025.01.24",
       description: "きしょうくんをゲストに迎えて。",

@@ -5,30 +5,6 @@ export interface Video {
     videoUrl: string;
 }
 
-export const nextLive: Video = {
-    title: "",
-    description: "",
-    videoUrl: ""
-}
-  
-export const liveVideos: Video[] = [
-    {
-        title:"【βcafè】deepseekを試していくよ！",
-        description:"deepseekの導入を試します。最後には、技術のことだけでなく自分語りもしてみたので見てくださいね！",
-        videoUrl:"https://youtu.be/tKwym4tr3_0"
-    },
-    {
-      title: "2025.01.24",
-      description: "きしょうくんをゲストに迎えて。",
-      videoUrl: "https://youtube.com/live/CaZ6wF4fIEw?feature=share",
-    },
-    {
-      title: "2025.01.07",
-      description: "来週頑張れない人に向けて。",
-      videoUrl: "https://youtu.be/GpMPkJbM5Jw",
-    }
-];
-
 export const airVideos:Video[] = [
     {
         title: "【グアム国際空港(GUM)】息をのむ美しい離陸の瞬間！🛫✨",

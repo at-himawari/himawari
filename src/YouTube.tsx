@@ -3,7 +3,7 @@ import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import VideoCard from "./components/VideoCard";
-import { liveVideos, airVideos } from "./data/videos";
+import { airVideos } from "./data/videos";
 import { Helmet } from "react-helmet-async";
 
 const Youtube: React.FC = () => (

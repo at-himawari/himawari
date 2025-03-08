@@ -39,22 +39,9 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li>
-              <Link to="/bcafe" className="hover:underline">
-                βcafè
-              </Link>
-            </li>
-            <li>
               <Link to="/youtube" className="hover:underline">
                 YouTube
               </Link>
-            </li>
-            <li>
-              <a
-                href="https://llm.at-himawari.com/"
-                className="hover:underline"
-              >
-                Phi-3:mini
-              </a>
             </li>
           </ul>
         </div>

@@ -5,7 +5,6 @@ import SoftwareDevelopment from "./SoftwareDevelopment";
 import PrivacyPolicy from "./PrivacyPolicy";
 import ProjectPolicy from "./ProjectPolicy";
 import License from "./License";
-import Bcafe from "./Bcafe";
 import Youtube from "./YouTube";
 import ScrollToTop from "./components/ScrollToTop";
 import { HelmetProvider } from "react-helmet-async";
@@ -22,7 +21,6 @@ const App: React.FC = () => {
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/project" element={<ProjectPolicy />} />
           <Route path="/license" element={<License />} />
-          <Route path="/bcafe" element={<Bcafe />} />
           <Route path="/youtube" element={<Youtube />} />
         </Routes>
       </Router>

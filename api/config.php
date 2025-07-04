@@ -8,10 +8,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
-$host = 'localhost';
-$dbname = 'himawari_cms';
-$username = $_ENV['DB_USERNAME'] ?? 'himawari_user';
-$password = $_ENV['DB_PASSWORD'] ?? 'himawari_pass';
+$host = $_ENV['DB_HOST'] ?? 'localhost';
+$dbname = $_ENV['DB_NAME'];
+$username = $_ENV['DB_USERNAME'];
+$password = $_ENV['DB_PASSWORD'];
+
+if (!$dbname || !$username || !$password) {
+    die(json_encode(['error' => 'Database configuration missing. Please set DB_NAME, DB_USERNAME, and DB_PASSWORD environment variables.']));
+}
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);

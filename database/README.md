@@ -4,7 +4,7 @@
 
 1. さくらレンタルサーバーのコントロールパネルにログイン
 2. データベース設定からMySQLデータベースを作成
-3. データベース名: `himawari_cms`
+3. データベース名: 任意の名前（環境変数 `DB_NAME` で指定）
 4. ユーザー名とパスワードを設定
 5. `schema.sql` を実行してテーブルを作成
 
@@ -13,9 +13,11 @@
 さくらレンタルサーバーで以下の環境変数を設定してください：
 
 ```
+DB_HOST=localhost
+DB_NAME=your_database_name
 DB_USERNAME=your_db_username
 DB_PASSWORD=your_db_password
-VITE_ADMIN_PASSWORD=himawari-admin-2025
+ADMIN_PASSWORD=your_admin_password
 ```
 
 ## 初期データ

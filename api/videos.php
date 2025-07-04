@@ -2,7 +2,12 @@
 require_once 'config.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
-$admin_password = $_ENV['VITE_ADMIN_PASSWORD'] ?? 'himawari-admin-2025';
+$admin_password = $_ENV['ADMIN_PASSWORD'];
+
+if (!$admin_password) {
+    http_response_code(500);
+    die(json_encode(['error' => 'Admin password not configured. Please set ADMIN_PASSWORD environment variable.']));
+}
 
 function authenticate() {
     global $admin_password;

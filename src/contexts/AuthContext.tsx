@@ -21,6 +21,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = (password: string): boolean => {
+    if (!ADMIN_PASSWORD) {
+      console.error('VITE_ADMIN_PASSWORD environment variable is not set');
+      return false;
+    }
     if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
       localStorage.setItem('himawari-admin-auth', 'true');

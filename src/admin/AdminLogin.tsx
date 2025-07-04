@@ -16,12 +16,17 @@ const AdminLogin: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(password)) {
-      navigate('/admin/dashboard');
-    } else {
-      setError('パスワードが正しくありません');
+    try {
+      if (await login(password)) {
+        navigate('/admin/dashboard');
+      } else {
+        setError('パスワードが正しくありません');
+        setPassword('');
+      }
+    } catch {
+      setError('ログインに失敗しました');
       setPassword('');
     }
   };

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: (password: string) => boolean;
+  login: (password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -20,22 +20,45 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  const login = (password: string): boolean => {
-    if (!ADMIN_PASSWORD) {
-      console.error('VITE_ADMIN_PASSWORD environment variable is not set');
+  const login = async (password: string): Promise<boolean> => {
+    try {
+      const response = await fetch('/api/auth.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ password })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          setIsAuthenticated(true);
+          localStorage.setItem('himawari-admin-auth', 'true');
+          localStorage.setItem('himawari-admin-token', data.token);
+          return true;
+        }
+      }
+      return false;
+    } catch {
+      if (!ADMIN_PASSWORD) {
+        console.error('VITE_ADMIN_PASSWORD environment variable is not set');
+        return false;
+      }
+      if (password === ADMIN_PASSWORD) {
+        setIsAuthenticated(true);
+        localStorage.setItem('himawari-admin-auth', 'true');
+        localStorage.setItem('himawari-admin-token', password);
+        return true;
+      }
       return false;
     }
-    if (password === ADMIN_PASSWORD) {
-      setIsAuthenticated(true);
-      localStorage.setItem('himawari-admin-auth', 'true');
-      return true;
-    }
-    return false;
   };
 
   const logout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem('himawari-admin-auth');
+    localStorage.removeItem('himawari-admin-token');
   };
 
   return (

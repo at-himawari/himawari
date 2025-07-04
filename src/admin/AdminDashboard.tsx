@@ -9,7 +9,7 @@ import Footer from '../components/Footer';
 
 const AdminDashboard: React.FC = () => {
   const { isAuthenticated, logout } = useAuth();
-  const { newsItems, airVideos, addNewsItem, updateNewsItem, deleteNewsItem, addVideo, updateVideo, deleteVideo, resetToDefaults } = useData();
+  const { newsItems, airVideos, loading, error, addNewsItem, updateNewsItem, deleteNewsItem, addVideo, updateVideo, deleteVideo, refreshData, resetToDefaults } = useData();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'news' | 'videos'>('news');
   const [editingNews, setEditingNews] = useState<{ index: number; item: NewsItem } | null>(null);
@@ -28,35 +28,57 @@ const AdminDashboard: React.FC = () => {
     navigate('/');
   };
 
-  const handleAddNews = (e: React.FormEvent) => {
+  const handleAddNews = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newNews.title && newNews.date && newNews.content) {
-      addNewsItem(newNews);
-      setNewNews({ title: '', date: '', content: '' });
+      try {
+        await addNewsItem(newNews);
+        setNewNews({ title: '', date: '', content: '' });
+      } catch (error) {
+        console.error('Failed to add news item:', error);
+      }
     }
   };
 
-  const handleUpdateNews = (e: React.FormEvent) => {
+  const handleUpdateNews = async (e: React.FormEvent) => {
     e.preventDefault();
     if (editingNews && editingNews.item.title && editingNews.item.date && editingNews.item.content) {
-      updateNewsItem(editingNews.index, editingNews.item);
-      setEditingNews(null);
+      try {
+        const newsItem = newsItems[editingNews.index];
+        if (newsItem.id) {
+          await updateNewsItem(newsItem.id, editingNews.item);
+          setEditingNews(null);
+        }
+      } catch (error) {
+        console.error('Failed to update news item:', error);
+      }
     }
   };
 
-  const handleAddVideo = (e: React.FormEvent) => {
+  const handleAddVideo = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newVideo.title && newVideo.videoUrl) {
-      addVideo(newVideo);
-      setNewVideo({ title: '', description: '', videoUrl: '' });
+      try {
+        await addVideo(newVideo);
+        setNewVideo({ title: '', description: '', videoUrl: '' });
+      } catch (error) {
+        console.error('Failed to add video:', error);
+      }
     }
   };
 
-  const handleUpdateVideo = (e: React.FormEvent) => {
+  const handleUpdateVideo = async (e: React.FormEvent) => {
     e.preventDefault();
     if (editingVideo && editingVideo.item.title && editingVideo.item.videoUrl) {
-      updateVideo(editingVideo.index, editingVideo.item);
-      setEditingVideo(null);
+      try {
+        const video = airVideos[editingVideo.index];
+        if (video.id) {
+          await updateVideo(video.id, editingVideo.item);
+          setEditingVideo(null);
+        }
+      } catch (error) {
+        console.error('Failed to update video:', error);
+      }
     }
   };
 
@@ -86,6 +108,13 @@ const AdminDashboard: React.FC = () => {
             <h1 className="text-3xl font-bold text-gray-900">CMS管理画面</h1>
             <div className="space-x-4">
               <button
+                onClick={refreshData}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+                disabled={loading}
+              >
+                {loading ? 'データ更新中...' : 'データ更新'}
+              </button>
+              <button
                 onClick={() => {
                   if (confirm('すべてのデータを初期状態にリセットしますか？')) {
                     resetToDefaults();
@@ -103,6 +132,18 @@ const AdminDashboard: React.FC = () => {
               </button>
             </div>
           </div>
+
+          {loading && (
+            <div className="text-center py-4">
+              <div className="text-lg text-gray-600">データを読み込み中...</div>
+            </div>
+          )}
+
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              {error}
+            </div>
+          )}
 
           <div className="mb-6">
             <div className="border-b border-gray-200">
@@ -226,9 +267,16 @@ const AdminDashboard: React.FC = () => {
                               編集
                             </button>
                             <button
-                              onClick={() => {
+                              onClick={async () => {
                                 if (confirm('このニュースを削除しますか？')) {
-                                  deleteNewsItem(index);
+                                  try {
+                                    const newsItem = newsItems[index];
+                                    if (newsItem.id) {
+                                      await deleteNewsItem(newsItem.id);
+                                    }
+                                  } catch (error) {
+                                    console.error('Failed to delete news item:', error);
+                                  }
                                 }
                               }}
                               className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
@@ -342,9 +390,16 @@ const AdminDashboard: React.FC = () => {
                               編集
                             </button>
                             <button
-                              onClick={() => {
+                              onClick={async () => {
                                 if (confirm('この動画を削除しますか？')) {
-                                  deleteVideo(index);
+                                  try {
+                                    const video = airVideos[index];
+                                    if (video.id) {
+                                      await deleteVideo(video.id);
+                                    }
+                                  } catch (error) {
+                                    console.error('Failed to delete video:', error);
+                                  }
                                 }
                               }}
                               className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"

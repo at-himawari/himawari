@@ -99,7 +99,7 @@ export const airVideos:Video[] = [
     {
         title: "【羽田空港(HND)】New Chitose to Haneda",
         description: "",
-        videoUrl: " https://youtu.be/lBIDTBDlncA",
+        videoUrl: "https://youtu.be/lBIDTBDlncA",
     },
 ];
 

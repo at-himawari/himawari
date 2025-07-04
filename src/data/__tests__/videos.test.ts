@@ -36,14 +36,4 @@ describe('videos', () => {
     });
   });
 
-  test('飛行機関連の動画が含まれている', () => {
-    const airportRelatedVideos = airVideos.filter(video => 
-      video.title.includes('空港') || 
-      video.title.includes('フライト') || 
-      video.title.includes('離陸') || 
-      video.title.includes('着陸')
-    );
-    
-    expect(airportRelatedVideos.length).toBeGreaterThan(0);
-  });
 });

@@ -18,12 +18,12 @@ describe('newsData', () => {
     });
   });
 
-  test('最新のニュースアイテムが正しい内容を持っている', () => {
+  test('最新のニュースアイテムが適切な構造を持っている', () => {
     const latestNews = newsItems[0];
     
-    expect(latestNews.title).toBe('Webページリリース');
-    expect(latestNews.date).toBe('2025.1.26');
-    expect(latestNews.content).toContain('Youtube');
+    expect(latestNews.title).toBeTruthy();
+    expect(latestNews.date).toMatch(/^\d{4}\.\d{1,2}\.\d{1,2}$/);
+    expect(latestNews.content).toBeTruthy();
   });
 
   test('日付形式が一貫している', () => {

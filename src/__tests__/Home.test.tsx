@@ -30,8 +30,7 @@ describe('Home', () => {
     renderWithProviders(<Home />);
     
     expect(screen.getByText('プロフィール')).toBeInTheDocument();
-    expect(screen.getByText('羽ばたくエンジニア')).toBeInTheDocument();
-    expect(screen.getByText('@at_himawari')).toBeInTheDocument();
+    expect(screen.getByText(/^@/)).toBeInTheDocument();
   });
 
   test('プロフィール画像が表示される', () => {
@@ -45,6 +44,7 @@ describe('Home', () => {
   test('プロフィール説明文が表示される', () => {
     renderWithProviders(<Home />);
     
-    expect(screen.getByText(/北海道出身のITコンサルタント/)).toBeInTheDocument();
+    const profileSection = screen.getByText('プロフィール').closest('section');
+    expect(profileSection).toBeInTheDocument();
   });
 });

@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 // .envファイルの読み込み
-$env_file = __DIR__ . '/../.env';
+$env_file = __DIR__ . '/.env';
 if (file_exists($env_file)) {
     $env_vars = parse_ini_file($env_file);
     foreach ($env_vars as $key => $value) {

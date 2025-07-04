@@ -1,5 +1,6 @@
 // 動画データの型定義
 export interface Video {
+    id?: number;
     title: string;
     description: string;
     videoUrl: string;

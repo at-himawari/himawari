@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { newsItems, NewsItem } from "../data/newsData";
+import { useData } from "../contexts/DataContext";
+import { NewsItem } from "../data/newsData";
 
 const NewsSection: React.FC = () => {
+  const { newsItems } = useData();
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
 

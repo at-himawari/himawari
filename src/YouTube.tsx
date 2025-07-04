@@ -3,11 +3,14 @@ import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import VideoCard from "./components/VideoCard";
-import { airVideos } from "./data/videos";
+import { useData } from "./contexts/DataContext";
 import { Helmet } from "react-helmet-async";
 
-const Youtube: React.FC = () => (
-  <>
+const Youtube: React.FC = () => {
+  const { airVideos } = useData();
+  
+  return (
+    <>
     <Helmet>
       <title>Himawari Project - YouTube </title>
       <meta property="og:title" content="YouTube" />
@@ -60,7 +63,8 @@ const Youtube: React.FC = () => (
 
 
     <Footer />
-  </>
-);
+    </>
+  );
+};
 
 export default Youtube;

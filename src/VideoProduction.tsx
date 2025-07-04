@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet-async";
 const VideoProduction: React.FC = () => (
   <>
     <Helmet>
-      <title>Himawari Project - ソフトウェア開発 </title>
+      <title>Himawari Project - 映像制作</title>
       <meta property="og:title" content="映像制作" />
       <meta
         property="og:description"

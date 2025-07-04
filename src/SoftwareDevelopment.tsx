@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Helmet } from "react-helmet-async";
 
-const VideoProduction: React.FC = () => (
+const SoftwareDevelopment: React.FC = () => (
   <>
     <Helmet>
       <title>Himawari Project - ソフトウェア開発 </title>
@@ -132,4 +132,4 @@ const VideoProduction: React.FC = () => (
   </>
 );
 
-export default VideoProduction;
+export default SoftwareDevelopment;

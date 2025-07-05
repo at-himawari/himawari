@@ -1,13 +1,20 @@
-# SPA routing configuration for React app
+# SPA routing configuration for React app - Enhanced for Sakura Rental Server
+Options -MultiViews
 RewriteEngine On
 RewriteBase /
 
 # Handle API routes - don't rewrite these to preserve PHP functionality
 RewriteRule ^api/ - [L]
 
-# Handle all other routes - send to index.html for client-side routing
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+# Abort early if request is already for index.html in the root
+RewriteRule ^index\.html$ - [L]
+
+# Check for existing files and directories first
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Route all other non-file/directory requests to index.html for SPA routing
 RewriteRule . /index.html [L]
 
 # Security headers

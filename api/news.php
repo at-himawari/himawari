@@ -10,15 +10,36 @@ if (!$admin_password) {
 }
 
 function authenticate() {
-    global $admin_password;
     $headers = getallheaders();
     $auth_header = $headers['Authorization'] ?? '';
     
     if (strpos($auth_header, 'Bearer ') === 0) {
         $token = substr($auth_header, 7);
-        return $token === $admin_password;
+        return validateToken($token);
     }
     return false;
+}
+
+function validateToken($token) {
+    $token_file = sys_get_temp_dir() . '/himawari_tokens.json';
+    
+    if (!file_exists($token_file)) {
+        return false;
+    }
+    
+    $tokens = json_decode(file_get_contents($token_file), true) ?: [];
+    
+    if (!isset($tokens[$token])) {
+        return false;
+    }
+    
+    if ($tokens[$token] < time()) {
+        unset($tokens[$token]);
+        file_put_contents($token_file, json_encode($tokens));
+        return false;
+    }
+    
+    return true;
 }
 
 switch ($method) {

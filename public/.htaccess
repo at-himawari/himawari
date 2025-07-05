@@ -1,0 +1,16 @@
+# SPA routing configuration for React app
+RewriteEngine On
+RewriteBase /
+
+# Handle API routes - don't rewrite these to preserve PHP functionality
+RewriteRule ^api/ - [L]
+
+# Handle all other routes - send to index.html for client-side routing
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+
+# Security headers
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set X-XSS-Protection "1; mode=block"

@@ -8,8 +8,6 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD;
-
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -40,17 +38,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
       return false;
-    } catch {
-      if (!ADMIN_PASSWORD) {
-        console.error('VITE_ADMIN_PASSWORD environment variable is not set');
-        return false;
-      }
-      if (password === ADMIN_PASSWORD) {
-        setIsAuthenticated(true);
-        localStorage.setItem('himawari-admin-auth', 'true');
-        localStorage.setItem('himawari-admin-token', password);
-        return true;
-      }
+    } catch (error) {
+      console.error('Authentication failed:', error);
       return false;
     }
   };

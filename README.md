@@ -1,11 +1,57 @@
-# React + TypeScript + Vite
+# Himawari - React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+企業サイトとCMS機能を備えたReactアプリケーション。
 
-Currently, two official plugins are available:
+## 開発環境のセットアップ
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. 依存関係のインストール:
+```bash
+npm install
+```
+
+2. 開発サーバーの起動:
+```bash
+npm run dev
+```
+
+3. ビルド:
+```bash
+npm run build
+```
+
+## サーバー設定（さくらレンタルサーバー）
+
+### SPA ルーティング設定
+AllowOverrideが無効化されている場合のフォールバック設定：
+
+1. ドキュメントルートに`.htaccess`ファイルを配置（リポジトリから自動デプロイ）
+2. `index.php`がSPAルーティングを処理
+3. APIルート（`/api/`）は通常通り動作
+
+### 環境変数設定
+さくらレンタルサーバーでの環境変数設定方法：
+
+1. **環境変数ファイルの作成**:
+   - ファイル名: `at-himawari.com` (ドメイン名)
+   - 配置場所: `/home/at-himawari/www/.env`
+   - 内容:
+   ```ini
+   DB_HOST=localhost
+   DB_NAME=your_database_name
+   DB_USERNAME=your_db_username
+   DB_PASSWORD=your_secure_password
+   ADMIN_PASSWORD=your_admin_password
+   ```
+
+2. **ファイル権限設定**: `chmod 600 .env`
+
+3. **データベース設定**: MySQLデータベースを作成し、`database/schema.sql`を実行
+
+## 技術スタック
+
+- React + TypeScript + Vite
+- PHP + MySQL (バックエンド)
+- さくらレンタルサーバー対応
 
 ## Expanding the ESLint configuration
 

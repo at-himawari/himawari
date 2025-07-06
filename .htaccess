@@ -1,0 +1,16 @@
+# Fallback routing for React SPA when AllowOverride is disabled
+# This file should be placed in the document root by server administrator
+
+# Enable PHP routing fallback
+DirectoryIndex index.php index.html
+
+# Handle all requests through PHP router
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Security headers
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set X-XSS-Protection "1; mode=block"

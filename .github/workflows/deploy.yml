@@ -34,7 +34,7 @@ jobs:
           host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          source: "./dist/*,./api/*,./database/*" # ローカルビルドフォルダとAPIファイル
+          source: "./dist/*,./api/*,./database/*,./index.php,./.htaccess" # ローカルビルドフォルダとAPIファイル
           target: ${{ secrets.FTP_REMOTE_PATH }} # サーバー上のアップロード先ディレクトリ
           strip_components: 1
           port: 22 # SFTPのポート（通常22）

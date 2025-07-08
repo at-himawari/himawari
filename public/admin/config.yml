@@ -1,0 +1,57 @@
+backend:
+  name: github
+  repo: at-himawari/himawari
+  branch: main
+  base_url: https://himawari-cms-oauth.netlify.app  # ← NetlifyのURL
+  auth_endpoint: .netlify/functions/auth
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Home Page"
+        name: "home"
+        file: "content/home.md"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Hero Title", name: "heroTitle", widget: "string"}
+          - {label: "Hero Description", name: "heroDescription", widget: "text"}
+          - {label: "Body", name: "body", widget: "markdown"}
+          - {label: "Meta Description", name: "metaDescription", widget: "string"}
+      
+      - label: "About Page"
+        name: "about"
+        file: "content/about.md"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Body", name: "body", widget: "markdown"}
+          - {label: "Meta Description", name: "metaDescription", widget: "string"}
+      
+      - label: "Contact Page"
+        name: "contact"
+        file: "content/contact.md"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Body", name: "body", widget: "markdown"}
+          - {label: "Email", name: "email", widget: "string"}
+          - {label: "Phone", name: "phone", widget: "string"}
+          - {label: "Address", name: "address", widget: "text"}
+
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "Site Config"
+        name: "config"
+        file: "content/site-config.md"
+        fields:
+          - {label: "Site Title", name: "siteTitle", widget: "string"}
+          - {label: "Site Description", name: "siteDescription", widget: "text"}
+          - {label: "Site URL", name: "siteUrl", widget: "string"}
+          - {label: "Author", name: "author", widget: "string"}
+          - {label: "Navigation", name: "navigation", widget: "list", fields: [
+              {label: "Label", name: "label", widget: "string"},
+              {label: "Link", name: "link", widget: "string"}
+            ]}

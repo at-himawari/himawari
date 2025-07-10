@@ -6,29 +6,34 @@ import Footer from "./components/Footer";
 import NewsSection from "./components/NewsSection";
 import { Helmet } from "react-helmet-async";
 
+interface Slide {
+  image: string;
+  title: string;
+  text: string;
+  link: string;
+}
+
 const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const slides = [
-    {
-      image: "/software_img.jpg",
-      title: "ソフトウェア開発",
-      text: "自社パッケージ導入・新規システム開発",
-      link: "/software",
-    },
-    {
-      image: "/video_img.jpg",
-      title: "映像制作",
-      text: "YouTube用動画編集/イベント動画制作",
-      link: "/video",
-    },
-  ];
+  const [slides, setSlides] = useState<Slide[]>([]);
 
   useEffect(() => {
+    fetch("/content/slides.json")
+      .then((res) => res.json())
+      .then((data) => setSlides(data));
+  }, []);
+
+  useEffect(() => {
+    if (slides.length === 0) return;
     const interval = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [slides]);
+
+  if (slides.length === 0) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="font-sans overflow-x-hidden">
@@ -47,7 +52,7 @@ const Home: React.FC = () => {
         <meta property="og:type" content="website" />
       </Helmet>
       {/* Header */}
-      <Header></Header>
+      <Header />
       {/* Hero Section - Slideshow */}
       <section id="software" className="relative h-96 overflow-hidden">
         {slides.map((slide, index) => (
@@ -78,7 +83,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* News Section */}
-      <NewsSection></NewsSection>
+      <NewsSection />
 
       {/* Profile Section */}
       <section id="profile" className="py-12">
@@ -105,7 +110,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <Footer></Footer>
+      <Footer />
     </div>
   );
 };

@@ -38,30 +38,17 @@ const PrivacyPolicy: React.FC = () => {
               // トップレベルの日本語タイトル (画像でオレンジ色の大きな文字)
               h1: ({ node, ...props }) => (
                 <h1
-                  className="text-5xl font-bold text-orange-600 mb-2 tracking-wide"
+                  className="title-ja text-5xl font-bold text-orange-600 mb-2 tracking-wide"
                   {...props}
                 />
               ),
               // その下の英語タイトル (画像で少し小さめの灰色文字)
-              h2: ({ node, ...props }) => {
-                // h1の直後のh2（Privacy Policy）と、セクション見出しのh2を区別する
-                // Markdownの行数で判定する例。より堅牢な方法も検討可能
-                if (
-                  node.position?.start.line === 2 &&
-                  node.position?.end.line === 2
-                ) {
-                  return (
-                    <h2 className="text-3xl text-gray-600 mb-8" {...props} />
-                  );
-                }
-                // 各セクションの日本語見出し (例: 1. 基本的考え方)
-                return (
-                  <h2
-                    className="text-2xl font-bold text-gray-900 mt-8 mb-4"
-                    {...props}
-                  />
-                );
-              },
+              h2: ({ node, ...props }) => (
+                <h2
+                  className="section-h2 text-2xl font-bold text-gray-900 mt-8 mb-4"
+                  {...props}
+                />
+              ),
               // 本文の段落
               p: ({ node, ...props }) => (
                 <p className="text-base leading-relaxed mb-4" {...props} />

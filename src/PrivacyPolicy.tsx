@@ -38,7 +38,7 @@ const PrivacyPolicy: React.FC = () => {
               // トップレベルの日本語タイトル (画像でオレンジ色の大きな文字)
               h1: ({ node, ...props }) => (
                 <h1
-                  className="title-ja text-5xl font-bold text-orange-600 mb-2 tracking-wide"
+                  className="title-ja text-4xl font-bold text-orange-600 mb-2 tracking-wide"
                   {...props}
                 />
               ),

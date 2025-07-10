@@ -14,21 +14,18 @@ collections:
     files:
       - label: "License"
         name: "license"
-        file: "content/license.md"
+        file: "public/content/license.md"
         fields:
           - { label: "Body", name: "body", widget: "markdown" }
       - label: "プライバシーポリシー"
         name: "privacy-policy"
-        file: "content/privacy-policy.md"
+        file: "public/content/privacy-policy.md"
         fields:
-          - { label: "タイトル",name: "title",widget: "string"}
-          - { label: "日付",name: "date",widget: "datetime"}
-          - { label: "パーマリンク",name: "permalink",widget: "string"}
           - { label: "body", name: "body", widget: "markdown" }
 
       - label: "Project Policy"
         name: "project_policy"
-        file: "content/project-policy.md"
+        file: "public/content/project-policy.md"
         fields:
           - { label: "Body", name: "body", widget: "markdown" }
 

@@ -1,9 +1,3 @@
----
-title: "プライバシーポリシー"
-date: "2025-07-10T10:00:00Z"
-permalink: "/privacy/"
----
-
 # プライバシーポリシー
 ## Privacy Policy
 

@@ -4,15 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Content Manager</title>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  <script src="https://unpkg.com/decap-cms-media-library-proxy@^1.0.0/dist/decap-cms-media-library-proxy.js"></script>
+  <script src="https://unpkg.com/decap-cms@3.1.10/dist/decap-cms.js"></script>
+  <script src="https://unpkg.com/decap-cms-media-library-proxy@1.0.1/dist/decap-cms-media-library-proxy.js"></script>
 </head>
 <body>
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      CMS.registerMediaLibrary(CMSProxyMediaLibrary.createProxyMediaLibrary({
-        proxyUrl: "/api/s3-auth.php"
-      }));
+
+    window.addEventListener('load', function() {
+      if (window.CMS && window.CMSProxyMediaLibrary) {
+        CMS.registerMediaLibrary(CMSProxyMediaLibrary.createProxyMediaLibrary({
+          proxyUrl: "/api/s3-auth.php"
+        }));
+
+        // CMSを初期化して起動
+        CMS.init();
+
+      } else {
+        // もしどちらかが読み込めていなければ、コンソールにエラーを出す
+        console.error('Decap CMS本体、またはプロキシライブラリの読み込みに失敗しました。');
+      }
     });
   </script>
 </body>

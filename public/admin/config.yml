@@ -32,7 +32,7 @@ collections:
   - name: "slides"
     label: "Slides"
     files:
-      - file: "content/slides.json"
+      - file: "public/content/slides.json"
         label: "Slides Data"
         name: "slides_data"
         fields:
@@ -46,7 +46,7 @@ collections:
   - name: "news"
     label: "News"
     files:
-      - file: "content/newsdata.json"
+      - file: "public/content/newsdata.json"
         label: "News Data"
         name: "news_data"
         fields:
@@ -59,7 +59,7 @@ collections:
   - name: "videos"
     label: "Videos"
     files:
-      - file: "content/videos.json"
+      - file: "public/content/videos.json"
         label: "Videos Data"
         name: "videos_data"
         fields:

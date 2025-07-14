@@ -7,8 +7,6 @@ backend:
 
 media_folder: ""
 public_folder: ""
-media_library:
-  name: "proxy"
 
 collections:
   - name: "pages"

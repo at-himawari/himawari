@@ -47,7 +47,7 @@ collections:
     label: "News"
     files:
       - file: "public/content/newsdata.json"
-        label: "News Data"
+        label: "ニュース"
         name: "news_data"
         fields:
           - { label: "News Items", name: "newsItems", widget: "list", fields: [
@@ -63,6 +63,8 @@ collections:
         label: "Videos Data"
         name: "videos_data"
         fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Description", name: "description", widget: "text" }
-          - { label: "Video URL", name: "videoUrl", widget: "string" }
+          - { label: "Video Items", name: "videoItems", widget: "list", fields: [
+           { label: "Title", name: "title", widget: "string" },
+           { label: "Description", name: "description", widget: "text" },
+           { label: "Video URL", name: "videoUrl", widget: "string" }
+          ]}

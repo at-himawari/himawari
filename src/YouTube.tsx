@@ -20,7 +20,7 @@ const Youtube: React.FC = () => {
   useEffect(() => {
     fetch("/content/videos.json")
       .then((res) => res.json())
-      .then((data) => setVideos(data))
+      .then((data) => setVideos(data.videoItems))
       .catch((error) => console.error("Error fetching videos:", error));
   }, []);
 

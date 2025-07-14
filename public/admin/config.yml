@@ -12,7 +12,7 @@ collections:
   - name: "pages"
     label: "ページ"
     files:
-      - label: "License"
+      - label: "ライセンス"
         name: "license"
         file: "public/content/license.md"
         fields:
@@ -23,7 +23,7 @@ collections:
         fields:
           - { label: "body", name: "body", widget: "markdown" }
 
-      - label: "Project Policy"
+      - label: "プロジェクトポリシー"
         name: "project_policy"
         file: "public/content/project-policy.md"
         fields:

@@ -5,9 +5,6 @@ backend:
   base_url: https://himawari-cms-oauth.netlify.app # ← NetlifyのURL
   auth_endpoint: .netlify/functions/auth
 
-media_folder: ""
-public_folder: ""
-
 collections:
   - name: "pages"
     label: "ページ"

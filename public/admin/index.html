@@ -9,21 +9,23 @@
 </head>
 <body>
   <script>
-
-    window.addEventListener('load', function() {
+    // 2. 準備が整うまで、しつこく確認し続ける
+    const interval = setInterval(function() {
+      // CMS本体とプロキシライブラリの両方が使えるようになったかチェック
       if (window.CMS && window.CMSProxyMediaLibrary) {
+        
+        // 準備ができたので、確認ループを停止
+        clearInterval(interval);
+
+        // プロキシライブラリをCMSに登録
         CMS.registerMediaLibrary(CMSProxyMediaLibrary.createProxyMediaLibrary({
           proxyUrl: "/api/s3-auth.php"
         }));
 
         // CMSを初期化して起動
         CMS.init();
-
-      } else {
-        // もしどちらかが読み込めていなければ、コンソールにエラーを出す
-        console.error('Decap CMS本体、またはプロキシライブラリの読み込みに失敗しました。');
       }
-    });
+    }, 100); // 0.1秒ごとに確認
   </script>
 </body>
 </html>

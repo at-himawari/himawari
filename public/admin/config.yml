@@ -2,12 +2,11 @@ backend:
   name: github
   repo: at-himawari/himawari
   branch: main
-  base_url: https://himawari-cms-oauth.netlify.app  # ← NetlifyのURL
+  base_url: https://himawari-cms-oauth.netlify.app # ← NetlifyのURL
   auth_endpoint: .netlify/functions/auth
 
 media_folder: "public/images"
 public_folder: "/images"
-
 
 collections:
   - name: "pages"
@@ -37,12 +36,18 @@ collections:
         label: "Slides Data"
         name: "slides_data"
         fields:
-          - { label: "Slides", name: "slides", widget: "list", fields: [
-              { label: "Title", name: "title", widget: "string" },
-              { label: "Text", name: "text", widget: "string" },
-              { label: "Image", name: "image", widget: "image" },
-              { label: "Link", name: "link", widget: "string" }
-            ] }
+          - {
+              label: "Slides",
+              name: "slides",
+              widget: "list",
+              fields:
+                [
+                  { label: "Title", name: "title", widget: "string" },
+                  { label: "Text", name: "text", widget: "string" },
+                  { label: "Image", name: "image", widget: "image" },
+                  { label: "Link", name: "link", widget: "string" },
+                ],
+            }
 
   - name: "news"
     label: "News"
@@ -51,11 +56,17 @@ collections:
         label: "ニュース"
         name: "news_data"
         fields:
-          - { label: "News Items", name: "newsItems", widget: "list", fields: [
-              { label: "Title", name: "title", widget: "string" },
-              { label: "Date", name: "date", widget: "string" },
-              { label: "Content", name: "content", widget: "text" }
-            ] }
+          - {
+              label: "News Items",
+              name: "newsItems",
+              widget: "list",
+              fields:
+                [
+                  { label: "Title", name: "title", widget: "string" },
+                  { label: "Date", name: "date", widget: "string" },
+                  { label: "Content", name: "content", widget: "text" },
+                ],
+            }
 
   - name: "videos"
     label: "Videos"
@@ -64,8 +75,14 @@ collections:
         label: "Videos Data"
         name: "videos_data"
         fields:
-          - { label: "Video Items", name: "videoItems", widget: "list", fields: [
-           { label: "Title", name: "title", widget: "string" },
-           { label: "Description", name: "description", widget: "text" },
-           { label: "Video URL", name: "videoUrl", widget: "string" }
-          ]}
+          - {
+              label: "Video Items",
+              name: "videoItems",
+              widget: "list",
+              fields:
+                [
+                  { label: "Title", name: "title", widget: "string" },
+                  { label: "Description", name: "description", widget: "text" },
+                  { label: "Video URL", name: "videoUrl", widget: "string" },
+                ],
+            }

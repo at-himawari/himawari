@@ -7,21 +7,5 @@
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  
-  <script src="https://unpkg.com/decap-cms-backend-github@^3.0.0/dist/decap-cms-backend-github.js"></script>
-
-  <script>
-    // 4. ページが読み込まれたら、CMSの準備をします
-    window.addEventListener('load', function() {      
-      // CMSを初期化します
-      CMS.init({
-        media_library:{name: 's3',config:{
-          bucket: 'himawari-blog-bucket',
-          region: 'ap-northeast-1',
-          endpoint: '/admin/api/s3-auth.php'
-        }}
-      });
-    });
-  </script>
 </body>
 </html>

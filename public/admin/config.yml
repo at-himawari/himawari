@@ -5,6 +5,16 @@ backend:
   base_url: https://himawari-cms-oauth.netlify.app # ← NetlifyのURL
   auth_endpoint: .netlify/functions/auth
 
+media_folder: ""
+public_folder: ""
+
+media_library:
+  name: s3
+  config:
+    bucket: himawari-blog-bucket
+    region: ap-northeast-1
+    endpoint: '/admin/api/s3-proxy.php'
+
 collections:
   - name: "pages"
     label: "ページ"

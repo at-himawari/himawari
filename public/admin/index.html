@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex" />
-    <title>Content Manager</title>
-  </head>
-  <body>
-    <!-- Include the script that builds the page and powers Decap CMS -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <script src="https://unpkg.com/decap-cms-media-library-proxy@1.0.1/dist/decap-cms-media-library-proxy.js"></script>
-    
-    <script>
-      const interval = setInterval(function() {
-        if (window.CMS && window.CMSProxyMediaLibrary) {
-          clearInterval(interval);
-          CMS.registerMediaLibrary(CMSProxyMediaLibrary.createProxyMediaLibrary({
-            proxyUrl: "/api/s3-auth.php" 
-          }));
-          CMS.init();
-        }
-      }, 100);
-    </script>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Content Manager</title>
+</head>
+<body>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <script src="https://unpkg.com/decap-cms-backend-github@^3.0.0/dist/decap-cms-backend-github.js"></script>
+
+  <script src="https://unpkg.com/@decap-cms/proxy-backend@^3.0.0/dist/proxy-backend.js"></script>
+
+  <script>
+    // 4. ページが読み込まれたら、CMSの準備をします
+    window.addEventListener('load', function() {
+      CMS.registerMediaLibrary(CMSProxyMediaLibrary.createProxyMediaLibrary({
+        proxyUrl: '/api/s3-auth.php',
+      }));
+      
+      // CMSを初期化します
+      CMS.init();
+    });
+  </script>
+</body>
 </html>

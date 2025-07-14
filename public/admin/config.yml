@@ -9,8 +9,6 @@ media_folder: ""
 public_folder: ""
 media_library:
   name: "proxy"
-  config:
-    proxy_url: "/api/s3-auth.php"
 
 collections:
   - name: "pages"

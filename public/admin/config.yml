@@ -9,11 +9,9 @@ media_folder: ""
 public_folder: ""
 
 media_library:
-  name: s3
+  name: s3_signed
   config:
-    bucket: himawari-blog-bucket
-    region: ap-northeast-1
-    endpoint: '/admin/api/s3-proxy.php'
+    apiUrl: https://himawari-cms-oauth.netlify.app/.netlify/functions/s3-handler
 
 collections:
   - name: "pages"

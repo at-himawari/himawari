@@ -53,7 +53,8 @@ function createS3MediaLibrary(options) {
       }
     },
 
-    async list() {
+      async list() {
+          console.log("呼ばれたよ");
       const response = await fetch(`${apiUrl}?action=list`);
       if (!response.ok) {
         console.error(

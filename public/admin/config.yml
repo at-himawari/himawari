@@ -9,9 +9,9 @@ media_folder: ""
 public_folder: ""
 
 media_library:
-  name:  "s3_signed"
+  name: 'uploadcare'
   config:
-    apiUrl: "https://himawari-cms-oauth.netlify.app/.netlify/functions/s3-handler"
+    public_key: 'demopublickey'
 
 collections:
   - name: "pages"

@@ -9,7 +9,7 @@ media_folder: ""
 public_folder: ""
 
 media_library:
-  name: s3_signed
+  name:  "s3_signed"
   config:
     apiUrl: https://himawari-cms-oauth.netlify.app/.netlify/functions/s3-handler
 

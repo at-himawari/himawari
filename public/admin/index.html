@@ -5,13 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
 
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js" defer></script>
-
-  <script src="s3-media-library-register.js" defer></script>
-
-  <script defer>
-    CMS.init();
+  <script>
+    window.CMS_MANUAL_INIT = true;
   </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
+
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <script src="s3-media-library-register.js"></script>
+
+  <script src="init.js"></script>
 </head>
 <body>
   </body>

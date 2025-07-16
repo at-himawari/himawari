@@ -1,3 +1,4 @@
+console.log("s3-media-library-register.js: スクリプトファイルの読み込み開始");
 // このスクリプトは、index.htmlで先に読み込まれたグローバルな「CMS」オブジェクトが存在することを前提としています。
 
 /**
@@ -53,8 +54,8 @@ function createS3MediaLibrary(options) {
       }
     },
 
-      async list() {
-          console.log("呼ばれたよ");
+    async list() {
+      console.log("呼ばれたよ");
       const response = await fetch(`${apiUrl}?action=list`);
       if (!response.ok) {
         console.error(
@@ -84,9 +85,13 @@ const s3MediaLibrary = {
   init: function ({ options }) {
     // CMSから渡されるオブジェクトから `options` を取り出し、
     // それを元にライブラリのインスタンスを作成して返す。
+    console.log("s3_signed ライブラリの init 関数がCMSによって呼ばれました！");
+    console.log("受け取ったAPI URL:", options.config.apiUrl);
     return createS3MediaLibrary(options);
   },
 };
 
+console.log("これから CMS.registerMediaLibrary を呼び出します。");
 // 作成したライブラリをグローバルなCMSオブジェクトに登録する
 CMS.registerMediaLibrary(s3MediaLibrary);
+console.log("CMS.registerMediaLibrary の呼び出しが完了しました。");

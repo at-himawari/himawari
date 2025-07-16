@@ -87,3 +87,21 @@ const s3MediaLibrary = {
 
 // 作成したライブラリをグローバルなCMSオブジェクトに登録する
 CMS.registerMediaLibrary(s3MediaLibrary);
+
+window.addEventListener('DOMContentLoaded', async () => {
+    try {
+      // config.yml を手動で取得・解析
+      const response = await fetch('config.yml');
+      if (!response.ok) {
+          throw new Error(`Could not load config.yml. Status: ${response.status}`);
+      }
+      const configText = await response.text();
+      const config = jsyaml.load(configText);
+  
+      // 最後に、解析したconfigオブジェクトを使ってCMSを起動
+      CMS.init({ config });
+  
+    } catch (error) {
+      console.error('CMS initialization failed:', error);
+    }
+  });

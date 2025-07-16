@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Content Manager</title>
-  </head>
-  <body>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Content Manager</title>
 
-    <script src="s3-media-library-register.js"></script>
-    <script>
-      // このイベントリスナーが重要です！
-      // ページの準備が完全に整ってから中のコードを実行します。
-      window.addEventListener("DOMContentLoaded", () => {
-        CMS.init();
-      });
-    </script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js" defer></script>
+
+  <script src="s3-media-library-register.js" defer></script>
+
+  <script defer>
+    CMS.init();
+  </script>
+</head>
+<body>
   </body>
 </html>

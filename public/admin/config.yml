@@ -11,7 +11,7 @@ public_folder: ""
 media_library:
   name: 'uploadcare'
   config:
-    public_key: 'demopublickey'
+    public_key: '95eb16e688a92e5e7f2d'
 
 collections:
   - name: "pages"

@@ -168,7 +168,7 @@ async function init({ options = {}, handleInsert } = {}) {
 }
 
 // Cloudinaryの例と同様に、CMSに登録するための最終オブジェクトを定義
-const s3MediaLibrary = { name: 's3-custom-ui', init };
+const s3MediaLibrary = { name: 's3_signed', init };
 
 // エクスポート（モジュールとして利用する場合）
 const DecapCmsMediaLibraryS3 = s3MediaLibrary;

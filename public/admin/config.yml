@@ -49,7 +49,7 @@ collections:
                 [
                   { label: "Title", name: "title", widget: "string" },
                   { label: "Text", name: "text", widget: "string" },
-                  { label: "Image", name: "image", widget: "image" },
+                  { label: "Image", name: "image", widget: "string" },
                   { label: "Link", name: "link", widget: "string" },
                 ],
             }

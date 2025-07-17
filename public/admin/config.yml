@@ -9,9 +9,9 @@ media_folder: ""
 public_folder: ""
 
 media_library:
-  name: 'uploadcare'
+  name: uploadcare
   config:
-    public_key: '95eb16e688a92e5e7f2d'
+    public_key: 95eb16e688a92e5e7f2d
 
 collections:
   - name: "pages"

@@ -1,89 +1,177 @@
-// このスクリプトは、index.htmlで先に読み込まれたグローバルな「CMS」オブジェクトが存在することを前提としています。
+// public/admin/s3-media-library.js
 
 /**
- * S3メディアライブラリの実際の機能を持つオブジェクトを作成する関数
- * @param {object} options - config.yml の media_library セクションの内容
+ * 署名付きURLを利用してS3と連携するDecap CMSメディアライブラリ
+ * Cloudinary Media Libraryの構成を参考にしています。
  */
-function createS3MediaLibrary(options) {
-  const apiUrl = options.config.apiUrl;
 
-  return {
-    name: "s3_signed",
-    config: options.config,
+// デフォルトオプション：config.ymlで設定されなかった場合のフォールバック
+const defaultOptions = {
+  // `config.yml`の`media_library.config`で設定されるべき項目
+  apiUrl: '', // Netlify Functionのエンドポイント
+  // このライブラリ固有のオプション
+  output_filename_only: false,
+};
 
-    async upload(file) {
+/**
+ * ライブラリの初期化を行うメイン関数
+ * Decap CMSから呼び出され、メディアライブラリオブジェクトを返す
+ */
+async function init({ options = {}, handleInsert } = {}) {
+  // --- 1. 設定のマージ ---
+  const { config: providedConfig = {}, ...integrationOptions } = options;
+  const resolvedOptions = { ...defaultOptions, ...providedConfig, ...integrationOptions };
+
+  if (!resolvedOptions.apiUrl) {
+    throw new Error("S3 media library requires 'apiUrl' in config.yml");
+  }
+
+  // --- 2. メディアライブラリUIの生成 (DOMの準備) ---
+  // この部分はCloudinaryの `createMediaLibrary` の役割を自前で実装する部分です
+  const mediaLibraryContainer = document.createElement('div');
+  mediaLibraryContainer.style.cssText = `
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5); z-index: 99999;
+    display: none; justify-content: center; align-items: center;
+  `;
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    background-color: white; padding: 20px; border-radius: 8px;
+    width: 80%; max-width: 900px; height: 80%; display: flex; flex-direction: column;
+  `;
+  const modalHeader = document.createElement('div');
+  modalHeader.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;';
+  const modalTitle = document.createElement('h2');
+  modalTitle.textContent = 'S3 Media Library';
+  const uploadButton = document.createElement('button');
+  uploadButton.textContent = 'Upload New File';
+  const closeButton = document.createElement('button');
+  closeButton.textContent = 'Close';
+  
+  modalHeader.append(modalTitle, uploadButton, closeButton);
+
+  const imageGrid = document.createElement('div');
+  imageGrid.style.cssText = `
+    flex-grow: 1; overflow-y: auto; display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;
+  `;
+  const loadingIndicator = document.createElement('p');
+  loadingIndicator.textContent = 'Loading...';
+  
+  modal.append(modalHeader, imageGrid);
+  mediaLibraryContainer.appendChild(modal);
+  document.body.appendChild(mediaLibraryContainer);
+
+  // ファイルアップロード用の非表示input要素
+  const fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.hidden = true;
+  document.body.appendChild(fileInput);
+
+  // --- 3. UIの振る舞いとAPI連携の定義 ---
+
+  /**
+   * S3からファイルリストを取得してグリッドに表示する
+   */
+  const fetchAndDisplayFiles = async () => {
+    imageGrid.innerHTML = ''; // クリア
+    imageGrid.appendChild(loadingIndicator);
+    try {
+      const response = await fetch(`${resolvedOptions.apiUrl}?action=list`);
+      const data = await response.json();
+      imageGrid.innerHTML = ''; // ローディング表示を削除
+      data.files.forEach(file => {
+        const imgContainer = document.createElement('div');
+        imgContainer.style.cursor = 'pointer';
+        const img = document.createElement('img');
+        img.src = file.url;
+        img.style.width = '100%';
+        img.style.height = '120px';
+        img.style.objectFit = 'cover';
+        img.onclick = () => {
+          // 画像がクリックされたら、そのURLをCMSに挿入
+          handleInsert(file.url);
+          hideMediaLibrary(); // ライブラリを閉じる
+        };
+        imgContainer.appendChild(img);
+        imageGrid.appendChild(imgContainer);
+      });
+    } catch (error) {
+      console.error('Error loading files from S3:', error);
+      imageGrid.innerHTML = '<p>Error loading files.</p>';
+    }
+  };
+
+  /**
+   * ファイルアップロード処理
+   */
+  const handleUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // ボタンを一時的に無効化
+    uploadButton.disabled = true;
+    uploadButton.textContent = 'Uploading...';
+
+    try {
+      // 1. 署名付きURLを取得
       const presignResponse = await fetch(
-        `${apiUrl}?action=upload&fileName=${encodeURIComponent(
-          file.name
-        )}&fileType=${encodeURIComponent(file.type)}`
+        `${resolvedOptions.apiUrl}?action=upload&fileName=${encodeURIComponent(file.name)}&fileType=${encodeURIComponent(file.type)}`
       );
-      if (!presignResponse.ok) {
-        throw new Error(
-          `Failed to get pre-signed URL: ${await presignResponse.text()}`
-        );
-      }
-      const { signedUrl, key, publicUrl } = await presignResponse.json();
+      const { signedUrl, publicUrl } = await presignResponse.json();
 
+      // 2. S3へアップロード
       await fetch(signedUrl, {
-        method: "PUT",
-        headers: { "Content-Type": file.type },
+        method: 'PUT',
         body: file,
+        headers: { 'Content-Type': file.type },
       });
 
-      return {
-        id: key,
-        name: file.name,
-        url: publicUrl,
-        size: file.size,
-        file,
-      };
-    },
+      // 3. 成功したらCMSにURLを挿入
+      handleInsert(publicUrl);
+      hideMediaLibrary();
+    } catch (error) {
+      console.error('Upload failed:', error);
+      alert('File upload failed. Check the console for details.');
+    } finally {
+      // 状態を元に戻す
+      uploadButton.disabled = false;
+      uploadButton.textContent = 'Upload New File';
+      fileInput.value = '';
+    }
+  };
+  
+  // イベントリスナーを設定
+  uploadButton.onclick = () => fileInput.click();
+  fileInput.onchange = handleUpload;
 
-    async delete(mediaFile) {
-      if (!mediaFile.id) {
-        throw new Error("File ID is missing.");
-      }
-      const deleteResponse = await fetch(
-        `${apiUrl}?action=delete&key=${encodeURIComponent(mediaFile.id)}`
-      );
-      if (!deleteResponse.ok) {
-        throw new Error(
-          `Failed to delete file: ${await deleteResponse.text()}`
-        );
-      }
-    },
+  // --- 4. メディアライブラリのコントローラーを定義 (show/hide) ---
 
-    async list() {
-      const response = await fetch(`${apiUrl}?action=list`);
-      if (!response.ok) {
-        throw new Error(`Failed to list files: ${await response.text()}`);
-      }
-      const data = await response.json();
-      return { files: data.files };
-    },
+  const showMediaLibrary = () => {
+    mediaLibraryContainer.style.display = 'flex';
+    fetchAndDisplayFiles();
+  };
 
-    async getMedia() {
-      return [];
-    },
+  const hideMediaLibrary = () => {
+    mediaLibraryContainer.style.display = 'none';
+  };
+  
+  closeButton.onclick = hideMediaLibrary;
 
+  // --- 5. Decap CMSに返す最終的なオブジェクト ---
+  // このオブジェクトがCMSのMedia Libraryとして機能する
+  return {
+    show: () => showMediaLibrary(),
+    hide: () => hideMediaLibrary(),
     enableStandalone: () => true,
   };
 }
 
-/**
- * Decap CMSにライブラリを登録するためのオブジェクト
- */
-const s3MediaLibrary = {
-  // この `name` は config.yml の `media_library.name` と一致する必要はありません。
-  // CMSは登録時に `init` が返すオブジェクトの `name` を正として使います。
-  name: "s3_signed",
-  init: function ({ options }) {
-    // CMSから渡されるオブジェクトから `options` を取り出し、
-    // それを元にライブラリのインスタンスを作成して返す。
-    return createS3MediaLibrary(options);
-  },
-};
+// Cloudinaryの例と同様に、CMSに登録するための最終オブジェクトを定義
+const s3MediaLibrary = { name: 's3-custom-ui', init };
 
+// エクスポート（モジュールとして利用する場合）
+const DecapCmsMediaLibraryS3 = s3MediaLibrary;
 
 // 作成したライブラリをグローバルなCMSオブジェクトに登録する
 CMS.registerMediaLibrary(s3MediaLibrary);

@@ -4,7 +4,7 @@
 
 * 1. 当サイトのライセンス Himawari Project(以下、当プロジェクト）では、当プロジェクトのウェブサイト（サブドメインを含むat-himawari.comドメイン配下のウェブサイト。以下特に記載がない限り同じです。以下「当ウェブサイト」といいます。）において提供するサービスでは Creative Commons CC BY-SA 4.0が適用されます。 詳しくは、Creative Commonsのリーガル･コードをご覧ください。
      <https://creativecommons.org/licenses/by-sa/4.0/legalcode.ja>
-* 2. ソースコードのライセンス GitHubの各リポジトリLICENSEファイルをご覧ください。LICENSEファイルがない場合は、MITライセンスに従います。
+  2. ソースコードのライセンス GitHubの各リポジトリLICENSEファイルをご覧ください。LICENSEファイルがない場合は、MITライセンスに従います。
 
 > MIT License
 >
@@ -15,3 +15,7 @@
 > The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 >
 > THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/01-1024x540-1.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIARLW7MOOSZPQI4J4I%2F20250717%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20250717T055538Z&X-Amz-Expires=3600&X-Amz-Signature=39fde8e58e81256318ea1a02791dbce2941aef07431920601ee78aa7dc48d519&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)

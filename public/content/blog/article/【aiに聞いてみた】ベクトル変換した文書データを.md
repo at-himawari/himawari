@@ -7,7 +7,7 @@ tags:
   - "フーリエ変換"
   - "ベクトル変換"
   - "機械学習"
-coverImage: "f8751740-e645-4e79-ab58-4066bcea9545.webp"
+coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/f8751740-e645-4e79-ab58-4066bcea9545.webp"
 ---
 
 ## 文書データのベクトル変換

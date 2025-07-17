@@ -3,7 +3,7 @@ title: "S3+CloudFront+Route53を使ってリダイレクトを実現する"
 date: 2024-03-08
 categories: 
   - "技術"
-coverImage: "スクリーンショット-2024-02-11-20.13.00.jpg"
+coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/スクリーンショット-2024-02-11-20.13.00.jpg"
 ---
 
 ## 何をしたいのか

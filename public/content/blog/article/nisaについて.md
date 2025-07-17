@@ -3,7 +3,7 @@ title: "NISAについて"
 date: 2024-03-08
 categories: 
   - "お金"
-coverImage: "IMG_5546.jpeg"
+coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/IMG_5546.jpeg"
 ---
 
 ## NISA（にーさ）とは？

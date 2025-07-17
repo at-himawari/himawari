@@ -3,7 +3,7 @@ title: "AWS Lambdaで楽天証券の評価損益･時価総額のスクショ�
 date: 2024-06-28
 categories: 
   - "技術"
-coverImage: "スクリーンショット-2024-06-29-17.07.48.png"
+coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/スクリーンショット-2024-06-29-17.07.48.png"
 ---
 
 ## 概要

@@ -3,7 +3,7 @@ title: "Lambdaでハンドラーが認識されない"
 date: 2024-06-22
 categories: 
   - "技術"
-coverImage: "Arch_AWS-Lambda_64@5x.png"
+coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Arch_AWS-Lambda_64@5x.png"
 ---
 
 今回は、AWS Lambdaでハンドラーが認識されないときの対処方法をご紹介します。

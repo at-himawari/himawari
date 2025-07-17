@@ -3,7 +3,7 @@ title: "pyenvでinstallができない"
 date: 2024-03-25
 categories: 
   - "技術"
-coverImage: "スクリーンショット-2024-03-25-14.01.43.png"
+coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/スクリーンショット-2024-03-25-14.01.43.png"
 ---
 
 pyenvでpythonをインストールしたときに、インストールに失敗していたので、原因調査をしたので記事にします。

@@ -1,7 +1,7 @@
 ---
 title: "はじめまして！"
 date: 2024-03-07
-coverImage: "スクリーンショット-2024-01-15-20.11.35.png"
+coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/スクリーンショット-2024-01-15-20.11.35.png"
 ---
 
 Himawari Projectの羽ばたくエンジニアと申します！

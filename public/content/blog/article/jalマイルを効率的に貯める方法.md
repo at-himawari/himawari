@@ -3,7 +3,7 @@ title: "JALマイルを効率的に貯める方法"
 date: 2024-03-08
 categories: 
   - "お金"
-coverImage: "IMG_5545.png"
+coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/IMG_5545.png"
 ---
 
 ## JALツアープレミアムに加入する

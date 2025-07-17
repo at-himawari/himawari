@@ -3,7 +3,7 @@ title: "Rails7でMicrosoft Entra IDを使ったログインを実装する"
 date: 2024-06-21
 categories: 
   - "技術"
-coverImage: "Microsoft_Azure.svg_.png"
+coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Microsoft_Azure.svg_.png"
 ---
 
 今回は、Ruby on RailsのDeviseを使って、Microsoft Entra IDでログインできるようにします。

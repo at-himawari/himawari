@@ -3,7 +3,7 @@ title: "GitHub Copilot: コード生成の未来への一歩"
 date: 2024-03-08
 categories: 
   - "技術"
-coverImage: "IMG_5543.jpeg"
+coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/IMG_5543.jpeg"
 ---
 
 ## コスト効率と手軽さ

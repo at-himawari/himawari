@@ -10,5 +10,11 @@
     "text": "YouTube用動画編集/イベント動画制作",
     "image": "/video_img.jpg",
     "link": "/video"
+  },
+  {
+    "title": "映像制作",
+    "text": "YouTube用動画編集/イベント動画制作",
+    "image": "https://picsum.photos/1920/1080",
+    "link": "/video"
   }
 ]

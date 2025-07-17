@@ -20,7 +20,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     fetch("/content/slides.json")
       .then((res) => res.json())
-      .then((data) => setSlides(data));
+      .then((data) => setSlides(data.slides));
   }, []);
 
   useEffect(() => {

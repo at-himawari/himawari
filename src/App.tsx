@@ -8,6 +8,8 @@ import License from "./License";
 import Youtube from "./YouTube";
 import ScrollToTop from "./components/ScrollToTop";
 import { HelmetProvider } from "react-helmet-async";
+import Blog from "./Blog";
+import Post from "./Post";
 
 const App: React.FC = () => {
   return (
@@ -22,6 +24,8 @@ const App: React.FC = () => {
           <Route path="/project" element={<ProjectPolicy />} />
           <Route path="/license" element={<License />} />
           <Route path="/youtube" element={<Youtube />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<Post />} />
         </Routes>
       </Router>
     </HelmetProvider>

@@ -47,8 +47,7 @@ coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/
     - TF-IDFスコア = 単語の出現頻度 (TF) × 逆文書頻度 (IDF)  
         
 
-####   
-2.3 Word2Vec
+#### 2.3 Word2Vec
 
 - **概要**: ニューラルネットワークを使用して、単語を高次元のベクトル空間に埋め込む手法です。
 
@@ -58,8 +57,7 @@ coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/
     - "king" - "man" + "woman" ≈ "queen"  
         
 
-####   
-2.4 Doc2Vec
+#### 2.4 Doc2Vec
 
 - **概要**: 文書全体をベクトルに変換する手法で、Word2Vecの拡張版です。
 
@@ -69,8 +67,7 @@ coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/
     - 類似したトピックの文書は、ベクトル空間内で近くに配置されます。  
         
 
-####   
-2.5 BERT（Bidirectional Encoder Representations from Transformers）
+#### 2.5 BERT（Bidirectional Encoder Representations from Transformers）
 
 - **概要**: トランスフォーマーモデルを使用して、文脈を考慮した単語ベクトルを生成します。
 
@@ -80,8 +77,7 @@ coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/
     - "bank" (river) と "bank" (financial) が文脈に応じて異なるベクトルになります。  
         
 
-###   
-3\. ベクトル変換の応用例
+### 3\. ベクトル変換の応用例
 
 - **テキスト分類**:
     - 文書をカテゴリに分類するために使用されます。
@@ -96,8 +92,7 @@ coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/
     - 文書集合からトピックを抽出するために使用されます。  
         
 
-###   
-4\. 注意点
+### 4\. 注意点
 
 - **次元の呪い**:
     - ベクトルの次元が高くなると計算量が増加し、効率が低下する可能性があります。
@@ -114,58 +109,44 @@ coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/
   
   
 
-##   
-フーリエ変換とは？
+## フーリエ変換とは？
 
-###   
-概要
+### 概要
 
   
 フーリエ変換は、信号や関数をその周波数成分に分解する手法です。具体的には、時間領域のデータを周波数領域に変換することで、データの周期性や周波数成分を明らかにします。  
 
-###   
-基本概念
+### 基本概念
 
-####   
-  
-1\. 時間領域と周波数領域
+#### 1\. 時間領域と周波数領域
 
 - **時間領域**: 信号やデータが時間に対してどのように変化するかを示す表現。
 
 - **周波数領域**: 信号やデータをその周波数成分ごとに表現する表現。  
     
 
-####   
-2\. フーリエ変換の定義
+#### 2. フーリエ変換の定義
 
   
-フーリエ変換は、連続時間信号 \\( f(t) \\) を周波数領域に変換する操作で、以下のように定義されます：  
-  
-\\\[ F(\\omega) = \\int\_{-\\infty}^{\\infty} f(t) e^{-i\\omega t} \\, dt \\\]  
-  
+フーリエ変換は、連続時間信号 $f(t)$ を周波数領域に変換する操作で、以下のように定義されます：
+
+$$ F(\omega) = \int_{-\infty}^{\infty} f(t) e^{-i\omega t} \, dt $$
+
 ここで、
 
-- \\( F(\\omega) \\) は周波数 \\( \\omega \\) におけるフーリエ変換の結果。
+- $F(\omega)$ は周波数 $\omega$ におけるフーリエ変換の結果。
+- $f(t)$ は時間領域の信号。
+- $i$ は虚数単位。
+- $\omega$ は角周波数。
 
-- \\( f(t) \\) は時間領域の信号。
+#### 3. 逆フーリエ変換
 
-- \\( i \\) は虚数単位。
+  逆フーリエ変換は、周波数領域のデータを再び時間領域に変換する操作です：
 
-- \\( \\omega \\) は角周波数。  
-    
+$$ f(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega) e^{i\omega t} \, d\omega $$
 
-#### 3\. 逆フーリエ変換
+### フーリエ変換の種類
 
-  
-逆フーリエ変換は、周波数領域のデータを再び時間領域に変換する操作です：  
-  
-\\\[ f(t) = \\frac{1}{2\\pi} \\int\_{-\\infty}^{\\infty} F(\\omega) e^{i\\omega t} \\, d\\omega \\\]  
-
-###   
-フーリエ変換の種類
-
-  
-  
 1\. **離散フーリエ変換（DFT）**
 
 - デジタル信号処理でよく使われる手法。有限長の離散データを周波数領域に変換します。
@@ -179,8 +160,7 @@ coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/
 - デジタル信号処理や音声処理、画像処理などに広く利用されます。  
     
 
-###   
-フーリエ変換の応用例  
+### フーリエ変換の応用例  
 
   
 1\. **信号処理**  
@@ -192,20 +172,16 @@ coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/
 3\. **データ分析**  
 時系列データの周期性やトレンドを解析するために使用されます。例えば、金融データや気象データの周期的なパターンを検出するのに役立ちます。  
 
-###   
-フーリエ変換の利点と制約
+### フーリエ変換の利点と制約
 
-####   
-  
-利点
+#### 利点
 
 - **周期成分の解析**: データ内の周期的な成分を明確にすることができます。
 
 - **フィルタリング**: 高周波成分や低周波成分を除去することで、データの平滑化やノイズ除去が可能です。  
     
 
-####   
-制約
+#### 制約
 
 - **時間情報の喪失**: フーリエ変換は周波数成分を解析しますが、元の信号の時間情報は失われます。
 
@@ -220,12 +196,8 @@ coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/
   
 ベクトル変換した文書データをフーリエ変換すると、文書内の特徴が周波数領域で表現されるようになります。これは、文書データの周期性やパターンを解析するために役立ちます。具体的には以下のような変化や利点があります。
 
-###   
-  
-ステップバイステップの変換プロセス
+### ステップバイステップの変換プロセス
 
-  
-  
 1\. **文書データのベクトル化**
 
 - 文書を数値ベクトルに変換するための方法として、Word2Vec、TF-IDF、Doc2Vec、BERTなどの手法を使用します。
@@ -258,8 +230,7 @@ coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/
 - **自然言語処理（NLP）**:
     - ベクトル化した文書データのフーリエ変換を用いて、テキストの特徴抽出や分類モデルの前処理として利用できます。
 
-###   
-注意点
+### 注意点
 
 - **解釈の難しさ**:
     - フーリエ変換後のデータは周波数領域の情報を持つため、元の文書データとの直接的な対応関係がわかりにくくなることがあります。

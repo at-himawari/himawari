@@ -10,6 +10,7 @@ interface PostInfo {
   date: string;
   tags: string[];
   categories: string[];
+  coverImage?: string; // coverImageプロパティを追加
 }
 
 const Blog: React.FC = () => {
@@ -20,7 +21,6 @@ const Blog: React.FC = () => {
       try {
         const res = await fetch(`/content/blog/index.json`);
         const postsData: PostInfo[] = await res.json();
-        // 日付の降順でソート
         postsData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         setPosts(postsData);
       } catch (error) {
@@ -38,20 +38,46 @@ const Blog: React.FC = () => {
       </Helmet>
       <Header />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8">Blog</h1>
-        <div className="space-y-6">
+        <h1 className="text-4xl font-bold mb-12 text-gray-800">ブログ</h1>
+        {/* ▼▼▼ ここからレイアウトを変更 ▼▼▼ */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post) => (
-            <Link key={post.slug} to={`/blog/${post.slug}`} className="block p-6 border rounded-lg hover:shadow-lg transition-shadow">
-              <p className="text-gray-600 text-sm">{new Date(post.date).toLocaleDateString()}</p>
-              <h2 className="text-2xl font-bold text-orange-500 mt-1">{post.title}</h2>
-              <div className="mt-3">
-                {post.tags?.map((tag: string) => (
-                  <span key={tag} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{tag}</span>
-                ))}
+            <Link 
+              key={post.slug} 
+              to={`/blog/${post.slug}`} 
+              className="group block bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+            >
+              {/* カバー画像の表示 */}
+              <div className="h-48 overflow-hidden">
+                <img 
+                  src={post.coverImage || '/default-cover.jpg'} // デフォルト画像も指定可能
+                  alt={post.title} 
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
+              
+              <div className="p-6">
+                {/* 日付 */}
+                <p className="text-gray-500 text-sm mb-2">
+                  {new Date(post.date).toLocaleDateString()}
+                </p>
+                {/* タイトル */}
+                <h2 className="text-xl font-bold text-gray-800 group-hover:text-orange-500 transition-colors duration-300">
+                  {post.title}
+                </h2>
+                {/* タグ */}
+                <div className="mt-4">
+                  {post.tags?.map((tag: string) => (
+                    <span key={tag} className="inline-block bg-orange-100 text-orange-800 rounded-full px-3 py-1 text-xs font-semibold mr-2 mb-2">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </Link>
           ))}
         </div>
+        {/* ▲▲▲ ここまで ▲▲▲ */}
       </div>
       <Footer />
     </>

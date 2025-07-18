@@ -4,20 +4,26 @@ import ReactMarkdown from 'react-markdown';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Helmet } from 'react-helmet-async';
-import matter from 'gray-matter';
 import remarkGfm from 'remark-gfm';
+
+interface PostData {
+  content: string;
+  title: string;
+  date: string;
+  coverImage?: string;
+}
 
 const Post: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<{ content: string; data: { [key: string]: any } } | null>(null);
+  const [post, setPost] = useState<PostData | null>(null);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`/content/blog/article/${slug}.md`);
-        const text = await res.text();
-        const { content, data } = matter(text);
-        setPost({ content, data });
+        // Markdownではなく、生成されたJSONファイルを読み込みます
+        const res = await fetch(`/content/blog/json/${slug}.json`);
+        const data: PostData = await res.json();
+        setPost(data);
       } catch (error) {
         console.error("Failed to fetch post:", error);
       }
@@ -34,14 +40,15 @@ const Post: React.FC = () => {
   return (
     <>
        <Helmet>
-        <title>{post.data.title} - Himawari Project</title>
-        <meta name="description" content={`Blog post about ${post.data.title}`} />
+        <title>{post.title} - Himawari Project</title>
+        <meta name="description" content={`Blog post about ${post.title}`} />
       </Helmet>
       <Header />
       <div className="container mx-auto px-4 py-8">
-        <article className="prose lg:prose-xl">
-          <h1 className="text-4xl font-bold mb-2">{post.data.title}</h1>
-          <p className="text-gray-600 mb-8">{new Date(post.data.date).toLocaleDateString()}</p>
+        <article className="prose lg:prose-xl max-w-none">
+          {post.coverImage && <img src={post.coverImage} alt={post.title} className="mb-8 rounded-lg" />}
+          <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
+          <p className="text-gray-600 mb-8">{new Date(post.date).toLocaleDateString()}</p>
            <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
         </article>
       </div>

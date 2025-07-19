@@ -90,7 +90,7 @@ const Post: React.FC = () => {
           </div>
           {/* ▲▲▲ シェアボタンここまで ▲▲▲ */}
 
-          <article className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-10">
+          <article className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-10">
             {/* カバー画像 */}
             {post.coverImage && (
               <img
@@ -105,10 +105,10 @@ const Post: React.FC = () => {
               <h1 className="text-3xl md:text-4xl font-bold mb-3 text-gray-900">
                 {post.title}
               </h1>
-              <p className="text-gray-500">
+              <p className="text-gray-500 text-right">
                 {new Date(post.date).toLocaleDateString()}
               </p>
-              <div className="mt-4 flex justify-center flex-wrap gap-2">
+              <div className="mt-4 flex  flex-wrap gap-2">
                 {post.tags?.map((tag) => (
                   <span
                     key={tag}

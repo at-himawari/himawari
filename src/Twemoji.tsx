@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import twemoji from "@twemoji/api";
 
 type TwemojiProps = {
-  emoji: string;
+  emoji: string|null;
 };
 
 const Twemoji: React.FC<TwemojiProps> = ({ emoji = null }) => {

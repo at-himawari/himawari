@@ -55,6 +55,13 @@ const Post: React.FC = () => {
       <Helmet>
         <title>{post.title} - Himawari Project</title>
         <meta name="description" content={`Blog post about ${post.title}`} />
+        {/* OGPタグ (Facebook, etc.) */}
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={window.location.href} />
+        {post.coverImage && <meta property="og:image" content={post.coverImage} />}
+        
         {/* ▼▼▼ ここからTwitter Card用のメタタグを追加 ▼▼▼ */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@at_himawari" />

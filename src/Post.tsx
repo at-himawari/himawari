@@ -50,6 +50,10 @@ const Post: React.FC = () => {
   const metaDescription = post.content.substring(0, 120) + "...";
   const postUrl = window.location.href;
 
+  const absoluteCoverImageUrl = post.coverImage
+    ? new URL(post.coverImage, "https://at-himawari.com").href
+    : "https://at-himawari.com/himawari.png"; // デフォルトの画像
+
   return (
     <>
       <Helmet>
@@ -60,17 +64,18 @@ const Post: React.FC = () => {
         <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={window.location.href} />
-        {post.coverImage && <meta property="og:image" content={post.coverImage} />}
-        
+        {post.coverImage && (
+          <meta property="og:image" content={absoluteCoverImageUrl} />
+        )}
+
         {/* ▼▼▼ ここからTwitter Card用のメタタグを追加 ▼▼▼ */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@at_himawari" />
         <meta name="twitter:creator" content="@at_himawari" />
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={metaDescription} />
-        {post.coverImage && (
-          <meta name="twitter:image" content={post.coverImage} />
-        )}
+        <meta name="twitter:image" content={absoluteCoverImageUrl} />
+        
         {/* ▲▲▲ ここまで追加 ▲▲▲ */}
       </Helmet>
       <Header />

@@ -48,7 +48,6 @@ const Post: React.FC = () => {
   }
 
   const postUrl = window.location.href;
-  const shareText = `"${post.title}" を読みました - Himawari Project`;
 
   return (
     <>

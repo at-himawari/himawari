@@ -47,6 +47,7 @@ const Post: React.FC = () => {
     );
   }
 
+  const metaDescription = post.content.substring(0, 120) + "...";
   const postUrl = window.location.href;
 
   return (
@@ -54,6 +55,16 @@ const Post: React.FC = () => {
       <Helmet>
         <title>{post.title} - Himawari Project</title>
         <meta name="description" content={`Blog post about ${post.title}`} />
+        {/* ▼▼▼ ここからTwitter Card用のメタタグを追加 ▼▼▼ */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@at_himawari" />
+        <meta name="twitter:creator" content="@at_himawari" />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={metaDescription} />
+        {post.coverImage && (
+          <meta name="twitter:image" content={post.coverImage} />
+        )}
+        {/* ▲▲▲ ここまで追加 ▲▲▲ */}
       </Helmet>
       <Header />
       <div className="bg-gray-50 py-8">

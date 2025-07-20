@@ -1,6 +1,4 @@
 @import "tailwindcss";
-@tailwind components;
-@tailwind utilities;
 
 .title-ja + .section-h2 {
   @apply text-3xl text-gray-600 mt-0 mb-8 font-normal;

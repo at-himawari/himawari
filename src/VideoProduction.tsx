@@ -1,21 +1,9 @@
 import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { Helmet } from "react-helmet-async";
 
 const VideoProduction: React.FC = () => (
   <>
-    <Helmet>
-      <title>Himawari Project - ソフトウェア開発 </title>
-      <meta property="og:title" content="映像制作" />
-      <meta
-        property="og:description"
-        content="Himawari Projectはあなたの映像制作をお手伝いします。機材も貸し出せます。"
-      />
-      <meta property="og:image" content="https://at-himawari.com/avatar.jpg" />
-      <meta property="og:url" content="https://at-himawari.com/video" />
-      <meta property="og:type" content="website" />
-    </Helmet>
     <Header></Header>
     <section id="video" className="py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

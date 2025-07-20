@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FaXTwitter } from "react-icons/fa6";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import NewsSection from "./components/NewsSection";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import NewsSection from "../../components/NewsSection";
 
 interface Slide {
   image: string;
@@ -11,7 +11,12 @@ interface Slide {
   link: string;
 }
 
-const Home: React.FC = () => {
+export const meta = {
+  title: 'Himawari Project',
+  description: '映像とITの融合領域にチャレンジするプロジェクト',
+};
+
+export default function Page() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slides, setSlides] = useState<Slide[]>([]);
 
@@ -36,7 +41,6 @@ const Home: React.FC = () => {
   return (
     <div className="font-sans overflow-x-hidden">
       <Header />
-      {/* Hero Section - Slideshow */}
       <section id="software" className="relative h-96 overflow-hidden">
         {slides.map((slide, index) => (
           <div
@@ -64,11 +68,7 @@ const Home: React.FC = () => {
           </div>
         ))}
       </section>
-
-      {/* News Section */}
       <NewsSection />
-
-      {/* Profile Section */}
       <section id="profile" className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-bold text-gray-800">プロフィール</h3>
@@ -91,11 +91,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
       <Footer />
     </div>
   );
-};
-
-export default Home;
+}

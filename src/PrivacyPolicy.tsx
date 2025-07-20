@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { Helmet } from "react-helmet-async";
 import ReactMarkdown from "react-markdown";
 
 const PrivacyPolicy: React.FC = () => {
@@ -16,20 +15,6 @@ const PrivacyPolicy: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Himawari Project - プライバシーポリシー </title>
-        <meta property="og:title" content="プライバシーポリシー" />
-        <meta
-          property="og:description"
-          content="Himawari Projectのプライバシーポリシーを説明します"
-        />
-        <meta
-          property="og:image"
-          content="https://at-himawari.com/avatar.jpg"
-        />
-        <meta property="og:url" content="https://at-himawari.com/privacy" />
-        <meta property="og:type" content="website" />
-      </Helmet>
       <Header />
       <section id="privacy-policy" className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

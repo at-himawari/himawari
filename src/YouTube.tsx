@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import VideoCard from "./components/VideoCard";
-import { Helmet } from "react-helmet-async";
 
 // videoオブジェクトの型を定義します
 interface Video {
@@ -26,22 +25,7 @@ const Youtube: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Himawari Project - YouTube </title>
-        <meta property="og:title" content="YouTube" />
-        <meta
-          property="og:description"
-          content="ライブ配信したり、飛行機の搭乗動画を撮ったり様々なジャンルでやってます。"
-        />
-        <meta
-          property="og:image"
-          content="https://at-himawari.com/avatar.jpg"
-        />
-        <meta property="og:url" content="https://at-himawari.com/youtube" />
-        <meta property="og:type" content="website" />
-      </Helmet>
       <Header />
-
       {/* 既存のセクション */}
       <section id="video" className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

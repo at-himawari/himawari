@@ -1,6 +1,5 @@
 import React from "react";
 import { FaXTwitter, FaGithub, FaInstagram, FaYoutube } from "react-icons/fa6";
-import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
   return (
@@ -10,14 +9,14 @@ const Footer: React.FC = () => {
           <h4 className="text-lg font-bold">Himawari Project</h4>
           <ul className="mt-4 space-y-2">
             <li>
-              <Link to="/software" className="hover:underline">
+              <a href="/software" className="hover:underline">
                 ソフトウェア開発
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/video" className="hover:underline">
+              <a href="/video" className="hover:underline">
                 映像制作
-              </Link>
+              </a>
             </li>
             <li>
               <a href="https://blog.at-himawari.com/cms/">ブログ</a>
@@ -39,9 +38,9 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li>
-              <Link to="/youtube" className="hover:underline">
+              <a href="/youtube" className="hover:underline">
                 YouTube
-              </Link>
+              </a>
             </li>
           </ul>
         </div>
@@ -49,19 +48,19 @@ const Footer: React.FC = () => {
           <h4 className="text-lg font-bold">利用規約</h4>
           <ul className="mt-4 space-y-2">
             <li>
-              <Link to="/privacy" className="hover:underline">
+              <a href="/privacy" className="hover:underline">
                 プライバシーポリシー
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/license" className="hover:underline">
+              <a href="/license" className="hover:underline">
                 ライセンス
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/project" className="hover:underline">
+              <a href="/project" className="hover:underline">
                 プロジェクトポリシー
-              </Link>
+              </a>
             </li>
           </ul>
         </div>

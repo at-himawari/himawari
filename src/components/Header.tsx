@@ -1,9 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
   return (
-    <Link to="/">
+    <a href="/">
       <header className="bg-white shadow">
         <div className="container mx-auto flex justify-between items-center py-4 px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
@@ -22,7 +21,7 @@ const Header: React.FC = () => {
           </div>
         </div>
       </header>
-    </Link>
+    </a>
   );
 };
 

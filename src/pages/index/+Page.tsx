@@ -10,12 +10,6 @@ interface Slide {
   text: string;
   link: string;
 }
-
-export const meta = {
-  title: 'Himawari Project',
-  description: '映像とITの融合領域にチャレンジするプロジェクト',
-};
-
 export default function Page() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slides, setSlides] = useState<Slide[]>([]);

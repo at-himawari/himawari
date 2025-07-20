@@ -1,15 +1,7 @@
-@tailwind base;
+@import "tailwindcss";
 @tailwind components;
 @tailwind utilities;
 
 .title-ja + .section-h2 {
-    /* Tailwindのクラスを@applyで適用するか、直接CSSプロパティを書く */
-    font-size: 1.875rem; /* text-3xl */
-    color: #4b5563; /* text-gray-600 */
-    margin-top: 0rem; /* mb-0 */
-    margin-bottom: 2rem; /* mb-8 */
-    font-weight: 400; /* font-normal */
-  }
-
-
-  
+  @apply text-3xl text-gray-600 mt-0 mb-8 font-normal;
+}

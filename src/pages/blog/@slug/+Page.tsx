@@ -16,19 +16,6 @@ interface PostPageProps {
   tags?: string[];
 }
 
-export function meta(pageProps: PostPageProps) {
-    const metaDescription = pageProps.content.substring(0, 120) + '...';
-    const absoluteCoverImageUrl = pageProps.coverImage
-        ? new URL(pageProps.coverImage, "https://at-himawari.com").href
-        : "https://at-himawari.com/avatar.png";
-
-    return {
-        title: `${pageProps.title} - Himawari Project`,
-        description: metaDescription,
-        coverImage: absoluteCoverImageUrl,
-    };
-}
-
 export default function Page(props: PostPageProps) {
   const { title, date, content, coverImage, tags } = props;
   const postUrl = typeof window !== 'undefined' ? window.location.href : '';

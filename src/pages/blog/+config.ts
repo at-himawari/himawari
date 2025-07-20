@@ -1,3 +1,4 @@
 export default {
-  title: 'Blog - Himawari Project'
-} satisfies Vike.Config
+  title: "ブログ - Himawari Project",
+  description: "ときどき更新する技術ブログやら",
+} satisfies Vike.Config;

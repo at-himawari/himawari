@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import { useEffect, useState } from "react";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 interface PostInfo {
   slug: string;
@@ -11,10 +11,6 @@ interface PostInfo {
   coverImage?: string;
 }
 
-export const meta = {
-  title: 'Blog - Himawari Project'
-};
-
 export default function Page() {
   const [posts, setPosts] = useState<PostInfo[]>([]);
 
@@ -23,7 +19,9 @@ export default function Page() {
       try {
         const res = await fetch(`/content/blog/index.json`);
         const postsData: PostInfo[] = await res.json();
-        postsData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        postsData.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
         setPosts(postsData);
       } catch (error) {
         console.error("Failed to fetch posts index:", error);
@@ -37,18 +35,20 @@ export default function Page() {
     <>
       <Header />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-12 text-center text-gray-800">Blog</h1>
+        <h1 className="text-4xl font-bold mb-12 text-center text-gray-800">
+          Blog
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post) => (
-            <a 
-              key={post.slug} 
-              href={`/blog/${post.slug}`} 
+            <a
+              key={post.slug}
+              href={`/blog/${post.slug}`}
               className="group block bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
             >
               <div className="h-48 overflow-hidden">
-                <img 
-                  src={post.coverImage || '/himawari.png'}
-                  alt={post.title} 
+                <img
+                  src={post.coverImage || "/himawari.png"}
+                  alt={post.title}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </div>
@@ -61,7 +61,10 @@ export default function Page() {
                 </h2>
                 <div className="mt-4">
                   {post.tags?.map((tag: string) => (
-                    <span key={tag} className="inline-block bg-orange-100 text-orange-800 rounded-full px-3 py-1 text-xs font-semibold mr-2 mb-2">
+                    <span
+                      key={tag}
+                      className="inline-block bg-orange-100 text-orange-800 rounded-full px-3 py-1 text-xs font-semibold mr-2 mb-2"
+                    >
                       #{tag}
                     </span>
                   ))}
@@ -74,4 +77,4 @@ export default function Page() {
       <Footer />
     </>
   );
-};
+}

@@ -1,8 +1,8 @@
 // src/Bcafe.tsx
 import React, { useEffect, useState } from "react";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import VideoCard from "./components/VideoCard";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import VideoCard from "../../components/VideoCard";
 
 // videoオブジェクトの型を定義します
 interface Video {

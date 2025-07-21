@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import ReactMarkdown from "react-markdown";
 
-const ProjectPolicy: React.FC = () => {
+const PrivacyPolicy: React.FC = () => {
   const [content, setContent] = useState<string>("");
 
   useEffect(() => {
-    fetch("/content/project-policy.md")
+    fetch("/content/privacy-policy.md")
       .then((res) => res.text())
       .then((text) => setContent(text));
   }, []);
@@ -16,9 +16,10 @@ const ProjectPolicy: React.FC = () => {
   return (
     <>
       <Header />
-      <section id="project-policy" className="py-12">
+      <section id="privacy-policy" className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <ReactMarkdown components={{
+          <ReactMarkdown
+            components={{
               // トップレベルの日本語タイトル (画像でオレンジ色の大きな文字)
               h1: ({ node, ...props }) => (
                 <h1
@@ -53,7 +54,10 @@ const ProjectPolicy: React.FC = () => {
                   {...props}
                 />
               ),
-            }}>{content}</ReactMarkdown>
+            }}
+          >
+            {content}
+          </ReactMarkdown>
         </div>
       </section>
       <Footer />
@@ -61,4 +65,4 @@ const ProjectPolicy: React.FC = () => {
   );
 };
 
-export default ProjectPolicy;
+export default PrivacyPolicy;

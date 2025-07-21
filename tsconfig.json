@@ -19,6 +19,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "vike.d.ts", "vike.config.ts"],
+  "include": ["src", "vike.d.ts", "vike.config.ts", "public/admin/custom-cms-loader.js"],
   "exclude": ["node_modules", "dist"]
 }

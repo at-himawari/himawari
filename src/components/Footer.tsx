@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li>
-              <a href="https://blog.at-himawari.com/cms/">ブログ</a>
+              <a href="/blog">ブログ</a>
             </li>
             <li>
               <a href="https://forms.gle/D8WSByjAnYGGtoGw9">お問い合わせ</a>

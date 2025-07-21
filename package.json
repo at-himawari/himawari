@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vike dev",
     "prebuild": "node scripts/generate-blog-index.cjs",
-    "build": "vite build",
+    "build": "vike build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vike preview"
   },
   "dependencies": {
     "@twemoji/api": "^16.0.1",

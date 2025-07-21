@@ -1,16 +1,16 @@
-import fs from 'fs';
-import path from 'path';
+import { getAllPosts } from "../utils/blog";
 
-// ビルドが始まる前に実行される関数
+// ビルド時にプリレンダリングするページのリストをVikeに教える
 export function onBeforePrerenderStart() {
-  // ブログ記事の一覧が書かれたJSONファイルを読み込む
-  const blogIndex = JSON.parse(
-    fs.readFileSync(path.join(process.cwd(), 'public', 'content', 'blog', 'index.json'), 'utf-8')
-  );
+  const posts = getAllPosts();
 
-  // JSONの情報から、各記事のURLのリストを作成する
-  const prerenderUrls = blogIndex.map((post: { slug: string }) => `/blog/${post.slug}`);
+  // 全ての記事のURL（例: /blog/xxxx, /blog/yyyy）を生成して返す
 
-  // Vikeに、これらのURLのページをプリレンダリングするように指示する
+  const prerenderUrls = posts.map((post) => {
+    console.log(post.slug);
+    return `/blog/${post.slug}`;
+  });
+
+  // トップページやブログ一覧ページなども含める
   return prerenderUrls;
 }

@@ -1,22 +1,14 @@
-import fs from "fs";
-import path from "path";
+import { getAllPosts } from '../../../utils/blog';
 
-// このファイルが返すデータの型をエクスポートします
 export type Data = Awaited<ReturnType<typeof data>>;
 
 export async function data(pageContext: { routeParams: { slug: string } }) {
   const { slug } = pageContext.routeParams;
-  const filePath = path.join(
-    process.cwd(),
-    "public",
-    "content",
-    "blog",
-    "json",
-    `${slug}.json`
-  );
-  const postData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  const posts = getAllPosts();
+  const postData = posts.find(p => p.slug === slug);
 
-  // meta情報をここで生成
+  if (!postData) return undefined;
+
   const metaDescription = postData.content.substring(0, 120) + "...";
   const absoluteCoverImageUrl = postData.coverImage
     ? new URL(postData.coverImage, "https://at-himawari.com").href
@@ -26,7 +18,6 @@ export async function data(pageContext: { routeParams: { slug: string } }) {
     pageProps: {
       ...postData,
     },
-    // ▼▼▼ metaオブジェクトの値を { value: '...' } で囲む ▼▼▼
     meta: {
       title: { value: `${postData.title} - Himawari Project` },
       description: { value: metaDescription },

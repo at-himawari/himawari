@@ -1,42 +1,15 @@
-import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import type { PostInfo } from "./+data"; // 先ほど作成した+data.tsから型をインポート
 
-interface PostInfo {
-  slug: string;
-  title: string;
-  date: string;
-  tags: string[];
-  categories: string[];
-  coverImage?: string;
-}
-
-export default function Page() {
-  const [posts, setPosts] = useState<PostInfo[]>([]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await fetch(`/content/blog/index.json`);
-        const postsData: PostInfo[] = await res.json();
-        postsData.sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
-        setPosts(postsData);
-      } catch (error) {
-        console.error("Failed to fetch posts index:", error);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
+// propsの型を更新
+export default function Page({ posts }: { posts: PostInfo[] }) {
   return (
     <>
       <Header />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-12 text-center text-gray-800">
-          Blog
+          ブログ
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post) => (

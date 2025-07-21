@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "vike dev",
-    "prebuild": "node scripts/generate-blog-index.cjs",
     "build": "vike build",
     "lint": "eslint .",
     "preview": "vike preview"

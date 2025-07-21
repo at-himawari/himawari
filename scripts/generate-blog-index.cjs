@@ -23,13 +23,13 @@ try {
     const filePath = path.join(articlesDir, filename);
     const fileContents = fs.readFileSync(filePath, "utf8");
     const { data, content } = matter(fileContents);
-    let slug = filename.replace(/\.md$/, "");
-    
-    //英語以外ならハッシュ化する
-    const isEnglish = /^[a-zA-Z0-9\s.,!?'"()\-]+$/.test(data.title);
-    const hash = isEnglish ? "" : require("crypto").createHash("md5").update(data.title).digest("hex").slice(0, 8);
-    slug = isEnglish ? slug : `${hash}`;
 
+    // ファイル名を元にハッシュを生成します。ファイル名は必ず一意なので、衝突は起こりません。
+    const slug = require("crypto")
+      .createHash("md5")
+      .update(filename) // ← ここを filename に変更
+      .digest("hex")
+      .slice(0, 12);
 
     // 各記事の本文を含んだJSONを保存
     const postJson = {

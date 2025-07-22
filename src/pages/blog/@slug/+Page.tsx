@@ -6,7 +6,7 @@ import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import { FaXTwitter } from "react-icons/fa6";
-import HatenaIcon from "../../../components/HatenaIcon";
+import  HatenaIcon from "../../../components/HatenaIcon";
 import { Post } from "./+data";
 
 

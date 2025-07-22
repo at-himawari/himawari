@@ -19,25 +19,25 @@ collections:
     files:
       - label: "ライセンス"
         name: "license"
-        file: "public/content/license.md"
+        file: "src/content/license.md"
         fields:
           - { label: "Body", name: "body", widget: "markdown" }
       - label: "プライバシーポリシー"
         name: "privacy-policy"
-        file: "public/content/privacy-policy.md"
+        file: "src/content/privacy-policy.md"
         fields:
           - { label: "body", name: "body", widget: "markdown" }
 
       - label: "プロジェクトポリシー"
         name: "project_policy"
-        file: "public/content/project-policy.md"
+        file: "src/content/project-policy.md"
         fields:
           - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "slides"
     label: "Slides"
     files:
-      - file: "public/content/slides.json"
+      - file: "src/content/slides.json"
         label: "Slides Data"
         name: "slides_data"
         fields:
@@ -56,7 +56,7 @@ collections:
             
   - name: "blog"
     label: "ブログ"
-    folder: "public/content/blog/article"
+    folder: "src/content/blog/article"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
@@ -70,7 +70,7 @@ collections:
   - name: "news"
     label: "News"
     files:
-      - file: "public/content/newsdata.json"
+      - file: "src/content/newsdata.json"
         label: "ニュース"
         name: "news_data"
         fields:
@@ -89,7 +89,7 @@ collections:
   - name: "videos"
     label: "Videos"
     files:
-      - file: "public/content/videos.json"
+      - file: "src/content/videos.json"
         label: "Videos Data"
         name: "videos_data"
         fields:

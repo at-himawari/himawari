@@ -3,5 +3,5 @@ import type { Config } from "vike/types";
 
 export default {
   extends: [vikeReact],
+  prerender: true,
 } satisfies Config;
-

@@ -7,46 +7,14 @@ import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import { FaXTwitter } from "react-icons/fa6";
 import HatenaIcon from "../../../components/HatenaIcon";
-import matter from "gray-matter";
-import { generateHash } from "../../../utils/hash";
-import type { PageContext } from "vike/types";
+import { Post } from "./+data";
 
-// 型定義を明示的に整理
-interface BlogMetadata {
-  title: string;
-  date: string;
-  categories?: string[];
-  tags?: string[];
-  coverImage?: string;
-}
-
-interface Post {
-  hash: string;
-  markdown: string;
-  metadata: BlogMetadata;
-}
-
-const modules = import.meta.glob("../../../content/blog/article/*.md", {
-  as: "raw",
-});
-
-// Markdownから全記事を読み込み、ハッシュマップに格納
-async function getAllPosts(): Promise<Record<string, Post>> {
-  const posts: Record<string, Post> = {};
-  for (const [_, loader] of Object.entries(modules)) {
-    const raw = await loader();
-    const { content, data } = matter(raw);
-    const hash = await generateHash(raw);
-    posts[hash] = { hash, markdown: content, metadata: data as BlogMetadata };
-  }
-  return posts;
-}
 
 // コンポーネント本体
 export default function Page({ post }: { post: Post }) {
   if (!post) return <div>記事が見つかりません</div>;
   const postUrl = typeof window !== "undefined" ? window.location.href : "";
-  const { title, date, tags, coverImage } = post.metadata;
+  const { title, date, tags, coverImage, content } = post;
 
   return (
     <>
@@ -81,7 +49,7 @@ export default function Page({ post }: { post: Post }) {
                 remarkPlugins={[remarkGfm, remarkMath]}
                 components={markdownComponents}
               >
-                {post.markdown}
+                {content}
               </ReactMarkdown>
             </section>
           </article>
@@ -134,37 +102,37 @@ function Tag({ tag }: { tag: string }) {
 // Markdownの表示カスタマイズ
 const markdownComponents = {
   h1: (props: any) => (
-    <h1 className="text-3xl font-bold mt-8 mb-4 underline decoration-slate-300" {...props} />
+    <h1
+      className="text-3xl font-bold mt-8 mb-4 underline decoration-slate-300"
+      {...props}
+    />
   ),
   h2: (props: any) => (
-    <h2 className="text-2xl font-bold mt-6 mb-3 underline decoration-slate-300" {...props} />
+    <h2
+      className="text-2xl font-bold mt-6 mb-3 underline decoration-slate-300"
+      {...props}
+    />
   ),
   h3: (props: any) => (
-    <h3 className="text-xl font-bold mt-4 mb-2 underline decoration-slate-300" {...props} />
+    <h3
+      className="text-xl font-bold mt-4 mb-2 underline decoration-slate-300"
+      {...props}
+    />
   ),
   h4: (props: any) => <h4 className="text-xl mt-4 mb-2" {...props} />,
-  p: (props: any) => <p className="text-base leading-relaxed mb-4" {...props} />,
-  ol: (props: any) => <ol className="list-decimal pl-6 mb-4" {...props} />,
-  li: (props: any) => <li className="mb-2 text-base leading-relaxed list-disc" {...props} />,
-  a: (props: any) => (
-    <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />
+  p: (props: any) => (
+    <p className="text-base leading-relaxed mb-4" {...props} />
   ),
-};
-
-// Vike 用のデータ取得関数
-Page.getPageProps = async ({ routeParams }: PageContext<{ slug: string }>) => {
-  const posts = await getAllPosts();
-  const post = posts[routeParams.slug];
-  if (!post) {
-    throw new Error(`記事が見つかりません (slug: ${routeParams.slug})`);
-  }
-  return { pageProps: { post } };
-};
-
-// SSG用のエントリ定義
-export const prerender = {
-  entries: async () => {
-    const posts = await getAllPosts();
-    return Object.keys(posts).map((hash) => `/blog/${hash}`);
-  },
+  ol: (props: any) => <ol className="list-decimal pl-6 mb-4" {...props} />,
+  li: (props: any) => (
+    <li className="mb-2 text-base leading-relaxed list-disc" {...props} />
+  ),
+  a: (props: any) => (
+    <a
+      className="text-blue-600 hover:underline"
+      target="_blank"
+      rel="noopener noreferrer"
+      {...props}
+    />
+  ),
 };

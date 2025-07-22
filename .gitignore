@@ -25,3 +25,7 @@ dist-ssr
 
 public/content/blog/index.json
 public/content/blog/json/
+
+# Vike build artifacts
+**/*.build-*.js
+**/*.build-*.mjs

@@ -1,9 +1,26 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import type { PostInfo } from "./+data"; // 先ほど作成した+data.tsから型をインポート
+import type { PostInfo } from "./+data";
+import { usePageContext } from "vike-react/usePageContext"; // ← usePageContextをインポート
 
-// propsの型を更新
-export default function Page({ posts }: { posts: PostInfo[] }) {
+export default function Page() {
+  // pageContextから直接postsを取得します
+  const pageContext = usePageContext();
+  const posts = pageContext.data?.posts as PostInfo[];
+
+  // postsがない場合の表示を追加
+  if (!posts) {
+    return (
+      <>
+        <Header />
+        <div className="container mx-auto px-4 py-8">
+          <p>記事を読み込んでいます...</p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Header />

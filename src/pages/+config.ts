@@ -1,9 +1,9 @@
-import vikeReact from 'vike-react/config'
-import { Layout } from './Layout'
+import vikeReact from "vike-react/config";
+import { Layout } from "./Layout";
 
 export default {
-    Layout: Layout,
-    lang:'ja',
-    extends: vikeReact,
-    prerender: true
-}
+  Layout: Layout,
+  lang: "ja",
+  extends: vikeReact,
+  prerender: true
+};

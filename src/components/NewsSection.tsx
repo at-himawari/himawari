@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import newsData from "../content/newsdata.json";
 
 export interface NewsItem {
   title: string;
@@ -10,15 +11,7 @@ const NewsSection: React.FC = () => {
   const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
-
-  // コンポーネントがマウントされた時にJSONファイルを読み込みます
-  useEffect(() => {
-    fetch("/content/newsdata.json")
-      .then((res) => res.json())
-      // config.ymlに合わせて "newsItems" というキーから配列を取得します
-      .then((data) => setNewsItems(data.newsItems))
-      .catch((error) => console.error("Error fetching news:", error));
-  }, []);
+  setNewsItems(newsData.newsItems || []);
 
   if (!newsItems || newsItems.length === 0) {
     return (

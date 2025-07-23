@@ -3,6 +3,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import NewsSection from "../../components/NewsSection";
+import slidesData from "../../content/slides.json"; // JSONを直接インポート
 
 interface Slide {
   image: string;
@@ -12,13 +13,7 @@ interface Slide {
 }
 export default function Page() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [slides, setSlides] = useState<Slide[]>([]);
-
-  useEffect(() => {
-    fetch("/content/slides.json")
-      .then((res) => res.json())
-      .then((data) => setSlides(data.slides));
-  }, []);
+  const slides: Slide[] = slidesData.slides;
 
   useEffect(() => {
     if (slides.length === 0) return;

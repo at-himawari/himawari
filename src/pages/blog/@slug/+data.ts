@@ -13,7 +13,10 @@ export interface Post {
 
 export function data(pageContext: PageContext) {
   const post = posts.find((p) => p.slug === pageContext.routeParams?.slug);
-  return { post };
+  // こちらも pageProps でラップします
+  return {
+    pageProps: {
+      post,
+    },
+  };
 }
-
-export type Data = Awaited<ReturnType<typeof data>>;

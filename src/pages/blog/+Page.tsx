@@ -6,7 +6,7 @@ import { usePageContext } from "vike-react/usePageContext"; // ← usePageContex
 export default function Page() {
   // pageContextから直接postsを取得します
   const pageContext = usePageContext();
-  const posts = pageContext.data?.posts as PostInfo[];
+  const { posts } = pageContext.pageProps as { posts: PostInfo[] };
 
   // postsがない場合の表示を追加
   if (!posts) {

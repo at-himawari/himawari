@@ -1,13 +1,8 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import type { PostInfo } from "./+data";
-import { usePageContext } from "vike-react/usePageContext"; // ← usePageContextをインポート
 
-export default function Page() {
-  // pageContextから直接postsを取得します
-  const pageContext = usePageContext();
-  const { posts } = pageContext.pageProps as { posts: PostInfo[] };
-
+export default function Page({ posts }: { posts: PostInfo[] }) {
   // postsがない場合の表示を追加
   if (!posts) {
     return (

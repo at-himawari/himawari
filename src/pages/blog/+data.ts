@@ -7,8 +7,6 @@ export type PostInfo = Omit<Post, "content">;
 export function data() {
   const posts: PostInfo[] = postsData.map(({ content, ...rest }) => rest);
   return {
-    pageProps: {
-      posts,
-    },
+    posts,
   };
 }

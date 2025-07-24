@@ -11,6 +11,12 @@
       "text": "YouTube用動画編集/イベント動画制作",
       "image": "/video_img.jpg",
       "link": "/video"
+    },
+    {
+      "title": "ブログ",
+      "text": "技術ブログや旅ブログなど自由気ままに書いています",
+      "image": "/blog_image.jpg",
+      "link": "/blog"
     }
   ]
 }

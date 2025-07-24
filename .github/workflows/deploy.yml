@@ -3,7 +3,7 @@ name: Deploy to Sakura Rental Server
 on:
   push:
     branches:
-      - main  # メインブランチにプッシュされた時に実行
+      - main # メインブランチにプッシュされた時に実行
 
 jobs:
   deploy:
@@ -34,9 +34,8 @@ jobs:
           host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          source: ./dist/* # ローカルビルドフォルダ
+          source: ./dist/client/* # ローカルビルドフォルダ
           target: ${{ secrets.FTP_REMOTE_PATH }} # サーバー上のアップロード先ディレクトリ
           strip_components: 1
           port: 22 # SFTPのポート（通常22）
           debug: true
-          

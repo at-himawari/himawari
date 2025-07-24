@@ -1,8 +1,7 @@
-// src/Bcafe.tsx
-import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import VideoCard from "../../components/VideoCard";
+import videosData from "../../content/videos.json"; // JSONを直接インポート
 
 // videoオブジェクトの型を定義します
 interface Video {
@@ -11,25 +10,15 @@ interface Video {
   videoUrl: string;
 }
 
-const Youtube: React.FC = () => {
-  // 動画データを格納するためのstateを定義します
-  const [videos, setVideos] = useState<Video[]>([]);
-
-  // コンポーネントがマウントされた時にJSONファイルを読み込みます
-  useEffect(() => {
-    fetch("/content/videos.json")
-      .then((res) => res.json())
-      .then((data) => setVideos(data.videoItems))
-      .catch((error) => console.error("Error fetching videos:", error));
-  }, []);
-
+export default function Page() {
+  const videos: Video[] = videosData.videoItems;
   return (
     <>
       <Header />
       {/* 既存のセクション */}
       <section id="video" className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-black">YouTube</h2>
+          <h2 className="text-2xl font-bold text-orange-600">YouTube</h2>
           <p className="text-gray-600 text-lg mt-2">
             羽ばたくエンジニア @at_himawari
           </p>
@@ -66,6 +55,4 @@ const Youtube: React.FC = () => {
       <Footer />
     </>
   );
-};
-
-export default Youtube;
+}

@@ -36,6 +36,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           source: ./dist/client/* # ローカルビルドフォルダ
           target: ${{ secrets.FTP_REMOTE_PATH }} # サーバー上のアップロード先ディレクトリ
-          strip_components: 1
+          strip_components: 2
           port: 22 # SFTPのポート（通常22）
           debug: true

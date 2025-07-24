@@ -4,6 +4,7 @@ export function Head() {
 
   return (
     <>
+      <meta property="og:image" content={imageUrl} />
       <meta property="og:type" content="article" />
       {/* Twitter Card Tags */}
       <meta name="twitter:card" content="summary_large_image" />

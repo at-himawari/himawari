@@ -14,7 +14,6 @@ export default {
   description: "映像とITの融合領域にチャレンジするプロジェクト",
   image: HimawariIcon,
   meta: {
-    "og:image": HimawariIcon,
     "og:type": "website",
     "twitter:card": "summary_large_image",
     "twitter:title": "Himawari Project",

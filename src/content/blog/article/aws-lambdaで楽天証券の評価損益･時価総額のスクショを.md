@@ -1,25 +1,30 @@
 ---
 title: "AWS Lambdaで楽天証券の評価損益･時価総額のスクショを送る(Python 3.11)"
 date: 2024-06-28
-categories: 
+categories:
   - "技術"
+tags:
+  - "プログラミング"
+  - "AWS"
+  - "Lambda"
 coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/スクリーンショット-2024-06-29-17.07.48.png"
 ---
 
 ## 概要
 
-今回は、AWS Lambdaを利用して楽天証券のWebページから時価総額と評価損益のスクショを撮り、LINEで送信する方法を紹介します。
+今回は、AWS Lambda を利用して楽天証券の Web ページから時価総額と評価損益のスクショを撮り、LINE で送信する方法を紹介します。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/スクリーンショット-2024-06-23-16.53.47-1024x720.png)
 
 ## 前提
 
 - 環境
-    - MacBookAir(macOS 14.4, Apple Sillicon)
 
-- Docker導入済み
+  - MacBookAir(macOS 14.4, Apple Sillicon)
 
-- AWS CLIのセットアップ済み
+- Docker 導入済み
+
+- AWS CLI のセットアップ済み
 
 - Python 3.12
 
@@ -27,41 +32,41 @@ coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/
 
 [https://github.com/himawari-aerobytes/scraping-rakuten-sec/tree/main](https://github.com/himawari-aerobytes/scraping-rakuten-sec/tree/main)
 
-## ECRのイメージからLambda関数を作成
+## ECR のイメージから Lambda 関数を作成
 
-SeleniumはWebブラウザの操作を自動化するフレームワークです。[https://qiita.com/Chanmoro/items/9a3c86bb465c1cce738a](https://qiita.com/Chanmoro/items/9a3c86bb465c1cce738a)
+Selenium は Web ブラウザの操作を自動化するフレームワークです。[https://qiita.com/Chanmoro/items/9a3c86bb465c1cce738a](https://qiita.com/Chanmoro/items/9a3c86bb465c1cce738a)
 
-今回は、Seleniumを利用してChromeを操作して楽天証券の画面のスクショを撮ります。
+今回は、Selenium を利用して Chrome を操作して楽天証券の画面のスクショを撮ります。
 
-Seleniumの利用には、Chromeのバイナリが必要になりますが、AWS LambdaではChromeのバイナリがデフォルトでは使えません。Chromeのバイナリは100MB近くの容量が必要となります。しかし、zipファイルでアップロードできるLambdaの容量は250MBが上限です。Pythonの諸々のライブラリを含めると、容量制限に引っかかってしまいます。
+Selenium の利用には、Chrome のバイナリが必要になりますが、AWS Lambda では Chrome のバイナリがデフォルトでは使えません。Chrome のバイナリは 100MB 近くの容量が必要となります。しかし、zip ファイルでアップロードできる Lambda の容量は 250MB が上限です。Python の諸々のライブラリを含めると、容量制限に引っかかってしまいます。
 
-250MBを超える場合は、ECRでdockerイメージを利用してLambda関数を構築します。
+250MB を超える場合は、ECR で docker イメージを利用して Lambda 関数を構築します。
 
-## ECRリポジトリの準備
+## ECR リポジトリの準備
 
-まずは、AWSコンソールのECRのページに飛びリポジトリの作成を押下します
+まずは、AWS コンソールの ECR のページに飛びリポジトリの作成を押下します
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/ECR1-1024x557.jpg)
 
-リポジトリ名に任意の名前（今回はselenium)を入力し｢リポジトリを作成｣を押下します
+リポジトリ名に任意の名前（今回は selenium)を入力し｢リポジトリを作成｣を押下します
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/ECR2-1-572x1024.jpg)
 
-以下のような画面になれば成功です。ここで表示されているURIは以降使用するのでメモをしておいてください。
+以下のような画面になれば成功です。ここで表示されている URI は以降使用するのでメモをしておいてください。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/ECR3-1024x557.jpg)
 
-## Dockerイメージのpush
+## Docker イメージの push
 
-この章では先程作成したECRリポジトリにDockerイメージをpushします。
+この章では先程作成した ECR リポジトリに Docker イメージを push します。
 
-### Dockerfileの作成
+### Dockerfile の作成
 
-Seleniumやchromedriverなどを導入したイメージを作成するためにDockerfileを作成します。
+Selenium や chromedriver などを導入したイメージを作成するために Dockerfile を作成します。
 
-新規フォルダを作成し、Dockerfileを作成します。
+新規フォルダを作成し、Dockerfile を作成します。
 
-開発環境が環境がMacではない場合、--platform=linux/amd64 の記述は削除してください。
+開発環境が環境が Mac ではない場合、--platform=linux/amd64 の記述は削除してください。
 
 Dockerfile
 
@@ -90,21 +95,21 @@ COPY lambda/lambda_function.py ./
 CMD [ "lambda_function.lambda_handler" ]
 ```
 
-### lambda\_function.pyの作成
+### lambda_function.py の作成
 
-Lambdaで実行する関数を書きます。ファイル名はlambda\_function.pyと必ずしてください。
+Lambda で実行する関数を書きます。ファイル名は lambda_function.py と必ずしてください。
 
-後述しますが、Lambdaの環境変数として以下を設定しています。
+後述しますが、Lambda の環境変数として以下を設定しています。
 
-| キー | 値 |
-| --- | --- |
-| BUCKET\_NAME | 画像を保存するS3バケット名 |
-| ID | 楽天証券のID |
-| LINE\_CHANNEL\_ACCESS\_TOKEN | LINE Messaging APIのチャンネルアクセストークン |
-| PASS | 楽天証券のパスワード |
-| USER\_ID | LINEのユーザID（送信先のユーザID） |
+| キー                      | 値                                              |
+| ------------------------- | ----------------------------------------------- |
+| BUCKET_NAME               | 画像を保存する S3 バケット名                    |
+| ID                        | 楽天証券の ID                                   |
+| LINE_CHANNEL_ACCESS_TOKEN | LINE Messaging API のチャンネルアクセストークン |
+| PASS                      | 楽天証券のパスワード                            |
+| USER_ID                   | LINE のユーザ ID（送信先のユーザ ID）           |
 
-lambda\_function.py
+lambda_function.py
 
 ```
 import os
@@ -158,7 +163,7 @@ def send_LINE(now,local_path):
             "Content-Type": "application/json",
             "Authorization": f"Bearer {line_channel_access_token}"
     }
-        
+
     data = {
         "to": user_id,
         "messages": [
@@ -169,13 +174,13 @@ def send_LINE(now,local_path):
             }
         ]
     }
-        
+
     response = requests.post(
         "https://api.line.me/v2/bot/message/push",
         headers=headers,
         data=json.dumps(data)
     )
-        
+
     return {
         'statusCode': response.status_code,
         'body': response.text
@@ -236,47 +241,47 @@ def lambda_handler(event,context):
     return send_LINE(now,local_path)
 ```
 
-### Dockerイメージの作成
+### Docker イメージの作成
 
-Dockerfileとlamda\_function.pyを作成したフォルダ内で以下のコマンドを実行します。
+Dockerfile と lamda_function.py を作成したフォルダ内で以下のコマンドを実行します。
 
 ```
 $ docker build -t selenium .
 ```
 
-イメージをpushするために、タグをつけます。（URI は AWS ECR リポジトリ一覧に表示されていた URI に置き換えてください。）
+イメージを push するために、タグをつけます。（URI は AWS ECR リポジトリ一覧に表示されていた URI に置き換えてください。）
 
 ```
 $ docker tag selenium:latest 123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/selenium:latest
 ```
 
-ECRにログインするために、以下のコマンドを実行します（URI は AWS ECR リポジトリ一覧に表示されていた URI に置き換えてください。）
+ECR にログインするために、以下のコマンドを実行します（URI は AWS ECR リポジトリ一覧に表示されていた URI に置き換えてください。）
 
 ```
 $ aws ecr get-login-password  | docker login --username AWS --password-stdin 123456789012.dkr.ecr.ap-northeast-1.amazonaws.com
 ```
 
-イメージをECRにpushするために以下のコマンドを実行します。（URI は Amazon ECR リポジトリ一覧に表示されていた URI に置き換えてください。）
+イメージを ECR に push するために以下のコマンドを実行します。（URI は Amazon ECR リポジトリ一覧に表示されていた URI に置き換えてください。）
 
 ```
 $ docker push 123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/selenium:latest
 ```
 
-pushが完了すると、ECRリポジトリ内にlatestタグの付いたイメージが追加されていることが確認できます。
+push が完了すると、ECR リポジトリ内に latest タグの付いたイメージが追加されていることが確認できます。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/ECR4-1024x558.jpg)
 
-## Lambda関数の作成
+## Lambda 関数の作成
 
-AWSコンソールのLambdaのページに飛びます。左上の｢関数の作成｣を押下します
+AWS コンソールの Lambda のページに飛びます。左上の｢関数の作成｣を押下します
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda1-1024x558.jpg)
 
 ｢コンテナイメージ｣を選択します。
 
-｢イメージの作成｣から先ほど作成したECRのURIをペーストします。
+｢イメージの作成｣から先ほど作成した ECR の URI をペーストします。
 
-その後、LambdaからS3にアップロードする権限を付与するために、IAMコンソールからIAMロールを作成します。
+その後、Lambda から S3 にアップロードする権限を付与するために、IAM コンソールから IAM ロールを作成します。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda2-736x1024.jpg)
 
@@ -292,7 +297,7 @@ AWSコンソールのLambdaのページに飛びます。左上の｢関数の�
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda5-728x1024.jpg)
 
-Lambdaのページに戻り、｢既存のロール｣に先ほど作成したロールを設定し、｢関数の作成｣を押下します。
+Lambda のページに戻り、｢既存のロール｣に先ほど作成したロールを設定し、｢関数の作成｣を押下します。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda6-1024x556.jpg)
 
@@ -300,31 +305,31 @@ Lambdaのページに戻り、｢既存のロール｣に先ほど作成した�
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda7-1024x556.jpg)
 
-設定タブから｢メモリ｣を512MB、｢タイムアウト｣を2分0秒に設定します
+設定タブから｢メモリ｣を 512MB、｢タイムアウト｣を 2 分 0 秒に設定します
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda8-1024x557.jpg)
 
 環境変数に以下を設定します。
 
-| キー | 値 |
-| --- | --- |
-| BUCKET\_NAME | 画像を保存するS3バケット名 |
-| ID | 楽天証券のID |
-| LINE\_CHANNEL\_ACCESS\_TOKEN | LINE Messaging APIのチャンネルアクセストークン |
-| PASS | 楽天証券のパスワード |
-| USER\_ID | LINEのユーザID（送信先のユーザID） |
+| キー                      | 値                                              |
+| ------------------------- | ----------------------------------------------- |
+| BUCKET_NAME               | 画像を保存する S3 バケット名                    |
+| ID                        | 楽天証券の ID                                   |
+| LINE_CHANNEL_ACCESS_TOKEN | LINE Messaging API のチャンネルアクセストークン |
+| PASS                      | 楽天証券のパスワード                            |
+| USER_ID                   | LINE のユーザ ID（送信先のユーザ ID）           |
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda9-1024x557.jpg)
 
-### LINE Messaging APIとS3バケット名の取得
+### LINE Messaging API と S3 バケット名の取得
 
-LINE Developersのページに行きます。[https://developers.line.biz/console/](https://developers.line.biz/console/)
+LINE Developers のページに行きます。[https://developers.line.biz/console/](https://developers.line.biz/console/)
 
 ｢プロバイダー｣から｢作成｣を選択します
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/LINE1-1024x563.jpg)
 
-｢プロバイダー名｣にscraping-rakutensec-test(任意の名前）を入力します。
+｢プロバイダー名｣に scraping-rakutensec-test(任意の名前）を入力します。
 
 ｢作成｣を押下します
 
@@ -340,21 +345,21 @@ LINE Developersのページに行きます。[https://developers.line.biz/consol
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/LINE4-444x1024.jpg)
 
-｢チャネルシークレット(環境変数のLINE\_CHANNEL\_ACCESS\_TOKEN)｣｢あなたのユーザID(環境変数のUSER\_ID)｣を確認し、Lambdaの環境変数に登録します。
+｢チャネルシークレット(環境変数の LINE_CHANNEL_ACCESS_TOKEN)｣｢あなたのユーザ ID(環境変数の USER_ID)｣を確認し、Lambda の環境変数に登録します。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/LINE5-1024x557.png)
 
-｢Messaging API設定｣のタブから｢QRコード｣を読み取り、LINE Botを友だち登録します。
+｢Messaging API 設定｣のタブから｢QR コード｣を読み取り、LINE Bot を友だち登録します。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/LINE6-2-1024x600.jpg)
 
-AWSコンソールから、S3のページに飛びます。
+AWS コンソールから、S3 のページに飛びます。
 
 ｢バケットを作成｣を押下します。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/S31-1024x528.jpg)
 
-｢バケット名｣に、名前を入力します。こちらが環境変数BUCKET\_NAMEになります。Lambdaの環境変数にこちらも登録します。
+｢バケット名｣に、名前を入力します。こちらが環境変数 BUCKET_NAME になります。Lambda の環境変数にこちらも登録します。
 
 ｢バケットを作成｣を押下します。
 
@@ -362,9 +367,9 @@ AWSコンソールから、S3のページに飛びます。
 
 以上で、手順は完了です。
 
-## Lambdaでテストを実行
+## Lambda でテストを実行
 
-LambdaでSeleniumのページに行き、｢テスト｣を実行するとLINEで画像が送られてきます。
+Lambda で Selenium のページに行き、｢テスト｣を実行すると LINE で画像が送られてきます。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda10-1024x590.jpg)
 

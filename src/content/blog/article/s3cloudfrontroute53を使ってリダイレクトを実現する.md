@@ -1,16 +1,18 @@
 ---
 title: "S3+CloudFront+Route53を使ってリダイレクトを実現する"
 date: 2024-03-08
-categories: 
+categories:
   - "技術"
+tags:
+  - "AWS"
 coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/スクリーンショット-2024-02-11-20.13.00.jpg"
 ---
 
 ## 何をしたいのか
 
-- Google AdSenseでドメイン（トップレベルドメイン）を登録したい。
+- Google AdSense でドメイン（トップレベルドメイン）を登録したい。
 
-- 上記を実現するために、blog.domain.comで運用しているサイトをdomain.comからリダイレクトされるようにしたい。
+- 上記を実現するために、blog.domain.com で運用しているサイトを domain.com からリダイレクトされるようにしたい。
 
 この方法を以下で解説していきます。
 
@@ -18,25 +20,25 @@ coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/
 
 **Amazon Route 53**
 
-AWSが提供するドメインネームシステム (DNS) サービスで、ドメイン名の登録、ドメイン名とIPアドレスの関連付け、ドメイン名の高可用性化など、DNSに関連する機能を提供します。また、自動リクエストをインターネット経由でウェブサーバーなどのリソースに送信して、そのリソースが到達可能、使用可能、機能中であることを確認します。
+AWS が提供するドメインネームシステム (DNS) サービスで、ドメイン名の登録、ドメイン名と IP アドレスの関連付け、ドメイン名の高可用性化など、DNS に関連する機能を提供します。また、自動リクエストをインターネット経由でウェブサーバーなどのリソースに送信して、そのリソースが到達可能、使用可能、機能中であることを確認します。
 
 **Amazon S3**
 
-「Amazon Simple Storage Service」の略称で、AWSのサービスの一つです。オブジェクトストレージサービスの一種であり、データ容量を気にすることなく保存することができます。オブジェクトのファイル単位での出し入れが可能なので、その場に応じて自由な使い道が想定され、より柔軟なデータ保存が実行できます。
+「Amazon Simple Storage Service」の略称で、AWS のサービスの一つです。オブジェクトストレージサービスの一種であり、データ容量を気にすることなく保存することができます。オブジェクトのファイル単位での出し入れが可能なので、その場に応じて自由な使い道が想定され、より柔軟なデータ保存が実行できます。
 
 **Amazon CloudFront**
 
-AWSが提供するグローバルなコンテンツ配信ネットワーク (CDN) サービスです。データやビデオ、アプリケーションといった静的/動的コンテンツを高速かつ安全に配信します。世界中にエッジサーバがあるため、あらゆる場所からのアクセスを改善することができます。また、CloudFrontは、コンテンツを最良の方法で供給できるエッジロケーションに各ユーザーリクエストをAWSバックボーンネットワーク経由でルーティングすることで、コンテンツの配信を高速化します。
+AWS が提供するグローバルなコンテンツ配信ネットワーク (CDN) サービスです。データやビデオ、アプリケーションといった静的/動的コンテンツを高速かつ安全に配信します。世界中にエッジサーバがあるため、あらゆる場所からのアクセスを改善することができます。また、CloudFront は、コンテンツを最良の方法で供給できるエッジロケーションに各ユーザーリクエストを AWS バックボーンネットワーク経由でルーティングすることで、コンテンツの配信を高速化します。
 
 これらのサービスは、ウェブサイトやウェブアプリケーションの運用において、高速なコンテンツ配信、大量のデータ保存、安定したドメイン管理といった重要な役割を果たします。それぞれが異なる機能を持ちながらも、一緒に使用することで相乗効果を発揮します。
 
-## S3の設定
+## S3 の設定
 
-サービスからS3を押下し、S3のバケットを作成します。
+サービスから S3 を押下し、S3 のバケットを作成します。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/01-1024x540-1.jpg)
 
-バケット名にトップレベルドメインを指定します。（Google Adsenceの設定にはトップレベルドメインしかできない）
+バケット名にトップレベルドメインを指定します。（Google Adsence の設定にはトップレベルドメインしかできない）
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/02-1-1024x804-1.jpg)
 
@@ -56,15 +58,15 @@ AWSが提供するグローバルなコンテンツ配信ネットワーク (CDN
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/06-1024x533-1.jpg)
 
-## CloudFrontの設定
+## CloudFront の設定
 
-CloudFrontのページに移動し、｢ディストリビューションを作成｣を押下します
+CloudFront のページに移動し、｢ディストリビューションを作成｣を押下します
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/07-1024x539-1.png)
 
-Origin domainから先程作成したバケットのエンドポイントを選択します。
+Origin domain から先程作成したバケットのエンドポイントを選択します。
 
-選択後、｢Webサイトのエンドポイントを使用｣のボタンが表示されるので押下します。
+選択後、｢Web サイトのエンドポイントを使用｣のボタンが表示されるので押下します。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/08-1024x733-1.jpg)
 
@@ -84,7 +86,7 @@ Origin domainから先程作成したバケットのエンドポイントを選�
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/12-1024x928-1.jpg)
 
-ACMのページにジャンプします。証明書タイプで、｢パブリック証明書をリクエスト｣を選択して、｢次へ｣を押下します。
+ACM のページにジャンプします。証明書タイプで、｢パブリック証明書をリクエスト｣を選択して、｢次へ｣を押下します。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/13-1024x391-1.png)
 
@@ -96,9 +98,9 @@ ACMのページにジャンプします。証明書タイプで、｢パブリ�
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/15-1024x500-1.jpg)
 
-CloudFrontのページに戻ります。
+CloudFront のページに戻ります。
 
-カスタムSSL証明書の｢証明書を選択｣を選択して、候補からトップレベルドメイン（リクエスト元ドメイン）を選択します。
+カスタム SSL 証明書の｢証明書を選択｣を選択して、候補からトップレベルドメイン（リクエスト元ドメイン）を選択します。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/16-1024x928-1.jpg)
 
@@ -106,9 +108,9 @@ CloudFrontのページに戻ります。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/17-1024x667-1.jpg)
 
-## Route53の設定
+## Route53 の設定
 
-Route53のページに移動します。ホストゾーンを選択します。
+Route53 のページに移動します。ホストゾーンを選択します。
 
 ![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/18-1024x500-1.jpg)
 

@@ -3,6 +3,9 @@ title: "Lambdaでハンドラーが認識されない"
 date: 2024-06-22
 categories: 
   - "技術"
+tags: 
+  - "技術"
+  - "Lambda"
 coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Arch_AWS-Lambda_64@5x.png"
 ---
 

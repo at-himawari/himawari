@@ -3,6 +3,9 @@ title: "Rails7でMicrosoft Entra IDを使ったログインを実装する"
 date: 2024-06-21
 categories: 
   - "技術"
+tags: 
+  - "Ruby on Rails7"
+  - "EntraID"
 coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Microsoft_Azure.svg_.png"
 ---
 

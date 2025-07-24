@@ -2,8 +2,13 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import ReactMarkdown from "react-markdown";
+import { usePageContext } from "vike-react/usePageContext";
+import type { PageContext } from "../../types/pageContext";
 
-export default function Page({ content }: { content: string }) {
+export default function Page() {
+  const pageContext = usePageContext() as { data: PageContext };
+  const content = pageContext.data?.content || "Loading...";
+
   return (
     <>
       <Header />
@@ -46,7 +51,9 @@ export default function Page({ content }: { content: string }) {
                 />
               ),
             }}
-          >{content}</ReactMarkdown>
+          >
+            {content}
+          </ReactMarkdown>
         </div>
       </section>
       <Footer />

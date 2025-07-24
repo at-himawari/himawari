@@ -7,11 +7,15 @@ import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import { FaXTwitter } from "react-icons/fa6";
 import  HatenaIcon from "../../../components/HatenaIcon";
-import { Post } from "./+data";
+import { PageContextPost } from "../../../types/pageContextPost";
+import { usePageContext } from "vike-react/usePageContext";
 
 
 // コンポーネント本体
-export default function Page({ post }: { post: Post }) {
+export default function Page() {
+  const pageContext = usePageContext() as { data: PageContextPost };
+  const post = pageContext.data?.post || "読み込み中...";
+  
   if (!post) return <div>記事が見つかりません</div>;
   const postUrl = typeof window !== "undefined" ? window.location.href : "";
   const { title, date, tags, coverImage, content } = post;

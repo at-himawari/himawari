@@ -3,16 +3,12 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import ReactMarkdown from "react-markdown";
+import { usePageContext } from "vike-react/usePageContext";
+import { PageContext } from "../../types/pageContext";
 
 const PrivacyPolicy: React.FC = () => {
-  const [content, setContent] = useState<string>("");
-
-  useEffect(() => {
-    fetch("/content/privacy-policy.md")
-      .then((res) => res.text())
-      .then((text) => setContent(text));
-  }, []);
-
+  const pageContext = usePageContext() as { data: PageContext };
+  const content = pageContext.data?.content || "Loading...";
   return (
     <>
       <Header />

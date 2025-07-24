@@ -8,10 +8,9 @@ export interface NewsItem {
 }
 
 const NewsSection: React.FC = () => {
-  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
+  const newsItems: NewsItem[] = newsData.newsItems || [];
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
-  setNewsItems(newsData.newsItems || []);
 
   if (!newsItems || newsItems.length === 0) {
     return (

@@ -5,5 +5,6 @@ export default {
   Layout: Layout,
   lang: "ja",
   extends: vikeReact,
-  prerender: true
+  prerender: true,
+  passToClient: ["content"],
 };

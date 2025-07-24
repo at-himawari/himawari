@@ -1,8 +1,12 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import type { PostInfo } from "./+data";
+import { usePageContext } from "vike-react/usePageContext";
+import { PageContextPost } from "../../types/pageContextPosts";
 
-export default function Page({ posts }: { posts: PostInfo[] }) {
+export default function Page() {
+  const pageContext = usePageContext() as { data: PageContextPost };
+  const posts = pageContext.data.posts;
+
   // postsがない場合の表示を追加
   if (!posts) {
     return (
@@ -20,9 +24,12 @@ export default function Page({ posts }: { posts: PostInfo[] }) {
     <>
       <Header />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-12 text-center text-gray-800">
+        <h1 className="text-4xl font-bold mb-12 text-left text-gray-800">
           ブログ
         </h1>
+        <h2 className="text-2xl font-bold mb-12 text-left text-gray-800">
+          Blog
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post) => (
             <a

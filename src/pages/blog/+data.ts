@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import postsData from "../../content/blog/posts.json";
-import type { Post } from "./@slug/+data";
+import { Post } from "../../types/Post";
+
 
 export type PostInfo = Omit<Post, "content">;
 

@@ -10,8 +10,8 @@
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true, // <-- JSもd.tsも、一切ファイルを出力しない設定
-    "jsx": "react-jsx",
+    "noEmit": true, 
+    "jsx": "preserve",
 
     /* Linting */
     "strict": true,

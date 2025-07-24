@@ -9,7 +9,6 @@ export function data() {
 
   // gray-matterでファイル内容をパースし、本文(content)とフロントマター(data)を分離します
   const { content } = matter(fileRawContent);
-  console.log(content);
   return {
     content,
   };

@@ -6,23 +6,53 @@ import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import { FaXTwitter } from "react-icons/fa6";
-import  HatenaIcon from "../../../components/HatenaIcon";
+import HatenaIcon from "../../../components/HatenaIcon";
 import { PageContextPost } from "../../../types/pageContextPost";
 import { usePageContext } from "vike-react/usePageContext";
 import { markdownComponents } from "../../../components/MarkdownComponents";
-
+import { Head } from "vike-react/Head";
+import { useEffect, useState } from "react";
 
 // コンポーネント本体
 export default function Page() {
-  const pageContext = usePageContext() as { data: PageContextPost };
+  const pageContext = usePageContext() as {
+    data: PageContextPost;
+    urlOriginal: string;
+  };
+  // サーバーサイドではpageContextから、クライアントサイドではwindow.locationからURLを取得
+  const [postUrl, setPostUrl] = useState(
+    `https://at-himawari.com${pageContext.urlOriginal}`
+  );
+  useEffect(() => {
+    setPostUrl(window.location.href);
+  }, []);
+
   const post = pageContext.data?.post || "読み込み中...";
-  
+
   if (!post) return <div>記事が見つかりません</div>;
-  const postUrl = typeof window !== "undefined" ? window.location.href : "";
+
   const { title, date, tags, coverImage, content } = post;
+
+  // 記事の冒頭120文字を説明文として抽出
+  const description = content.substring(0, 120).replace(/\n/g, " ") + "...";
 
   return (
     <>
+      <Head>
+        <meta name="description" content={description} />
+        {/* OGP Tags */}
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={coverImage} />
+        <meta property="og:url" content={postUrl} />
+        <meta property="og:type" content="article" />
+        {/* Twitter Card Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={coverImage} />
+        <meta name="twitter:site" content="@at_himawari" />
+      </Head>
       <Header />
       <main className="bg-gray-50 py-8">
         <div className="container mx-auto px-4 relative">
@@ -67,13 +97,14 @@ export default function Page() {
 
 // シェアボタンのコンポーネント
 function ShareButtons({ postUrl, title }: { postUrl: string; title: string }) {
+  console.log(postUrl);
   return (
     <div className="absolute top-32 -left-4 hidden lg:block">
       <div className="sticky top-32 flex flex-col items-center space-y-4">
         <a
-          href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
-            postUrl
-          )}&text=${encodeURIComponent(title)}`}
+          href={`https://twitter.com/intent/tweet?url=${postUrl}&text=${encodeURIComponent(
+            title
+          )}`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-500 hover:text-blue-500 transition-colors p-2 rounded-full bg-white shadow"
@@ -103,4 +134,3 @@ function Tag({ tag }: { tag: string }) {
     </span>
   );
 }
-

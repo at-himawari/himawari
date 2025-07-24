@@ -1,3 +1,5 @@
-export default function title(pageContext: { data?: { title: string } }) {
-  return pageContext?.data?.title || "Blog Post";
+import { PageContextPost } from "../../../types/pageContextPost";
+
+export default function title(pageContext: { data: PageContextPost }) {
+  return pageContext?.data?.post?.title || "Blog Post";
 }

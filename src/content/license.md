@@ -2,9 +2,10 @@
 
 ## License
 
-* 1. 当サイトのライセンス Himawari Project(以下、当プロジェクト）では、当プロジェクトのウェブサイト（サブドメインを含むat-himawari.comドメイン配下のウェブサイト。以下特に記載がない限り同じです。以下「当ウェブサイト」といいます。）において提供するサービスでは Creative Commons CC BY-SA 4.0が適用されます。 詳しくは、Creative Commonsのリーガル･コードをご覧ください。
-     <https://creativecommons.org/licenses/by-sa/4.0/legalcode.ja>
-  2. ソースコードのライセンス GitHubの各リポジトリLICENSEファイルをご覧ください。LICENSEファイルがない場合は、MITライセンスに従います。
+1. 当サイトのライセンス Himawari Project(以下、当プロジェクト）では、当プロジェクトのウェブサイト（サブドメインを含む at-himawari.com ドメイン配下のウェブサイト。(以下特に記載がない限り同じです。)以下「当ウェブサイト」といいます。）において提供するサービスでは Creative Commons CC BY-SA 4.0 が適用されます。 詳しくは、Creative Commons のリーガル･コードをご覧ください。
+   <https://creativecommons.org/licenses/by-sa/4.0/legalcode.ja>
+
+2. ソースコードのライセンス GitHub の各リポジトリ LICENSE ファイルをご覧ください。LICENSE ファイルがない場合は、MIT ライセンスに従います。
 
 > MIT License
 >

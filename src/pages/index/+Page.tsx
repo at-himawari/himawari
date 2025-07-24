@@ -61,7 +61,7 @@ export default function Page() {
       <section id="profile" className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-bold text-gray-800">プロフィール</h3>
-          <div className="mt-6 flex items-center">
+          <div className="mt-6 flex items-start">
             <img
               src="/avatar.jpg"
               alt="Avatar"
@@ -74,7 +74,16 @@ export default function Page() {
                 <FaXTwitter className="mr-2" /> @at_himawari
               </p>
               <p className="mt-2 text-gray-600">
-                北海道出身のITコンサルタント。2022年某総合大学卒。クラウドを得意とし基板設計や開発環境整備等の職務に従事してきた。
+                2022年理工学部情報系学科卒。新卒でITコンサルティング会社に入社する。
+              </p>
+              <p className="mt-2 text-gray-600">
+                VueやReactなどのフロントエンド技術の他に、PythonやJavaなどのバックエンド技術も扱う。
+              </p>
+              <p className="mt-2 text-gray-600">
+                本プロジェクトでは、AWS,GCP,Azure,などを使ったプロダクトやVikeとさくらのインターネットを使ったホームページの開発を行っている。
+              </p>
+              <p className="mt-2 text-gray-600">
+                サカナクションと同じ北海道出身で、NF会員。
               </p>
             </div>
           </div>

@@ -2,12 +2,40 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { usePageContext } from "vike-react/usePageContext";
 import { PageContextPost } from "../../types/pageContextPosts";
+import { useState, useMemo } from "react";
 
 export default function Page() {
   const pageContext = usePageContext() as { data: PageContextPost };
+  // `posts` は content を含むようになる
   const posts = pageContext.data.posts;
 
-  // postsがない場合の表示を追加
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const categories = useMemo(() => {
+    if (!posts) return [];
+    const allCategories = posts.flatMap(post => post.categories || []);
+    return [...new Set(allCategories)];
+  }, [posts]);
+
+  const filteredPosts = useMemo(() => {
+    if (!posts) return [];
+    
+    // 検索キーワードを小文字に変換
+    const lowercasedQuery = searchQuery.toLowerCase();
+
+    return posts.filter(post => {
+      // タイトルと本文(content)の両方を検索対象にする
+      const matchesSearch =
+        post.title.toLowerCase().includes(lowercasedQuery) ||
+        post.content.toLowerCase().includes(lowercasedQuery);
+
+      const matchesCategory = selectedCategory ? post.categories?.includes(selectedCategory) : true;
+      
+      return matchesSearch && matchesCategory;
+    });
+  }, [posts, searchQuery, selectedCategory]);
+
   if (!posts) {
     return (
       <>
@@ -27,11 +55,45 @@ export default function Page() {
         <h1 className="text-4xl font-bold text-left text-orange-600 title-ja">
           ブログ
         </h1>
-        <h2 className="text-2xl font-bold mb-12 text-left text-gray-800 section-h2">
+        <h2 className="text-2xl font-bold mb-8 text-left text-gray-800 section-h2">
           Blog
         </h2>
+
+        {/* 検索フォームとカテゴリフィルター */}
+        <div className="mb-2 flex flex-col md:flex-row gap-4">
+          <input
+            type="text"
+            placeholder="記事を検索..."
+            className="border p-2 rounded-md w-full md:w-1/2"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          
+        </div>
+        <div className="flex flex-wrap gap-2 mb-8">
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className={`py-1 px-3 rounded-full text-sm ${
+                selectedCategory === null ? "bg-orange-500 text-white" : "bg-gray-200 text-gray-700"
+              }`}
+            >
+              すべて
+            </button>
+            {categories.map(category => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`py-1 px-3 rounded-full text-sm ${
+                  selectedCategory === category ? "bg-orange-500 text-white" : "bg-gray-200 text-gray-700"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post) => (
+          {filteredPosts.map((post) => (
             <a
               key={post.slug}
               href={`/blog/${post.slug}`}

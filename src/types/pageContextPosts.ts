@@ -1,7 +1,8 @@
 // types/pageContext.ts
 
 import { JSX } from "react";
-import { PostInfo } from "./PostInfo";
+import { Post } from "./Post";
+
 
 // types/pageContext.ts
 
@@ -16,7 +17,7 @@ export type PageContextPost = {
         description?: string;
       };
     };
-    posts: PostInfo[];
+    posts: Post[];
     // 明示的にクライアント用であることを示す
     isClientSide: true;
   };

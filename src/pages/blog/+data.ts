@@ -3,10 +3,8 @@ import postsData from "../../content/blog/posts.json";
 import { Post } from "../../types/Post";
 
 
-export type PostInfo = Omit<Post, "content">;
-
 export function data() {
-  const posts: PostInfo[] = postsData.map(({ content, ...rest }) => rest);
+  const posts: Post[] = postsData;
   return {
     posts,
   };

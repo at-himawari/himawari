@@ -83,7 +83,7 @@ export default function Page() {
                 本プロジェクトでは、AWS,GCP,Azure,などを使ったプロダクトやVikeとさくらのインターネットを使ったホームページの開発を行っている。
               </p>
               <p className="mt-2 text-gray-600">
-                サカナクションと同じ北海道出身で、NF会員。
+                サカナクションと同じ北海道出身で、NF Member。
               </p>
             </div>
           </div>

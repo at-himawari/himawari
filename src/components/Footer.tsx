@@ -100,7 +100,7 @@ const Footer: React.FC = () => {
           className="hover:text-gray-400"
           aria-label="Qiita"
         >
-          <img src="/qiita-icon.png" width="25px" height="25px" />
+          <img src="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/qiita-icon.png" width="25px" height="25px" />
         </a>
       </div>
       <div className="mt-8 text-center text-sm text-gray-400">

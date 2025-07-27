@@ -7,7 +7,7 @@ const Header: React.FC = () => {
         <div className="container mx-auto flex justify-between items-center py-4 px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
             <img
-              src="/himawari.png"
+              src="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/himawari.png"
               alt="Himawari Project Logo"
               className="h-8 mr-3"
               loading="lazy"

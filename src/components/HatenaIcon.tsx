@@ -1,9 +1,10 @@
 import React from "react";
-import HatenaImage from "../../public/hatenabookmark_symbolmark.png";
 // SVGアイコンのプロパティの型を定義
 interface IconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   size?: string | number;
 }
+
+const HatenaImage = "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/hatenabookmark_symbolmark.png"
 
 const HatenaIcon: React.FC<IconProps> = ({ size = 24, ...props }) => (
   <img

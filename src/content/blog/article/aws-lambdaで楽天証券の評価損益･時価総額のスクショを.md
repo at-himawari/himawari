@@ -7,14 +7,14 @@ tags:
   - "プログラミング"
   - "AWS"
   - "Lambda"
-coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/スクリーンショット-2024-06-29-17.07.48.png"
+coverImage: "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/スクリーンショット-2024-06-29-17.07.48.png"
 ---
 
 ## 概要
 
 今回は、AWS Lambda を利用して楽天証券の Web ページから時価総額と評価損益のスクショを撮り、LINE で送信する方法を紹介します。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/スクリーンショット-2024-06-23-16.53.47-1024x720.png)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/スクリーンショット-2024-06-23-16.53.47-1024x720.png)
 
 ## 前提
 
@@ -46,15 +46,15 @@ Selenium の利用には、Chrome のバイナリが必要になりますが、A
 
 まずは、AWS コンソールの ECR のページに飛びリポジトリの作成を押下します
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/ECR1-1024x557.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/ECR1-1024x557.jpg)
 
 リポジトリ名に任意の名前（今回は selenium)を入力し｢リポジトリを作成｣を押下します
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/ECR2-1-572x1024.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/ECR2-1-572x1024.jpg)
 
 以下のような画面になれば成功です。ここで表示されている URI は以降使用するのでメモをしておいてください。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/ECR3-1024x557.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/ECR3-1024x557.jpg)
 
 ## Docker イメージの push
 
@@ -269,13 +269,13 @@ $ docker push 123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/selenium:latest
 
 push が完了すると、ECR リポジトリ内に latest タグの付いたイメージが追加されていることが確認できます。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/ECR4-1024x558.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/ECR4-1024x558.jpg)
 
 ## Lambda 関数の作成
 
 AWS コンソールの Lambda のページに飛びます。左上の｢関数の作成｣を押下します
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda1-1024x558.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/Lambda1-1024x558.jpg)
 
 ｢コンテナイメージ｣を選択します。
 
@@ -283,31 +283,31 @@ AWS コンソールの Lambda のページに飛びます。左上の｢関数�
 
 その後、Lambda から S3 にアップロードする権限を付与するために、IAM コンソールから IAM ロールを作成します。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda2-736x1024.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/Lambda2-736x1024.jpg)
 
 ｢サービスまたはユースケース｣で、｢Lambda｣し、｢次へ｣を選択します。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda3-1024x1017.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/Lambda3-1024x1017.jpg)
 
 ｢AmazonS3FullAccess｣を許可ポリシーに追加し、｢次へ｣を選択します。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda4-1024x554.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/Lambda4-1024x554.jpg)
 
 ロール名に、role-selenium-lambda(任意の名前）を入力し、｢ロールの作成｣を押下します。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda5-728x1024.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/Lambda5-728x1024.jpg)
 
 Lambda のページに戻り、｢既存のロール｣に先ほど作成したロールを設定し、｢関数の作成｣を押下します。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda6-1024x556.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/Lambda6-1024x556.jpg)
 
 関数の作成が完了すると｢正常に作成しました｣と表示されます。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda7-1024x556.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/Lambda7-1024x556.jpg)
 
 設定タブから｢メモリ｣を 512MB、｢タイムアウト｣を 2 分 0 秒に設定します
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda8-1024x557.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/Lambda8-1024x557.jpg)
 
 環境変数に以下を設定します。
 
@@ -319,7 +319,7 @@ Lambda のページに戻り、｢既存のロール｣に先ほど作成した�
 | PASS                      | 楽天証券のパスワード                            |
 | USER_ID                   | LINE のユーザ ID（送信先のユーザ ID）           |
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda9-1024x557.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/Lambda9-1024x557.jpg)
 
 ### LINE Messaging API と S3 バケット名の取得
 
@@ -327,43 +327,43 @@ LINE Developers のページに行きます。[https://developers.line.biz/conso
 
 ｢プロバイダー｣から｢作成｣を選択します
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/LINE1-1024x563.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/LINE1-1024x563.jpg)
 
 ｢プロバイダー名｣に scraping-rakutensec-test(任意の名前）を入力します。
 
 ｢作成｣を押下します
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/LINE2-1024x556.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/LINE2-1024x556.jpg)
 
 ｢Messaging API｣を選択します。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/LINE3-1024x558.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/LINE3-1024x558.jpg)
 
 チャネル名、チャネル説明、大業種、小業種、メールアドレスを入力します。
 
 ｢作成｣を押下します。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/LINE4-444x1024.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/LINE4-444x1024.jpg)
 
 ｢チャネルシークレット(環境変数の LINE_CHANNEL_ACCESS_TOKEN)｣｢あなたのユーザ ID(環境変数の USER_ID)｣を確認し、Lambda の環境変数に登録します。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/LINE5-1024x557.png)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/LINE5-1024x557.png)
 
 ｢Messaging API 設定｣のタブから｢QR コード｣を読み取り、LINE Bot を友だち登録します。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/LINE6-2-1024x600.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/LINE6-2-1024x600.jpg)
 
 AWS コンソールから、S3 のページに飛びます。
 
 ｢バケットを作成｣を押下します。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/S31-1024x528.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/S31-1024x528.jpg)
 
 ｢バケット名｣に、名前を入力します。こちらが環境変数 BUCKET_NAME になります。Lambda の環境変数にこちらも登録します。
 
 ｢バケットを作成｣を押下します。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/S32-1-396x1024.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/S32-1-396x1024.jpg)
 
 以上で、手順は完了です。
 
@@ -371,6 +371,6 @@ AWS コンソールから、S3 のページに飛びます。
 
 Lambda で Selenium のページに行き、｢テスト｣を実行すると LINE で画像が送られてきます。
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/Lambda10-1024x590.jpg)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/Lambda10-1024x590.jpg)
 
-![](https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/スクリーンショット-2024-06-29-17.09.02.png)
+![](https://dq7c5b6uxkdk2.cloudfront.net/posts/images/スクリーンショット-2024-06-29-17.09.02.png)

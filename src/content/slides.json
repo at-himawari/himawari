@@ -3,19 +3,19 @@
     {
       "title": "ソフトウェア開発",
       "text": "自社パッケージ導入・新規システム開発",
-      "image": "/software_img.jpg",
+      "image": "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/software_img.jpg",
       "link": "/software"
     },
     {
       "title": "映像制作",
       "text": "YouTube用動画編集/イベント動画制作",
-      "image": "/video_img.jpg",
+      "image": "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/video_img.jpg",
       "link": "/video"
     },
     {
       "title": "ブログ",
       "text": "技術ブログや旅ブログなど自由気ままに書いています",
-      "image": "/blog_image.jpg",
+      "image": "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/blog_image.jpg",
       "link": "/blog"
     }
   ]

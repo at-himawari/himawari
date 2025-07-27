@@ -63,7 +63,7 @@ export default function Page() {
           <h3 className="text-2xl font-bold text-gray-800">プロフィール</h3>
           <div className="mt-6 flex items-start">
             <img
-              src="/avatar.jpg"
+              src="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg"
               alt="Avatar"
               className="h-16 w-16 rounded-full mr-4"
               loading="lazy"

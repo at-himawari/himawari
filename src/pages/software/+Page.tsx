@@ -14,11 +14,9 @@ const VideoProduction: React.FC = () => (
           Projectでは「オープンな開発」を理念に掲げています。これは、オープンソースであることはもちろん、開発の過程や成果物を透明にし、誰でも参加できる環境を提供することを意味します。
           原則として、開発に使用するソフトウェアはオープンソースであり、GitHubなどのプラットフォームを通じてコードを公開しています。また、開発の進捗や課題も定期的に共有し、コミュニティからのフィードバックを受け入れています。
           しかし、秘匿性の高いアプリケーションを取り扱う場合は、セキュリティやプライバシーの観点から、必要に応じて非公開のリポジトリを使用することもあります。
-          
-
         </p>
         <img
-          src="/software_opensource_and_engineerfirst.png"
+          src="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/software_opensource_and_engineerfirst.png"
           alt="オープンソース＆エンジニアファースト"
           className="mt-8 w-full h-auto rounded-lg mb-2"
         />
@@ -33,7 +31,7 @@ const VideoProduction: React.FC = () => (
           当プロジェクトで作成したアーキテクチャの一例を示します。為替リスクは当プロジェクトでは負担いたしません。
         </p>
         <img
-          src="/architecture.png"
+          src="/https://dq7c5b6uxkdk2.cloudfront.net/posts/images/architecture.png"
           alt="アーキテクチャ"
           className="mt-8 w-full h-auto rounded-lg shadow-lg mb-2"
         />

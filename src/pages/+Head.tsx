@@ -1,6 +1,5 @@
 export function Head() {
-  const siteUrl = "https://at-himawari.com";
-  const imageUrl = `${siteUrl}/avatar.jpg`;
+  const imageUrl = `https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg`;
 
   return (
     <>

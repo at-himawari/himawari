@@ -101,7 +101,7 @@ export default function Page() {
             >
               <div className="h-48 overflow-hidden">
                 <img
-                  src={post.coverImage || "/himawari.png"}
+                  src={post.coverImage || "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/himawari.png"}
                   alt={post.title}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />

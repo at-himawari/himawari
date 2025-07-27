@@ -1,7 +1,7 @@
 ---
 title: "自己紹介"
 date: 2024-03-07
-coverImage: "https://himawari-blog-bucket.s3.ap-northeast-1.amazonaws.com/posts/images/スクリーンショット-2024-01-15-20.11.35.png"
+coverImage: "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/スクリーンショット-2024-01-15-20.11.35.png"
 ---
 
 Himawari Project の羽ばたくエンジニアと申します！

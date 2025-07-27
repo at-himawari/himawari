@@ -1,6 +1,5 @@
 import vikeReact from "vike-react/config";
 import { Layout } from "./Layout";
-import favicon from "../../public/himawari.png";
 
 export default {
   Layout: Layout,
@@ -8,5 +7,5 @@ export default {
   extends: vikeReact,
   prerender: true,
   passToClient: ["content"],
-  favicon,
+  favicon:"https://dq7c5b6uxkdk2.cloudfront.net/posts/images/himawari.png",
 };

@@ -4,9 +4,11 @@ backend:
   branch: main
   base_url: https://himawari-cms-oauth.netlify.app # ← NetlifyのURL
   auth_endpoint: .netlify/functions/auth
+  squash_merges: true
 
 media_folder: ""
 public_folder: ""
+publish_mode: editorial_workflow
 
 media_library:
   name: s3_signed
@@ -53,7 +55,7 @@ collections:
                   { label: "Link", name: "link", widget: "string" },
                 ],
             }
-            
+
   - name: "blog"
     label: "ブログ"
     folder: "src/content/blog/article"
@@ -62,9 +64,19 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Categories", name: "categories", widget: "list", required: false }
+      - {
+          label: "Categories",
+          name: "categories",
+          widget: "list",
+          required: false,
+        }
       - { label: "Tags", name: "tags", widget: "list", required: false }
-      - { label: "Cover Image", name: "coverImage", widget: "image", required: false }
+      - {
+          label: "Cover Image",
+          name: "coverImage",
+          widget: "image",
+          required: false,
+        }
       - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "news"

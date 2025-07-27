@@ -3,37 +3,44 @@
     {
       "title": "Webページリリース",
       "date": "2025.1.26",
-      "content": "プロダクト欄に、｢Youtube｣を追加しました。"
+      "content": "プロダクト欄に、｢Youtube｣を追加しました。",
+      "link": "/youtube"
     },
     {
       "title": "YouTube",
       "date": "2025.1.18",
-      "content": "北海道大学総合博物館探索してきました。https://youtu.be/BcSbeY-UHYY?si=40hMQSsTRoOIupgX"
+      "content": "北海道大学総合博物館探索してきました。",
+      "link": "https://youtu.be/BcSbeY-UHYY?si=40hMQSsTRoOIupgX"
     },
     {
       "title": "お知らせ",
       "date": "2025.1.11",
-      "content": "当サイトのソースコードを公開しました。https://github.com/at-himawari/himawari"
+      "content": "当サイトのソースコードを公開しました。",
+      "link": "https://github.com/at-himawari/himawari"
     },
     {
       "title": "Webページリリース",
       "date": "2024.12.15",
-      "content": "当Webサイトをオープンしました！"
+      "content": "当Webサイトをオープンしました！",
+      "link": "/"
     },
     {
       "title": "お知らせ",
       "date": "2024.10.20",
-      "content": "議事録メーカーを開発しました。当プロジェクトとしてリリースする予定は未定ですが、導入支援は承ります。"
+      "content": "議事録メーカーを開発しました。当プロジェクトとしてリリースする予定は未定ですが、導入支援は承ります。",
+      "link": "https://github.com/at-himawari/gijiroku-maker"
     },
     {
       "title": "お知らせ",
       "date": "2024.10.20",
-      "content": "Xにて公式マークを取得しました。"
+      "content": "Xにて公式マークを取得しました。",
+      "link": "https://x.com/at_himawari"
     },
     {
       "title": "お知らせ",
       "date": "2024.10.20",
-      "content": "AI面接コーチをリリースしました。"
+      "content": "AI面接コーチをリリースしました。",
+      "link": "https://aimensetsu.pages.dev/"
     },
     {
       "title": "お知らせ",

@@ -5,11 +5,12 @@ export interface NewsItem {
   title: string;
   date: string;
   content: string;
+  link?: string;
 }
 
 const NewsSection: React.FC = () => {
   const newsItems: NewsItem[] = newsData.newsItems || [];
-  const itemsPerPage = 3;
+  const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
 
   if (!newsItems || newsItems.length === 0) {
@@ -37,13 +38,28 @@ const NewsSection: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h3 className="text-2xl font-bold text-gray-800">ニュース</h3>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayedItems.map((item: NewsItem, index: number) => (
-            <div key={index} className="bg-white shadow rounded-lg p-6">
-              <p className="text-orange-500 font-bold">{item.title}</p>
-              <p className="text-gray-700 mt-2">{item.date}</p>
-              <p className="mt-4 text-gray-600">{item.content}</p>
-            </div>
-          ))}
+          {displayedItems.map((item: NewsItem, index: number) => {
+            const cardContent = (
+              <>
+                <p className="text-orange-500 font-bold">{item.title}</p>
+                <p className="text-gray-700 mt-2">{item.date}</p>
+                <div
+                  className="mt-4 text-gray-600"
+                  dangerouslySetInnerHTML={{ __html: item.content }}
+                />
+              </>
+            );
+
+            if (item.link) {
+              return (
+                <a key={index} href={item.link} target="_blank" rel="noopener noreferrer" className="block bg-white shadow-md rounded-lg p-6 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                  {cardContent}
+                </a>
+              );
+            }
+
+            return <div key={index} className="bg-white shadow rounded-lg p-6">{cardContent}</div>;
+          })}
         </div>
 
         {/* ページネーションコントロール */}

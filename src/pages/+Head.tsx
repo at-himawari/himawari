@@ -6,7 +6,7 @@ export function Head() {
       <meta property="og:image" content={imageUrl} />
       <meta property="og:type" content="article" />
       {/* Twitter Card Tags */}
-      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:card" content="summary" />
       <meta name="twitter:title" content="Himawari Project" />
       <meta name="twitter:description" content="のんびり仕事する" />
       <meta name="twitter:image" content={imageUrl} />

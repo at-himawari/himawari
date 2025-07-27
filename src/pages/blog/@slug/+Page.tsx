@@ -35,6 +35,8 @@ export default function Page() {
 
   // 記事の冒頭120文字を説明文として抽出
   const description = content.substring(0, 120).replace(/\n/g, " ") + "...";
+  const ogImageUrl =
+    coverImage || "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg";
 
   return (
     <>
@@ -43,15 +45,12 @@ export default function Page() {
         {/* OGP Tags */}
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={coverImage} />
+        <meta property="og:image" content={ogImageUrl} />
         <meta property="og:url" content={postUrl} />
-        <meta property="og:type" content="article" />
         {/* Twitter Card Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={coverImage} />
-        <meta name="twitter:site" content="@at_himawari" />
+        <meta name="twitter:image" content={ogImageUrl} />
       </Head>
       <Header />
       <main className="bg-gray-50 py-8">

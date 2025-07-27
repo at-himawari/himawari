@@ -31,7 +31,7 @@ const VideoProduction: React.FC = () => (
           当プロジェクトで作成したアーキテクチャの一例を示します。為替リスクは当プロジェクトでは負担いたしません。
         </p>
         <img
-          src="/https://dq7c5b6uxkdk2.cloudfront.net/posts/images/architecture.png"
+          src="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/architecture.png"
           alt="アーキテクチャ"
           className="mt-8 w-full h-auto rounded-lg shadow-lg mb-2"
         />

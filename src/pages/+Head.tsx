@@ -3,6 +3,11 @@ export function Head() {
 
   return (
     <>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6651283997191475"
+        crossOrigin="anonymous"
+      ></script>
       <meta property="og:image" content={imageUrl} />
       <meta property="og:type" content="article" />
       {/* Twitter Card Tags */}

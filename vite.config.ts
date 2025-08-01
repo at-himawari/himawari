@@ -4,11 +4,13 @@ import vike from 'vike/plugin';
 import tailwindcss from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
 import path from 'path';
+import mdx from '@mdx-js/rollup'
 
 export default defineConfig({
   plugins: [
     react(),
-    vike()
+    vike(),
+    mdx(),
   ],
   css: {
     postcss: {

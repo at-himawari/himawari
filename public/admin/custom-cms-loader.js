@@ -1,5 +1,3 @@
-// public/admin/s3-media-library.js
-
 /**
  * 署名付きURLを利用してS3と連携するDecap CMSメディアライブラリ
  * Cloudinary Media Libraryの構成を参考にしています。

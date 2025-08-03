@@ -20,7 +20,7 @@ const VideoProduction: React.FC = () => (
         <h2 className="text-2xl font-bold text-orange-500">費用</h2>
         <p className="text-gray-600 text-lg mt-2">Cost</p>
         <img
-          src="/video_img.jpg"
+          src="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/video_img.jpg"
           alt="動画制作の例"
           className="mt-8 w-full h-auto rounded-lg shadow-lg mb-2"
         />

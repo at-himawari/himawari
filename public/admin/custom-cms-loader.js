@@ -154,10 +154,11 @@ async function init({ options = {}, handleInsert } = {}) {
    */
   const updateSidebar = () => {
     if (selectedFile) {
+      const fileName = selectedFile.key || selectedFile.url.split('/').pop();
       sidebarContent.innerHTML = `
         <h3 style="margin-top:0; margin-bottom: 15px; font-size: 1rem;">File Details</h3>
         <img src="${selectedFile.url}" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border: 1px solid #eee; margin-bottom: 15px;">
-        <p style="margin: 5px 0; font-size: 0.9rem; word-break: break-all;"><strong>Name:</strong> ${selectedFile.key}</p>
+        <p style="margin: 5px 0; font-size: 0.9rem; word-break: break-all;"><strong>Name:</strong> ${fileName}</p>
         <p style="margin: 5px 0; font-size: 0.9rem;"><strong>URL:</strong> <input type="text" value="${selectedFile.url}" readonly style="width: 100%; padding: 5px; border: 1px solid #ccc; font-size: 0.8rem;"></p>
       `;
       insertButton.disabled = false;

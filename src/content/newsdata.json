@@ -2,6 +2,12 @@
   "newsItems": [
     {
       "title": "Webページリリース",
+      "date": "2025.8.18",
+      "content": "ルビ財団様より提供されているルブフルボタンを導入しました。詳細はこのボードをクリックしてください。",
+      "link": "https://rubizaidan.jp/rubyful-button/"
+    },
+    {
+      "title": "Webページリリース",
       "date": "2025.1.26",
       "content": "プロダクト欄に、｢Youtube｣を追加しました。",
       "link": "/youtube"

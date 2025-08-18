@@ -16,6 +16,23 @@ export function Head() {
       <meta name="twitter:description" content="のんびり仕事する" />
       <meta name="twitter:image" content={imageUrl} />
       <meta name="twitter:site" content="@at_himawari" />
+      {/* RubyfulV2ライブラリの読み込み */}
+      <script src="https://rubyful-v2.s3.ap-northeast-1.amazonaws.com/v2/rubyful.js?t=20250507022654"></script>
+      {/* RubyfulV2の初期化スクリプト */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.addEventListener('load', () => {
+              if (typeof RubyfulV2 !== 'undefined') {
+                RubyfulV2.init({
+                  selector: 'p, li',
+                  defaultDisplay: true
+                });
+              }
+            });
+          `,
+        }}
+      />
     </>
   );
 }

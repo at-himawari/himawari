@@ -43,22 +43,31 @@ const NewsSection: React.FC = () => {
               <>
                 <p className="text-orange-500 font-bold">{item.title}</p>
                 <p className="text-gray-700 mt-2">{item.date}</p>
-                <div
-                  className="mt-4 text-gray-600"
-                  dangerouslySetInnerHTML={{ __html: item.content }}
-                />
+                <div className="mt-4 text-gray-600">
+                  <p>{item.content}</p>
+                </div>
               </>
             );
 
             if (item.link) {
               return (
-                <a key={index} href={item.link} target="_blank" rel="noopener noreferrer" className="block bg-white shadow-md rounded-lg p-6 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                <a
+                  key={index}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-white shadow-md rounded-lg p-6 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+                >
                   {cardContent}
                 </a>
               );
             }
 
-            return <div key={index} className="bg-white shadow rounded-lg p-6">{cardContent}</div>;
+            return (
+              <div key={index} className="bg-white shadow rounded-lg p-6">
+                {cardContent}
+              </div>
+            );
           })}
         </div>
 

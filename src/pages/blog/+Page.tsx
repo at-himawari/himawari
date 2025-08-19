@@ -2,7 +2,8 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { usePageContext } from "vike-react/usePageContext";
 import { PageContextPost } from "../../types/pageContextPosts";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { Post } from "../../types/Post";
 
 export default function Page() {
   const pageContext = usePageContext() as { data: PageContextPost };
@@ -11,6 +12,13 @@ export default function Page() {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [allPosts, setAllPosts] = useState<Post[] | null>(null);
+
+  useEffect(() => {
+    import("../../content/blog/posts.json").then((module) => {
+      setAllPosts(module.default);
+    });
+  }, []);
 
   const categories = useMemo(() => {
     if (!posts) return [];
@@ -19,22 +27,23 @@ export default function Page() {
   }, [posts]);
 
   const filteredPosts = useMemo(() => {
+    const searchablePosts = allPosts || posts;
     if (!posts) return [];
     
     // 検索キーワードを小文字に変換
     const lowercasedQuery = searchQuery.toLowerCase();
 
-    return posts.filter(post => {
+    return searchablePosts.filter(post => {
       // タイトルと本文(content)の両方を検索対象にする
       const matchesSearch =
         post.title.toLowerCase().includes(lowercasedQuery) ||
-        post.content.toLowerCase().includes(lowercasedQuery);
+        (post.content && post.content.toLowerCase().includes(lowercasedQuery));
 
       const matchesCategory = selectedCategory ? post.categories?.includes(selectedCategory) : true;
       
       return matchesSearch && matchesCategory;
     });
-  }, [posts, searchQuery, selectedCategory]);
+  }, [posts,allPosts, searchQuery, selectedCategory]);
 
   if (!posts) {
     return (

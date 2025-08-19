@@ -309,8 +309,7 @@ async function init({ options = {}, handleInsert } = {}) {
   fileInput.onchange = (e) => handleUpload(e.target.files);
   insertButton.onclick = () => {
     if (selectedFile) {
-      const encodedURI = encodeURIComponent(selectedFile.url);
-      handleInsert(encodedURI);
+      handleInsert(selectedFile.url);
       hideMediaLibrary();
     }
   };

@@ -154,7 +154,7 @@ async function init({ options = {}, handleInsert } = {}) {
    */
   const updateSidebar = () => {
     if (selectedFile) {
-      const fileName = selectedFile.key || selectedFile.url.split('/').pop();
+      const fileName = selectedFile.key || selectedFile.url.split("/").pop();
       sidebarContent.innerHTML = `
         <h3 style="margin-top:0; margin-bottom: 15px; font-size: 1rem;">File Details</h3>
         <img src="${selectedFile.url}" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border: 1px solid #eee; margin-bottom: 15px;">
@@ -271,7 +271,6 @@ async function init({ options = {}, handleInsert } = {}) {
       await fetchAndDisplayFiles();
       // (オプション) アップロードしたばかりのファイルを選択状態にする
       // この実装はAPIがファイルキーを返す必要があるため、今回は省略
-      alert(`${files.length} file(s) uploaded successfully!`);
     } catch (error) {
       console.error("Upload failed:", error);
       alert("File upload failed. Check the console for details.");
@@ -310,7 +309,8 @@ async function init({ options = {}, handleInsert } = {}) {
   fileInput.onchange = (e) => handleUpload(e.target.files);
   insertButton.onclick = () => {
     if (selectedFile) {
-      handleInsert(selectedFile.url);
+      const encodedURI = encodeURIComponent(selectedFile.url);
+      handleInsert(encodedURI);
       hideMediaLibrary();
     }
   };

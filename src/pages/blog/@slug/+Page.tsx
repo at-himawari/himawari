@@ -34,7 +34,7 @@ export default function Page() {
   const { title, date, tags, coverImage, content } = post;
 
   // 記事の冒頭120文字を説明文として抽出
-  const description = content.substring(0, 120).replace(/\n/g, " ") + "...";
+  const description = content?.substring(0, 120).replace(/\n/g, " ") + "...";
   const ogImageUrl =
     coverImage || "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg";
 

@@ -12,7 +12,16 @@ export function Head() {
   // URL デコード用のヘルパー関数
   const safeDecodeURI = (url: string): string => {
     try {
-      return decodeURI(url);
+      // decodeURIComponent を使用してより完全なデコードを実行
+      // 既にデコードされている場合はそのまま返す
+      let decoded = url;
+
+      // %エンコードが含まれている場合のみデコード
+      if (url.includes("%")) {
+        decoded = decodeURIComponent(url);
+      }
+
+      return decoded;
     } catch (error) {
       console.warn("Failed to decode URI:", url, error);
       return url;

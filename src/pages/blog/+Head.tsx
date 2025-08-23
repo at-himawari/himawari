@@ -93,7 +93,7 @@ export function Head() {
       {/* OGP Tags */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={ogImageUrl} />
+      <meta property="og:image" content={decodeURI(ogImageUrl)} />
       <meta property="og:url" content={postUrl} />
       <meta property="og:type" content="article" />
       <meta property="og:site_name" content="Himawari Project" />

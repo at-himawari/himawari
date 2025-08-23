@@ -104,6 +104,7 @@ export function Head() {
     safeDecodeURI(coverImage) ||
     "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg";
   const postUrl = `https://at-himawari.com${pageContext.urlOriginal}`;
+  console.log(ogImageUrl);
 
   return (
     <>

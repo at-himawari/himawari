@@ -2,12 +2,15 @@ import { usePageContext } from "vike-react/usePageContext";
 import { PageContextPost } from "../../types/pageContextPost";
 
 export function Head() {
+  console.log("Head component is executing");
+
   const pageContext = usePageContext() as {
     data: PageContextPost;
     urlOriginal: string;
   };
 
   const post = pageContext.data?.post;
+  console.log("Post data:", post);
 
   // URL デコード用のヘルパー関数
   const safeDecodeURI = (url: string | undefined): string | undefined => {
@@ -104,7 +107,6 @@ export function Head() {
     safeDecodeURI(coverImage) ||
     "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg";
   const postUrl = `https://at-himawari.com${pageContext.urlOriginal}`;
-  console.log(ogImageUrl);
 
   return (
     <>

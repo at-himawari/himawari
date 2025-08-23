@@ -1,5 +1,38 @@
+import { usePageContext } from "vike-react/usePageContext";
+
 export function Head() {
+  const pageContext = usePageContext();
   const imageUrl = `https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg`;
+
+  // ブログページの場合は、ブログ専用のHeadコンポーネントに任せる
+  if (pageContext.urlOriginal?.startsWith("/blog/")) {
+    return (
+      <>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6651283997191475"
+          crossOrigin="anonymous"
+        ></script>
+        {/* RubyfulV2ライブラリの読み込み */}
+        <script src="https://rubyful-v2.s3.ap-northeast-1.amazonaws.com/v2/rubyful.js?t=20250507022654"></script>
+        {/* RubyfulV2の初期化スクリプト */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('load', () => {
+                if (typeof RubyfulV2 !== 'undefined') {
+                  RubyfulV2.init({
+                    selector: 'p, li',
+                    defaultDisplay: true
+                  });
+                }
+              });
+            `,
+          }}
+        />
+      </>
+    );
+  }
 
   return (
     <>

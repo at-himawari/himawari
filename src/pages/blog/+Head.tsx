@@ -2,25 +2,20 @@ import { usePageContext } from "vike-react/usePageContext";
 import { PageContextPost } from "../../types/pageContextPost";
 
 export function Head() {
-  console.log("Head component is executing");
-
   const pageContext = usePageContext() as {
     data: PageContextPost;
     urlOriginal: string;
   };
 
   const post = pageContext.data?.post;
-  console.log("Post data:", post);
 
   // URL デコード用のヘルパー関数
   const safeDecodeURI = (url: string | undefined): string | undefined => {
-    try {
-      if (!url) {
-        return undefined;
-      }
-      const decoded = decodeURI(url);
+    if (!url) return undefined;
 
-      return decoded;
+    try {
+      // %エンコードが含まれている場合のみデコード
+      return url.includes("%") ? decodeURIComponent(url) : url;
     } catch (error) {
       console.warn("Failed to decode URI:", url, error);
       return url;

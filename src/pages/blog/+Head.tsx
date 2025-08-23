@@ -9,6 +9,16 @@ export function Head() {
 
   const post = pageContext.data?.post;
 
+  // URL デコード用のヘルパー関数
+  const safeDecodeURI = (url: string): string => {
+    try {
+      return decodeURI(url);
+    } catch (error) {
+      console.warn("Failed to decode URI:", url, error);
+      return url;
+    }
+  };
+
   // ブログ一覧ページの場合（postがない場合）
   if (!post) {
     return (
@@ -24,7 +34,9 @@ export function Head() {
         />
         <meta
           property="og:image"
-          content="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg"
+          content={safeDecodeURI(
+            "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg"
+          )}
         />
         <meta
           property="og:url"
@@ -42,7 +54,9 @@ export function Head() {
         />
         <meta
           name="twitter:image"
-          content="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg"
+          content={safeDecodeURI(
+            "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg"
+          )}
         />
         <meta name="twitter:site" content="@at_himawari" />
 
@@ -93,16 +107,16 @@ export function Head() {
       {/* OGP Tags */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={decodeURI(ogImageUrl)} />
+      <meta property="og:image" content={safeDecodeURI(ogImageUrl)} />
       <meta property="og:url" content={postUrl} />
       <meta property="og:type" content="article" />
       <meta property="og:site_name" content="Himawari Project" />
 
       {/* Twitter Card Tags */}
-      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={decodeURI(ogImageUrl)} />
+      <meta name="twitter:image" content={safeDecodeURI(ogImageUrl)} />
       <meta name="twitter:site" content="@at_himawari" />
 
       {/* Article specific meta tags */}

@@ -10,8 +10,11 @@ export function Head() {
   const post = pageContext.data?.post;
 
   // URL デコード用のヘルパー関数
-  const safeDecodeURI = (url: string): string => {
+  const safeDecodeURI = (url: string|undefined): string|undefined => {
     try {
+      if (!url) {
+        return undefined;
+      }
       // decodeURIComponent を使用してより完全なデコードを実行
       // 既にデコードされている場合はそのまま返す
       let decoded = url;
@@ -104,7 +107,7 @@ export function Head() {
   // 記事の冒頭120文字を説明文として抽出
   const description = content?.substring(0, 120).replace(/\n/g, " ") + "...";
   const ogImageUrl =
-    coverImage ||
+  safeDecodeURI(coverImage) ||
     "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg";
   const postUrl = `https://at-himawari.com${pageContext.urlOriginal}`;
 
@@ -116,7 +119,7 @@ export function Head() {
       {/* OGP Tags */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={safeDecodeURI(ogImageUrl)} />
+      <meta property="og:image" content={ogImageUrl} />
       <meta property="og:url" content={postUrl} />
       <meta property="og:type" content="article" />
       <meta property="og:site_name" content="Himawari Project" />
@@ -125,7 +128,7 @@ export function Head() {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={safeDecodeURI(ogImageUrl)} />
+      <meta name="twitter:image" content={ogImageUrl} />
       <meta name="twitter:site" content="@at_himawari" />
 
       {/* Article specific meta tags */}

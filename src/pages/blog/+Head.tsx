@@ -10,7 +10,7 @@ export function Head() {
   const post = pageContext.data?.post;
 
   // URL デコード用のヘルパー関数
-  const safeDecodeURI = (url: string|undefined): string|undefined => {
+  const safeDecodeURI = (url: string | undefined): string | undefined => {
     try {
       if (!url) {
         return undefined;
@@ -105,9 +105,10 @@ export function Head() {
   const { title, date, tags, coverImage, content } = post;
 
   // 記事の冒頭120文字を説明文として抽出
-  const description = content?.substring(0, 120).replace(/\n/g, " ") + "...";
+  const description =
+    content?.substring(0, 120).replace(/\n/g, " ").replace("#", "") + "...";
   const ogImageUrl =
-  safeDecodeURI(coverImage) ||
+    safeDecodeURI(coverImage) ||
     "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg";
   const postUrl = `https://at-himawari.com${pageContext.urlOriginal}`;
 

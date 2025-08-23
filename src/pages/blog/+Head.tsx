@@ -15,14 +15,7 @@ export function Head() {
       if (!url) {
         return undefined;
       }
-      // decodeURIComponent を使用してより完全なデコードを実行
-      // 既にデコードされている場合はそのまま返す
-      let decoded = url;
-
-      // %エンコードが含まれている場合のみデコード
-      if (url.includes("%")) {
-        decoded = decodeURIComponent(url);
-      }
+      const decoded = decodeURI(url);
 
       return decoded;
     } catch (error) {

@@ -102,7 +102,7 @@ export function Head() {
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImageUrl} />
+      <meta name="twitter:image" content={decodeURI(ogImageUrl)} />
       <meta name="twitter:site" content="@at_himawari" />
 
       {/* Article specific meta tags */}

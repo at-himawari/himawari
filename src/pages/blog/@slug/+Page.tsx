@@ -9,7 +9,7 @@ import HatenaIcon from "../../../components/HatenaIcon";
 import { PageContextPost } from "../../../types/pageContextPost";
 import { usePageContext } from "vike-react/usePageContext";
 import { markdownComponents } from "../../../components/MarkdownComponents";
-import { Head } from "vike-react/Head";
+
 import { useEffect, useState } from "react";
 
 // コンポーネント本体
@@ -32,40 +32,8 @@ export default function Page() {
 
   const { title, date, tags, coverImage, content } = post;
 
-  // 記事の冒頭120文字を説明文として抽出
-  const description = content?.substring(0, 120).replace(/\n/g, " ") + "...";
-  const ogImageUrl =
-    coverImage ||
-    "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg";
-
   return (
     <>
-      <Head>
-        <title>{title} | Himawari Project</title>
-        <meta name="description" content={description} />
-        {/* OGP Tags */}
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={ogImageUrl} />
-        <meta property="og:url" content={postUrl} />
-        <meta property="og:type" content="article" />
-        <meta property="og:site_name" content="Himawari Project" />
-        {/* Twitter Card Tags */}
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={ogImageUrl} />
-        <meta name="twitter:site" content="@at_himawari" />
-        {/* Article specific meta tags */}
-        <meta
-          property="article:published_time"
-          content={new Date(date).toISOString()}
-        />
-        {tags &&
-          tags.map((tag) => (
-            <meta key={tag} property="article:tag" content={tag} />
-          ))}
-      </Head>
       <Header />
       <main className="bg-gray-50 py-8">
         <div className="container mx-auto px-4 relative">

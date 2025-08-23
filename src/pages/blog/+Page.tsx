@@ -1,49 +1,63 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { usePageContext } from "vike-react/usePageContext";
-import { PageContextPost } from "../../types/pageContextPosts";
 import { useState, useMemo, useEffect } from "react";
 import { Post } from "../../types/Post";
 
+type PostForList = Omit<Post, 'content'>;
+
 export default function Page() {
-  const pageContext = usePageContext() as { data: PageContextPost };
+  const pageContext = usePageContext() as { data: { posts: PostForList[] } };
+  const initialPosts = pageContext.data.posts;
+
   // `posts` は content を含むようになる
   const posts = pageContext.data.posts;
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [allPosts, setAllPosts] = useState<Post[] | null>(null);
-
+  const [isLoading, setIsLoading] = useState(false);
+    // 検索入力があった場合に、全文データを非同期で読み込む
   useEffect(() => {
-    import("../../content/blog/posts.json").then((module) => {
-      setAllPosts(module.default);
-    });
-  }, []);
+    if (searchQuery && !allPosts) {
+      setIsLoading(true);
+      // 動的importの代わりに、作成したデータエンドポイントをfetchする
+      fetch('/blog/allPosts.data.json')
+        .then(response => response.json())
+        .then(data => {
+          setAllPosts(data);
+        }).catch(()=>setIsLoading(false));
+    }
+  }, [searchQuery, allPosts,isLoading]);
 
   const categories = useMemo(() => {
-    if (!posts) return [];
-    const allCategories = posts.flatMap(post => post.categories || []);
+    if (!initialPosts) return [];
+    const allCategories = initialPosts.flatMap(post => post.categories || []);
     return [...new Set(allCategories)];
-  }, [posts]);
+  }, [initialPosts]);
 
   const filteredPosts = useMemo(() => {
-    const searchablePosts = allPosts || posts;
-    if (!posts) return [];
-    
-    // 検索キーワードを小文字に変換
     const lowercasedQuery = searchQuery.toLowerCase();
 
-    return searchablePosts.filter(post => {
-      // タイトルと本文(content)の両方を検索対象にする
-      const matchesSearch =
-        post.title.toLowerCase().includes(lowercasedQuery) ||
-        (post.content && post.content.toLowerCase().includes(lowercasedQuery));
-
+    if (searchQuery && allPosts) {
+      return allPosts.filter(post => {
+        const matchesSearch =
+          post.title.toLowerCase().includes(lowercasedQuery) ||
+          (post.content && post.content.toLowerCase().includes(lowercasedQuery));
+        const matchesCategory = selectedCategory ? post.categories?.includes(selectedCategory) : true;
+        return matchesSearch && matchesCategory;
+      })
+    }
+    // 上記以外の場合（検索していない、または全文データ読み込み中）は、
+    // initialPosts（本文なし）をフィルタリングする
+    return initialPosts.filter(post => {
+      const matchesSearch = searchQuery
+        ? post.title.toLowerCase().includes(lowercasedQuery)
+        : true;
       const matchesCategory = selectedCategory ? post.categories?.includes(selectedCategory) : true;
-      
       return matchesSearch && matchesCategory;
     });
-  }, [posts,allPosts, searchQuery, selectedCategory]);
+  }, [initialPosts, allPosts, searchQuery, selectedCategory]);
 
   if (!posts) {
     return (

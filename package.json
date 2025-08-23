@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vike dev",
-    "build": "node scripts/generate-posts.mjs && vike build",
+    "build": "vike build",
     "lint": "eslint .",
     "preview": "vike preview"
   },

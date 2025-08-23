@@ -1,10 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import postsData from "../../content/blog/posts.json";
+import { getPosts } from "../../utils/getPosts";
 import { Post } from "../../types/Post";
 
 export function data() {
-  // 記事の全文(content)を含まないようにデータを加工する
-  const posts: Omit<Post, "content">[] = postsData.map(
+  const allPosts = getPosts();
+
+  // content を除外したメタデータのみを渡す
+  const posts: Omit<Post, "content">[] = allPosts.map(
     ({ slug, title, date, categories, tags, coverImage }) => ({
       slug,
       title,
@@ -14,6 +15,7 @@ export function data() {
       coverImage,
     })
   );
+
   return {
     posts,
   };

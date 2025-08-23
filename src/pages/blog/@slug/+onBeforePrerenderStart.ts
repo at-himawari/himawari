@@ -1,11 +1,7 @@
-// このファイルが、ビルド時にプリレンダリングする全ページのURLリストをVikeに提供します。
-import posts from "../../../content/blog/posts.json";
+import { getPosts } from "../../../utils/getPosts";
 
 export default function onBeforePrerenderStart() {
-  // ブログ記事のURLリストを生成
+  const posts = getPosts();
   const blogUrls = posts.map((post) => `/blog/${post.slug}`);
-
-  // 静的なページと、動的に生成したブログページのURLをすべて返す
   return blogUrls;
-  
 }

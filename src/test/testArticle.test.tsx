@@ -12,6 +12,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { markdownComponents } from "../components/MarkdownComponents";
+import { sanitizeConfig } from "../utils/sanitizeConfig";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -38,7 +39,11 @@ describe("Test Article Integration", () => {
     return render(
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
-        rehypePlugins={[rehypeRaw, rehypeKatex, rehypeSanitize]}
+        rehypePlugins={[
+          rehypeRaw,
+          rehypeKatex,
+          [rehypeSanitize, sanitizeConfig],
+        ]}
         components={markdownComponents}
       >
         {content}

@@ -8,7 +8,7 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import matter from "gray-matter";
 
@@ -158,21 +158,20 @@ describe("Decap CMS 互換性確認", () => {
 
   describe("既存記事の表示確認", () => {
     it("既存のMarkdown記事が正常に読み込める", () => {
-      try {
-        const existingPostPath = join(
-          process.cwd(),
-          "src/content/blog/article/test-html-markdown-mixed.md"
-        );
-        const existingPost = readFileSync(existingPostPath, "utf-8");
-        const { data, content } = matter(existingPost);
+      const existingPostPath = join(
+        process.cwd(),
+        "src/content/blog/article/test-html-markdown-mixed.md"
+      );
 
-        expect(data).toHaveProperty("title");
-        expect(content).toBeTruthy();
-        expect(content.length).toBeGreaterThan(0);
-      } catch {
-        // テスト記事が存在しない場合はスキップ
-        console.warn("テスト記事が見つかりません");
-      }
+      // ファイルが存在することを確認
+      expect(existsSync(existingPostPath)).toBe(true);
+
+      const existingPost = readFileSync(existingPostPath, "utf-8");
+      const { data, content } = matter(existingPost);
+
+      expect(data).toHaveProperty("title");
+      expect(content).toBeTruthy();
+      expect(content.length).toBeGreaterThan(0);
     });
 
     it("記事データが getPosts() 関数で正しく取得できる", async () => {

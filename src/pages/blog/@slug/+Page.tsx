@@ -1,16 +1,21 @@
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeKatex from "rehype-katex";
-import remarkMath from "remark-math";
 import { FaXTwitter } from "react-icons/fa6";
 import HatenaIcon from "../../../components/HatenaIcon";
 import { PageContextPost } from "../../../types/pageContextPost";
 import { usePageContext } from "vike-react/usePageContext";
-import { markdownComponents } from "../../../components/MarkdownComponents";
+import { secureMarkdownContent } from "../../../utils/contentSecurity";
 
 import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
+import { sanitizeConfig } from "../../../utils/sanitizeConfig";
+import { markdownComponents } from "../../../components/MarkdownComponents";
+import PerformanceMonitor from "../../../components/PerformanceMonitor";
 
 // コンポーネント本体
 export default function Page() {
@@ -31,6 +36,20 @@ export default function Page() {
   if (!post) return <div>記事が見つかりません</div>;
 
   const { title, date, tags, coverImage, content } = post;
+
+  // Apply security validation and pre-sanitization
+  const securityResult = secureMarkdownContent(content || "");
+
+  // Log security warnings in development
+  if (
+    process.env.NODE_ENV === "development" &&
+    securityResult.hasSecurityIssues
+  ) {
+    console.warn(
+      "Security issues detected in content:",
+      securityResult.warnings
+    );
+  }
 
   return (
     <>
@@ -61,17 +80,29 @@ export default function Page() {
             </header>
             <section className="prose lg:prose-xl max-w-none">
               <ReactMarkdown
-                rehypePlugins={[rehypeKatex]}
+                rehypePlugins={[
+                  rehypeRaw,
+                  rehypeKatex,
+                  [rehypeSanitize, sanitizeConfig],
+                ]}
                 remarkPlugins={[remarkGfm, remarkMath]}
                 components={markdownComponents}
               >
-                {content}
+                {securityResult.content}
               </ReactMarkdown>
             </section>
           </article>
         </div>
       </main>
       <Footer />
+      <PerformanceMonitor
+        enabled={process.env.NODE_ENV === "development"}
+        showDebugInfo={true}
+        onMetricsCollected={(metrics) => {
+          // Log performance metrics for analysis
+          console.log("Blog page performance:", metrics);
+        }}
+      />
     </>
   );
 }

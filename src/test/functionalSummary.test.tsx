@@ -128,20 +128,21 @@ describe("CMS機能サマリー検証", () => {
         "src/content/blog/article/test-html-markdown-mixed.md"
       );
 
-      if (existsSync(testArticlePath)) {
-        const content = readFileSync(testArticlePath, "utf-8");
-        const { data, content: body } = matter(content);
+      // ファイルが存在することを確認
+      expect(existsSync(testArticlePath)).toBe(true);
 
-        // フロントマターの確認
-        expect(data).toHaveProperty("title");
-        expect(data).toHaveProperty("date");
+      const content = readFileSync(testArticlePath, "utf-8");
+      const { data, content: body } = matter(content);
 
-        // HTML要素とMarkdownの混在確認
-        expect(body).toContain("<div");
-        expect(body).toContain("# ");
-        expect(body).toContain("## ");
-        expect(body).toContain("**");
-      }
+      // フロントマターの確認
+      expect(data).toHaveProperty("title");
+      expect(data).toHaveProperty("date");
+
+      // HTML要素とMarkdownの混在確認
+      expect(body).toContain("<div");
+      expect(body).toContain("# ");
+      expect(body).toContain("## ");
+      expect(body).toContain("**");
     });
 
     it("プレビューに必要なHTML要素が適切に保持されている", () => {
@@ -296,16 +297,17 @@ describe("CMS機能サマリー検証", () => {
         "src/content/blog/article/test-html-markdown-mixed.md"
       );
 
-      if (existsSync(testArticlePath)) {
-        const content = readFileSync(testArticlePath, "utf-8");
-        const sizeKB = Buffer.byteLength(content, "utf-8") / 1024;
+      // ファイルが存在することを確認
+      expect(existsSync(testArticlePath)).toBe(true);
 
-        // 記事ファイルが100KB以下であることを確認
-        expect(sizeKB).toBeLessThan(100);
+      const content = readFileSync(testArticlePath, "utf-8");
+      const sizeKB = Buffer.byteLength(content, "utf-8") / 1024;
 
-        // 最小限のコンテンツは含まれていることを確認
-        expect(sizeKB).toBeGreaterThan(1);
-      }
+      // 記事ファイルが100KB以下であることを確認
+      expect(sizeKB).toBeLessThan(100);
+
+      // 最小限のコンテンツは含まれていることを確認
+      expect(sizeKB).toBeGreaterThan(1);
     });
   });
 

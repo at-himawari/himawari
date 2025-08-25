@@ -22,6 +22,9 @@ export function Head() {
     }
   };
 
+  const selector =
+    ".container p,.container button.text-sm,h1,h2,h3,h4,h5,h6,span,li,a > *:not(div)";
+
   // ブログ一覧ページの場合（postがない場合）
   if (!post) {
     return (
@@ -80,7 +83,7 @@ export function Head() {
               window.addEventListener('load', () => {
                 if (typeof RubyfulV2 !== 'undefined') {
                   RubyfulV2.init({
-                    selector: 'p, li',
+                    selector: '${selector}',
                     defaultDisplay: true
                   });
                 }
@@ -150,7 +153,7 @@ export function Head() {
             window.addEventListener('load', () => {
               if (typeof RubyfulV2 !== 'undefined') {
                 RubyfulV2.init({
-                  selector: 'p, li',
+                  selector: '${selector}',
                   defaultDisplay: true
                 });
               }

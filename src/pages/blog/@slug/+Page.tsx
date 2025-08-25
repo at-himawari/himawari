@@ -110,13 +110,11 @@ export default function Page() {
 
 // シェアボタンのコンポーネント
 function ShareButtons({ postUrl, title }: { postUrl: string; title: string }) {
-  const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(true); // 初期状態で表示
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setScrollY(currentScrollY);
 
       // 記事の開始位置（ヘッダーの高さ + マージン）を過ぎたら表示
       const articleStartPosition = 100; // 閾値を下げる

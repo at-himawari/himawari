@@ -4,19 +4,19 @@ export const markdownComponents = {
   // Existing Markdown elements
   h1: (props: any) => (
     <h1
-      className="text-3xl font-bold mt-8 mb-4 underline decoration-slate-300"
+      className="text-3xl font-bold mt-8 mb-4 decoration-slate-300"
       {...props}
     />
   ),
   h2: (props: any) => (
     <h2
-      className="text-2xl font-bold mt-6 mb-3 underline decoration-slate-300"
+      className="text-2xl font-bold mt-6 mb-3 decoration-slate-300"
       {...props}
     />
   ),
   h3: (props: any) => (
     <h3
-      className="text-xl font-bold mt-4 mb-2 underline decoration-slate-300"
+      className="text-xl font-bold mt-4 mb-2 decoration-slate-300"
       {...props}
     />
   ),

@@ -16,6 +16,27 @@ export function shouldShowTestPosts(): boolean {
     return process.env.SHOW_TEST_POSTS === "true";
   }
 
+  // NODE_ENVが未定義の場合（ビルド時など）は環境変数を直接チェック
+  if (!process.env.NODE_ENV && process.env.SHOW_TEST_POSTS === "true") {
+    return true;
+  }
+
+  // ビルド時に環境変数が読み込まれない場合の対応
+  // .env.local ファイルを直接読み込んで確認
+  try {
+    const fs = require("fs");
+    const path = require("path");
+    const envPath = path.join(process.cwd(), ".env.local");
+    if (fs.existsSync(envPath)) {
+      const envContent = fs.readFileSync(envPath, "utf8");
+      if (envContent.includes("SHOW_TEST_POSTS=true")) {
+        return true;
+      }
+    }
+  } catch (error) {
+    // ファイル読み込みエラーは無視
+  }
+
   // 本番環境では表示しない
   return false;
 }

@@ -4,6 +4,7 @@
  * Tests the actual test article we created to ensure it renders correctly
  */
 
+import { describe, test, expect, beforeAll } from "vitest";
 import { render, screen } from "@testing-library/react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";

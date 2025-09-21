@@ -10,7 +10,7 @@ export interface NewsItem {
 
 const NewsSection: React.FC = () => {
   const newsItems: NewsItem[] = newsData.newsItems || [];
-  const itemsPerPage = 6;
+  const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
 
   if (!newsItems || newsItems.length === 0) {
@@ -36,7 +36,17 @@ const NewsSection: React.FC = () => {
   return (
     <section id="news" className="py-12 bg-gray-100">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h3 className="text-2xl font-bold text-gray-800">ニュース</h3>
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          {" "}
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-3 sm:mb-4">
+            ニュース
+          </h2>
+          <p className="text-gray-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto">
+            最新情報をご紹介します
+          </p>
+          <div className="w-16 h-1 bg-orange-500 mx-auto mt-4 rounded-full"></div>
+        </div>
+
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {displayedItems.map((item: NewsItem, index: number) => {
             const cardContent = (

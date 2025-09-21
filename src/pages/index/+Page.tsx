@@ -67,12 +67,12 @@ function Page() {
             </div>
           ))}
         </section>
-        <NewsSection />
         <BlogSection
           latestPosts={latestPosts}
           featuredPosts={featuredPosts}
           error={error}
         />
+        <NewsSection />
         <section id="profile" className="py-12">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl text-center font-bold text-gray-800 mb-3 sm:mb-4">

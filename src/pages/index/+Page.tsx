@@ -1,11 +1,15 @@
+export default Page;
+
+import React from "react";
 import { useState, useEffect } from "react";
 import { FaXTwitter } from "react-icons/fa6";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import NewsSection from "../../components/NewsSection";
+import BlogSection from "../../components/BlogSection";
 import slidesData from "../../content/slides.json"; // JSONを直接インポート
-import { Head } from "vike-react/Head";
-import { description, ogImageUrl, postUrl, title } from "../../const/pageConstants";
+import { usePageContext } from "vike-react/usePageContext";
+import type { HomePageData } from "./+data";
 
 interface Slide {
   image: string;
@@ -13,9 +17,12 @@ interface Slide {
   text: string;
   link: string;
 }
-export default function Page() {
+function Page() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides: Slide[] = slidesData.slides;
+  const pageContext = usePageContext();
+  const { latestPosts, featuredPosts, error } =
+    pageContext.data as HomePageData;
 
   useEffect(() => {
     if (slides.length === 0) return;
@@ -31,17 +38,6 @@ export default function Page() {
 
   return (
     <>
-      <Head>
-        {/* OGP Tags */}
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={ogImageUrl} />
-        <meta property="og:url" content={postUrl} />
-        {/* Twitter Card Tags */}
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={ogImageUrl} />
-      </Head>
       <div className="font-sans overflow-x-hidden">
         <Header />
         <section id="software" className="relative h-96 overflow-hidden">
@@ -72,9 +68,17 @@ export default function Page() {
           ))}
         </section>
         <NewsSection />
+        <BlogSection
+          latestPosts={latestPosts}
+          featuredPosts={featuredPosts}
+          error={error}
+        />
         <section id="profile" className="py-12">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-2xl font-bold text-gray-800">プロフィール</h3>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl text-center font-bold text-gray-800 mb-3 sm:mb-4">
+              プロフィール
+            </h2>
+            <div className="w-16 h-1 bg-orange-500 mx-auto mt-4 rounded-full"></div>
             <div className="mt-6 flex items-start">
               <img
                 src="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg"

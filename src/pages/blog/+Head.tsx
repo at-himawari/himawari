@@ -1,5 +1,6 @@
 import { usePageContext } from "vike-react/usePageContext";
 import { PageContextPost } from "../../types/pageContextPost";
+import { selector } from "../../const/pageConstants";
 
 export function Head() {
   const pageContext = usePageContext() as {
@@ -21,9 +22,6 @@ export function Head() {
       return url;
     }
   };
-
-  const selector =
-    ".container p,.container button.text-sm,h1,h2,h3,h4,h5,h6,span,li,a > *:not(div)";
 
   // ブログ一覧ページの場合（postがない場合）
   if (!post) {

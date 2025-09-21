@@ -1,6 +1,7 @@
 import vikeReact from "vike-react/config";
-import { Layout } from "./Layout";
+import { Layout } from "./+Layout";
 import { description, favicon, title } from "../const/pageConstants";
+import { Config } from "vike/types";
 
 export default {
   Layout,
@@ -10,4 +11,4 @@ export default {
   favicon,
   title,
   description,
-};
+} satisfies Config;

@@ -49,6 +49,23 @@ export function Head() {
         `,
         }}
       />
+      {/** Google tag (gtag.js) */}
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-S8J4Z721EH"
+      ></script>
+      <script
+        type="text/javascript"
+        dangerouslySetInnerHTML={{
+          __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-S8J4Z721EH');
+`,
+        }}
+      />
+
       <script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6651283997191475"

@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
           <ul className="mt-4 space-y-2">
             <li>
               <a
-                href="https://aimensetsu.pages.dev/"
+                href="https://aimensetsu.at-himawari.com/"
                 className="hover:underline"
               >
                 AI面接コーチ

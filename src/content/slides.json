@@ -2,7 +2,7 @@
   "slides": [
     {
       "title": "ソフトウェア開発",
-      "text": "自社パッケージ導入・新規システム開発",
+      "text": "小規模なシステム開発、導入実験、クラウド導入などなど",
       "image": "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/software_img.jpg",
       "link": "/software"
     },

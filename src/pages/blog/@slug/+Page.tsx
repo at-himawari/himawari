@@ -15,7 +15,6 @@ import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
 import { sanitizeConfig } from "../../../utils/sanitizeConfig";
 import { markdownComponents } from "../../../components/MarkdownComponents";
-import PerformanceMonitor from "../../../components/PerformanceMonitor";
 
 // コンポーネント本体
 export default function Page() {
@@ -96,14 +95,6 @@ export default function Page() {
         </div>
       </main>
       <Footer />
-      <PerformanceMonitor
-        enabled={process.env.NODE_ENV === "development"}
-        showDebugInfo={true}
-        onMetricsCollected={(metrics) => {
-          // Log performance metrics for analysis
-          console.log("Blog page performance:", metrics);
-        }}
-      />
     </>
   );
 }

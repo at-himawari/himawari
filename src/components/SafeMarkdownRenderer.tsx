@@ -125,11 +125,9 @@ export const SafeMarkdownRenderer: React.FC<SafeMarkdownRendererProps> = ({
     let isMounted = true;
 
     const renderContent = async () => {
-      console.log("SafeMarkdownRenderer: Starting render process");
       setIsLoading(true);
 
       try {
-        console.log("SafeMarkdownRenderer: Trying optimized rendering");
         // Try optimized rendering first for better performance
         const { result: optimizedContent, duration } =
           await performanceUtils.measureRenderTime(
@@ -141,11 +139,6 @@ export const SafeMarkdownRenderer: React.FC<SafeMarkdownRendererProps> = ({
               }),
             "optimized-render"
           );
-
-        console.log(
-          "SafeMarkdownRenderer: Optimized rendering succeeded",
-          optimizedContent
-        );
 
         if (isMounted) {
           // Create successful result
@@ -164,11 +157,8 @@ export const SafeMarkdownRenderer: React.FC<SafeMarkdownRendererProps> = ({
         );
 
         try {
-          console.log("SafeMarkdownRenderer: Trying safe rendering fallback");
           // Fallback to comprehensive error handling
           const result = await renderMarkdownSafely(content);
-
-          console.log("SafeMarkdownRenderer: Safe rendering result", result);
 
           if (isMounted) {
             setRenderResult(result);
@@ -183,11 +173,6 @@ export const SafeMarkdownRenderer: React.FC<SafeMarkdownRendererProps> = ({
             }
           }
         } catch (error) {
-          console.error(
-            "SafeMarkdownRenderer: All rendering methods failed:",
-            error
-          );
-
           if (isMounted) {
             // Create a minimal error result
             setRenderResult({
@@ -208,7 +193,6 @@ export const SafeMarkdownRenderer: React.FC<SafeMarkdownRendererProps> = ({
         }
       } finally {
         if (isMounted) {
-          console.log("SafeMarkdownRenderer: Render process completed");
           setIsLoading(false);
         }
       }

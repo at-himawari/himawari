@@ -69,11 +69,5 @@ export function filterTestPosts<T extends { filename?: string }>(
  * 開発環境でのテスト記事表示状態をログ出力
  */
 export function logTestPostsStatus(): void {
-  if (process.env.NODE_ENV === "development") {
-    const showTests = shouldShowTestPosts();
-    console.log(`🧪 Test posts: ${showTests ? "VISIBLE" : "HIDDEN"}`);
-    if (!showTests) {
-      console.log("💡 To show test posts, set SHOW_TEST_POSTS=true");
-    }
-  }
+  // Logging removed for production
 }

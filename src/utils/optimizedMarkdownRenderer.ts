@@ -248,10 +248,6 @@ export const performanceUtils = {
     const end = performance.now();
     const duration = end - start;
 
-    if (process.env.NODE_ENV === "development") {
-      console.log(`⏱️ ${label}: ${duration.toFixed(2)}ms`);
-    }
-
     return { result, duration };
   },
 

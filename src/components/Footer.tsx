@@ -38,6 +38,11 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li>
+              <a href="https://lin.ee/8fFn4KB" className="hover:underline">
+                あざらし君@AI（LINE公式アカウント）
+              </a>
+            </li>
+            <li>
               <a href="/youtube" className="hover:underline">
                 YouTube
               </a>
@@ -100,7 +105,11 @@ const Footer: React.FC = () => {
           className="hover:text-gray-400"
           aria-label="Qiita"
         >
-          <img src="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/qiita-icon.png" width="25px" height="25px" />
+          <img
+            src="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/qiita-icon.png"
+            width="25px"
+            height="25px"
+          />
         </a>
       </div>
       <div className="mt-8 text-center text-sm text-gray-400">

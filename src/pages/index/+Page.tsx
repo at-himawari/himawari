@@ -115,9 +115,7 @@ function Page() {
               <button
                 onClick={handleSearchClick}
                 className="bg-orange-500 hover:bg-orange-600 text-white rounded-full px-6 py-3 font-bold transition-colors duration-200 shadow-md hidden sm:block"
-              >
-                検索
-              </button>
+              ></button>
             </div>
 
             {/* サブコピー / タグライン */}

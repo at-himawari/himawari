@@ -53,6 +53,11 @@ const Footer: React.FC = () => {
           <h4 className="text-lg font-bold">利用規約</h4>
           <ul className="mt-4 space-y-2">
             <li>
+              <a href="/commercial" className="hover:underline">
+                特定商取引法に基づく表記
+              </a>
+            </li>
+            <li>
               <a href="/privacy" className="hover:underline">
                 プライバシーポリシー
               </a>

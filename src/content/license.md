@@ -1,6 +1,5 @@
-# ライセンス
-
-## License
+<h2 class="text-2xl font-bold text-orange-500 !mb-2">ライセンス</h2>
+<p class="text-gray-600 text-lg !mt-0 mb-6">License</p>
 
 1. 当サイトのライセンス Himawari Project(以下、当プロジェクト）では、当プロジェクトのウェブサイト（サブドメインを含む at-himawari.com ドメイン配下のウェブサイト。(以下特に記載がない限り同じです。)以下「当ウェブサイト」といいます。）において提供するサービスでは Creative Commons CC BY-SA 4.0 が適用されます。 詳しくは、Creative Commons のリーガル･コードをご覧ください。
    <https://creativecommons.org/licenses/by-sa/4.0/legalcode.ja>

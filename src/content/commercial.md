@@ -1,4 +1,6 @@
-# 特定商取引法に基づく表記
+<h2 class="text-2xl font-bold text-orange-500 !mb-2">特定商取引法に基づく表記</h2>
+<p class="text-gray-600 text-lg !mt-0 mb-6">Act on specified commercial transactions</p>
+
 
 ## 販売業者
 
@@ -10,12 +12,12 @@ Himawari Project
 
 ## 所在地
 
-〒 060-0062
+〒 060-0062  
 北海道札幌市中央区南 2 西五丁目 31-1 RMBld. 701
 
 ## 電話番号
 
-090-9212-5204.  
+090-9212-5204  
 ※通話料金がかかります。
 
 ## メールアドレス

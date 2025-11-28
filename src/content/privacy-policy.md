@@ -1,6 +1,6 @@
-# プライバシーポリシー
+<h2 class="text-2xl font-bold text-orange-500 !mb-2">プライバシーポリシー</h2>
 
-## Privacy Policy
+<p class="text-gray-600 text-lg !mt-0 mb-6">Privacy Policy</p>
 
 ## 1. 基本的考え方
 
@@ -45,7 +45,7 @@ Himawari Project（以下、当プロジェクト）では、当プロジェク�
 **SNS の利用者のみなさまへの留意事項（個人情報保護委員会 HP）**  
 https://www.ppc.go.jp/news/careful_information/sns_button_life/
 
-**Meta社のデータに関するポリシー**
+**Meta 社のデータに関するポリシー**
 https://www.facebook.com/privacy/explanation
 
 **X（旧 Twitter）社のプライバシーポリシー**  

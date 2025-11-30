@@ -1,6 +1,12 @@
 {
   "newsItems": [
     {
+      "title": "サービスリリース",
+      "date": "2025.11.30",
+      "content": "あざらし君@AIを公開しました。友だち登録よろしくお願いします。",
+      "link": "line.me/R/ti/p/@494seuly"
+    },
+    {
       "title": "Webページリリース",
       "date": "2025.8.18",
       "content": "ルビ財団様より提供されているルビフルボタンを導入しました。詳細はこのボードをクリックしてください。",
@@ -11,12 +17,6 @@
       "date": "2025.1.26",
       "content": "プロダクト欄に、｢Youtube｣を追加しました。",
       "link": "/youtube"
-    },
-    {
-      "title": "YouTube",
-      "date": "2025.1.18",
-      "content": "北海道大学総合博物館探索してきました。",
-      "link": "https://youtu.be/BcSbeY-UHYY?si=40hMQSsTRoOIupgX"
     },
     {
       "title": "お知らせ",

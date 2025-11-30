@@ -1,7 +1,6 @@
 <h2 class="text-2xl font-bold text-orange-500 !mb-2">特定商取引法に基づく表記</h2>
 <p class="text-gray-600 text-lg !mt-0 mb-6">Act on specified commercial transactions</p>
 
-
 ## 販売業者
 
 Himawari Project
@@ -19,6 +18,7 @@ Himawari Project
 
 090-9212-5204  
 ※通話料金がかかります。
+※AIが応答します。お名前と要件をお話ください。
 
 ## メールアドレス
 

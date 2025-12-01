@@ -117,6 +117,68 @@ src/
 
 詳細は [セキュリティガイドライン](docs/SECURITY_GUIDELINES.md) を参照してください。
 
+## 💳 Stripe 決済ページ
+
+このプロジェクトには、Stripe Checkout の決済フロー用の静的ページが含まれています。
+
+### 利用可能なページ
+
+#### 決済成功ページ (`/lineat_ai/account/success`)
+
+- **URL**: `https://yourdomain.com/lineat_ai/account/success`
+- **用途**: Stripe Checkout の成功時リダイレクト先
+- **表示内容**:
+  - 決済完了メッセージ
+  - 感謝のメッセージ
+  - ホームページへのリンク
+
+#### 決済キャンセルページ (`/lineat_ai/account/cancel`)
+
+- **URL**: `https://yourdomain.com/lineat_ai/account/cancel`
+- **用途**: Stripe Checkout のキャンセル時リダイレクト先
+- **表示内容**:
+  - キャンセル確認メッセージ
+  - 再試行リンク
+  - ホームページへのリンク
+
+### Stripe 設定手順
+
+1. **Stripe ダッシュボードにログイン**
+
+   - [Stripe Dashboard](https://dashboard.stripe.com/) にアクセス
+
+2. **Checkout セッションの設定**
+
+   - Checkout セッション作成時に以下の URL を指定：
+
+   ```javascript
+   const session = await stripe.checkout.sessions.create({
+     success_url: "https://yourdomain.com/lineat_ai/account/success",
+     cancel_url: "https://yourdomain.com/lineat_ai/account/cancel",
+     // その他の設定...
+   });
+   ```
+
+3. **環境変数の設定**
+
+   - `.env.local` ファイルに以下を追加：
+
+   ```bash
+   STRIPE_SUCCESS_URL=https://yourdomain.com/lineat_ai/account/success
+   STRIPE_CANCEL_URL=https://yourdomain.com/lineat_ai/account/cancel
+   ```
+
+4. **本番環境での確認**
+   - デプロイ後、実際の決済フローで両ページが正しく表示されることを確認
+   - レスポンシブデザインの動作確認（モバイル、タブレット、デスクトップ）
+
+### ページの特徴
+
+- **静的生成**: 両ページは静的に生成され（SSG）、高速に配信されます
+- **レスポンシブデザイン**: すべてのデバイスで最適な表示
+- **日本語対応**: 日本語フォントで読みやすく表示
+- **サイト統一デザイン**: 既存のヘッダー・フッターと統合
+
 ## 📝 コンテンツ作成
 
 ### ブログ記事の作成

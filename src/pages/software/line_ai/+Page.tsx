@@ -13,7 +13,7 @@ export default function Page() {
       <Header></Header>
       <div className="max-w-4xl mx-auto px-4 py-12 space-y-8">
         {/* --- Hero Section (Card) --- */}
-        <section className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 md:p-12 text-center animate-fade-in">
+        <section className="p-8 md:p-12 text-center animate-fade-in">
           <div className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-wider text-green-800 uppercase bg-green-100 rounded-full">
             New Release
           </div>

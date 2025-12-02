@@ -1,5 +1,5 @@
 export const title = "Himawari Project";
-export const description = "映像とITの融合領域にチャレンジするプロジェクト";
+export const description = "あなたのとなりで、つくる技術";
 export const favicon =
   "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/himawari.png";
 export const ogImageUrl =

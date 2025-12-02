@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li>
-              <a href="https://lin.ee/8fFn4KB" className="hover:underline">
+              <a href="/software/line_ai" className="hover:underline">
                 あざらし君@AI（LINE公式アカウント）
               </a>
             </li>

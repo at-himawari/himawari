@@ -76,7 +76,7 @@ export function Head() {
       {/* Twitter Card Tags */}
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:title" content="Himawari Project" />
-      <meta name="twitter:description" content="のんびり仕事する" />
+      <meta name="twitter:description" content="あなたのとなりで、つくる技術。" />
       <meta name="twitter:image" content={imageUrl} />
       <meta name="twitter:site" content="@at_himawari" />
       {/* RubyfulV2ライブラリの読み込み */}

@@ -10,7 +10,7 @@ export interface NewsItem {
 
 const NewsSection: React.FC = () => {
   const newsItems: NewsItem[] = newsData.newsItems || [];
-  const itemsPerPage = 3;
+  const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
 
   if (!newsItems || newsItems.length === 0) {
@@ -47,38 +47,45 @@ const NewsSection: React.FC = () => {
           <div className="w-16 h-1 bg-orange-500 mx-auto mt-4 rounded-full"></div>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayedItems.map((item: NewsItem, index: number) => {
-            const cardContent = (
-              <>
-                <p className="text-orange-500 font-bold">{item.title}</p>
-                <p className="text-gray-700 mt-2">{item.date}</p>
-                <div className="mt-4 text-gray-600">
-                  <p>{item.content}</p>
+        <div className="mt-6 bg-white shadow rounded-lg overflow-hidden">
+          <ul className="divide-y divide-gray-200">
+            {displayedItems.map((item: NewsItem, index: number) => {
+              const listContent = (
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+                  <span className="text-gray-500 text-sm sm:text-base whitespace-nowrap">
+                    {item.date}
+                  </span>
+                  <span className="text-orange-500 font-semibold text-sm sm:text-base">
+                    {item.title}
+                  </span>
+                  <span className="text-gray-700 text-sm sm:text-base flex-1">
+                    {item.content}
+                  </span>
                 </div>
-              </>
-            );
-
-            if (item.link) {
-              return (
-                <a
-                  key={index}
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block bg-white shadow-md rounded-lg p-6 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
-                >
-                  {cardContent}
-                </a>
               );
-            }
 
-            return (
-              <div key={index} className="bg-white shadow rounded-lg p-6">
-                {cardContent}
-              </div>
-            );
-          })}
+              if (item.link) {
+                return (
+                  <li key={index}>
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block px-4 sm:px-6 py-4 hover:bg-gray-50 transition-colors duration-200"
+                    >
+                      {listContent}
+                    </a>
+                  </li>
+                );
+              }
+
+              return (
+                <li key={index} className="px-4 sm:px-6 py-4">
+                  {listContent}
+                </li>
+              );
+            })}
+          </ul>
         </div>
 
         {/* ページネーションコントロール */}

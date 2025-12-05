@@ -150,12 +150,46 @@ function Page() {
           </div>
         </section>
 
+        {/* ビデオセクション */}
+        <section className="relative bg-gradient-to-b from-gray-50 to-gray-100 py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto">
+              {/* ビデオコンテナ */}
+              <div className="relative bg-black rounded-lg shadow-2xl overflow-hidden">
+                <video
+                  src="https://dq7c5b6uxkdk2.cloudfront.net/pages/HimawariProjectHeroMovie.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-auto"
+                ></video>
+              </div>
+            </div>
+          </div>
+
+          {/* 下にコンテンツがあることを示すインジケーター */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg
+              className="w-8 h-8 text-gray-400"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </div>
+        </section>
+
+        <NewsSection />
         <BlogSection
           latestPosts={latestPosts}
           featuredPosts={featuredPosts}
           error={error}
         />
-        <NewsSection />
         <section id="profile" className="py-12">
           {/* プロフィールセクション（既存のコード） */}
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">

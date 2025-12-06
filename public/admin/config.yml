@@ -2,7 +2,7 @@ backend:
   name: github
   repo: at-himawari/himawari
   branch: main
-  base_url: https://himawari-cms-oauth.netlify.app # ← NetlifyのURL
+  base_url: https://himawari-cms-oauth.netlify.app
   auth_endpoint: .netlify/functions/auth
   squash_merges: true
 
@@ -16,108 +16,128 @@ media_library:
     apiUrl: https://himawari-cms-oauth.netlify.app/.netlify/functions/s3-handler
 
 collections:
-  - name: "pages"
-    label: "ページ"
+  - name: pages
+    label: ページ
     files:
-      - label: "ライセンス"
-        name: "license"
-        file: "src/content/license.md"
+      - label: ライセンス
+        name: license
+        file: src/content/license.md
         fields:
-          - { label: "Body", name: "body", widget: "markdown" }
-      - label: "プライバシーポリシー"
-        name: "privacy-policy"
-        file: "src/content/privacy-policy.md"
+          - label: Body
+            name: body
+            widget: markdown
+      - label: プライバシーポリシー
+        name: privacy_policy
+        file: src/content/privacy-policy.md
         fields:
-          - { label: "body", name: "body", widget: "markdown" }
+          - label: Body
+            name: body
+            widget: markdown
+      - label: プロジェクトポリシー
+        name: project_policy
+        file: src/content/project-policy.md
+        fields:
+          - label: Body
+            name: body
+            widget: markdown
+      - label: 特定商取引法に基づく表記
+        name: commercial
+        file: src/content/commercial.md
+        fields:
+          - label: Body
+            name: body
+            widget: markdown
 
-      - label: "プロジェクトポリシー"
-        name: "project_policy"
-        file: "src/content/project-policy.md"
-        fields:
-          - { label: "Body", name: "body", widget: "markdown" }
-      - label: "特定商取引法に基づく表記"
-        name: "commercial"
-        file: "src/content/commercial.md"
-        fields:
-          - { label: "Body", name: "body", widget: "markdown" }
-
-  - name: "slides"
-    label: "Slides"
+  - name: slides_collection
+    label: Slides
     files:
-      - file: "src/content/slides.json"
-        label: "Slides Data"
-        name: "slides_data"
+      - file: src/content/slides.json
+        label: Slides Data
+        name: slides_data
         fields:
-          - {
-              label: "Slides",
-              name: "slides",
-              widget: "list",
-              fields:
-                [
-                  { label: "Title", name: "title", widget: "string" },
-                  { label: "Text", name: "text", widget: "string" },
-                  { label: "Image", name: "image", widget: "string" },
-                  { label: "Link", name: "link", widget: "string" },
-                ],
-            }
+          - label: Slides
+            name: slides
+            widget: list
+            fields:
+              - label: Title
+                name: title
+                widget: string
+              - label: Text
+                name: text
+                widget: string
+              - label: Image
+                name: image
+                widget: string
+              - label: Link
+                name: link
+                widget: string
 
-  - name: "blog"
-    label: "ブログ"
-    folder: "src/content/blog/article"
+  - name: blog
+    label: ブログ
+    folder: src/content/blog/article
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
-      - {
-          label: "Categories",
-          name: "categories",
-          widget: "list",
-          required: false,
-        }
-      - { label: "Tags", name: "tags", widget: "list", required: false }
-      - {
-          label: "Cover Image",
-          name: "coverImage",
-          widget: "image",
-          required: false,
-        }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - label: Title
+        name: title
+        widget: string
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - label: Categories
+        name: categories
+        widget: list
+        required: false
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+      - label: Cover Image
+        name: coverImage
+        widget: image
+        required: false
+      - label: Body
+        name: body
+        widget: markdown
 
-  - name: "news"
-    label: "News"
+  - name: news_collection
+    label: News
     files:
-      - file: "src/content/newsdata.json"
-        label: "ニュース"
-        name: "news_data"
+      - file: src/content/newsdata.json
+        label: ニュース
+        name: news_data
         fields:
-          - {
-              label: "News Items",
-              name: "newsItems",
-              widget: "list",
-              fields:
-                [
-                  { label: "Title", name: "title", widget: "string" },
-                  { label: "Date", name: "date", widget: "string" },
-                  { label: "Content", name: "content", widget: "text" },
-                ],
-            }
+          - label: News Items
+            name: newsItems
+            widget: list
+            fields:
+              - label: Title
+                name: title
+                widget: string
+              - label: Date
+                name: date
+                widget: string
+              - label: Content
+                name: content
+                widget: text
 
-  - name: "videos"
-    label: "Videos"
+  - name: videos_collection
+    label: Videos
     files:
-      - file: "src/content/videos.json"
-        label: "Videos Data"
-        name: "videos_data"
+      - file: src/content/videos.json
+        label: Videos Data
+        name: videos_data
         fields:
-          - {
-              label: "Video Items",
-              name: "videoItems",
-              widget: "list",
-              fields:
-                [
-                  { label: "Title", name: "title", widget: "string" },
-                  { label: "Description", name: "description", widget: "text" },
-                  { label: "Video URL", name: "videoUrl", widget: "string" },
-                ],
-            }
+          - label: Video Items
+            name: videoItems
+            widget: list
+            fields:
+              - label: Title
+                name: title
+                widget: string
+              - label: Description
+                name: description
+                widget: text
+              - label: Video URL
+                name: videoUrl
+                widget: string

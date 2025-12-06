@@ -50,7 +50,7 @@ collections:
         fields:
           - {
               label: "Slides",
-              name: "slides",
+              name: "slides1",
               widget: "list",
               fields:
                 [

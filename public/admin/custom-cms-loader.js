@@ -349,16 +349,19 @@ if (window.CMS) {
   CMS.registerMediaLibrary(s3MediaLibrary);
 }
 
-// config.ymlの読み込みとCMSの初期化 (変更なし)
+// config.ymlの読み込みとCMSの初期化 (キャッシュバスティング追加)
 window.addEventListener("DOMContentLoaded", async () => {
   try {
-    const response = await fetch("/admin/config.yml");
+    // キャッシュを回避するためにタイムスタンプを追加
+    const cacheBuster = new Date().getTime();
+    const response = await fetch(`/admin/config.yml?v=${cacheBuster}`);
     if (!response.ok) {
       throw new Error(`Could not load config.yml. Status: ${response.status}`);
     }
     const configText = await response.text();
     // js-yamlライブラリが読み込まれていることを想定
     const config = jsyaml.load(configText);
+    console.log("Loaded config:", config); // デバッグ用
     CMS.init({ config });
   } catch (error) {
     console.error("CMS initialization failed:", error);

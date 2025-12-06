@@ -354,7 +354,14 @@ window.addEventListener("DOMContentLoaded", async () => {
   try {
     // キャッシュを回避するためにタイムスタンプを追加
     const cacheBuster = new Date().getTime();
-    const response = await fetch(`/admin/config.yml?v=${cacheBuster}`);
+    const response = await fetch(`/admin/config.yml?v=${cacheBuster}`, {
+      cache: "no-store",
+      headers: {
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
+      },
+    });
     if (!response.ok) {
       throw new Error(`Could not load config.yml. Status: ${response.status}`);
     }
@@ -362,6 +369,11 @@ window.addEventListener("DOMContentLoaded", async () => {
     // js-yamlライブラリが読み込まれていることを想定
     const config = jsyaml.load(configText);
     console.log("Loaded config:", config); // デバッグ用
+    console.log("Collections count:", config.collections.length);
+    console.log(
+      "Collection names:",
+      config.collections.map((c) => c.name)
+    );
     CMS.init({ config });
   } catch (error) {
     console.error("CMS initialization failed:", error);

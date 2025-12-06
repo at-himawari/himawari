@@ -37,7 +37,7 @@ collections:
           - { label: "Body", name: "body", widget: "markdown" }
       - label: "特定商取引法に基づく表記"
         name: "commercial"
-        file: "src/content/commercial"
+        file: "src/content/commercial.md"
         fields:
           - { label: "Body", name: "body", widget: "markdown" }
 

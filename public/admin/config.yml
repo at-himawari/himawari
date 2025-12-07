@@ -6,9 +6,14 @@ backend:
   auth_endpoint: .netlify/functions/auth
   squash_merges: true
 
-media_folder: "public/uploads"
-public_folder: "/uploads"
+media_folder: ""
+public_folder: ""
 publish_mode: editorial_workflow
+
+media_library:
+  name: s3_signed
+  config:
+    apiUrl: https://himawari-cms-oauth.netlify.app/.netlify/functions/s3-handler
 
 collections:
   - name: blog
@@ -23,6 +28,108 @@ collections:
       - name: date
         label: Publish Date
         widget: datetime
+      - name: categories
+        label: Categories
+        widget: list
+        required: false
+      - name: tags
+        label: Tags
+        widget: list
+        required: false
+      - name: coverImage
+        label: Cover Image
+        widget: image
+        required: false
       - name: body
         label: Body
         widget: markdown
+
+  - name: static_pages
+    label: Static Pages
+    files:
+      - name: license_page
+        label: ライセンス
+        file: src/content/license.md
+        fields:
+          - name: body
+            label: Body
+            widget: markdown
+      - name: privacy_page
+        label: プライバシーポリシー
+        file: src/content/privacy-policy.md
+        fields:
+          - name: body
+            label: Body
+            widget: markdown
+      - name: project_page
+        label: プロジェクトポリシー
+        file: src/content/project-policy.md
+        fields:
+          - name: body
+            label: Body
+            widget: markdown
+      - name: commercial_page
+        label: 特定商取引法に基づく表記
+        file: src/content/commercial.md
+        fields:
+          - name: body
+            label: Body
+            widget: markdown
+
+  - name: site_data
+    label: Site Data
+    files:
+      - name: slides_json
+        file: src/content/slides.json
+        label: Slides Data
+        fields:
+          - name: slides
+            label: Slides
+            widget: list
+            fields:
+              - name: title
+                label: Title
+                widget: string
+              - name: text
+                label: Text
+                widget: string
+              - name: image
+                label: Image
+                widget: string
+              - name: link
+                label: Link
+                widget: string
+      - name: news_json
+        file: src/content/newsdata.json
+        label: ニュース
+        fields:
+          - name: newsItems
+            label: News Items
+            widget: list
+            fields:
+              - name: title
+                label: Title
+                widget: string
+              - name: date
+                label: Date
+                widget: string
+              - name: content
+                label: Content
+                widget: text
+      - name: videos_json
+        file: src/content/videos.json
+        label: Videos Data
+        fields:
+          - name: videoItems
+            label: Video Items
+            widget: list
+            fields:
+              - name: title
+                label: Title
+                widget: string
+              - name: description
+                label: Description
+                widget: text
+              - name: videoUrl
+                label: Video URL
+                widget: string

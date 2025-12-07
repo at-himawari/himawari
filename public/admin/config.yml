@@ -76,29 +76,29 @@ collections:
             label: Body
             widget: markdown
 
-  - name: site_data
-    label: Site Data
-    files:
-      - name: slides_json
-        file: src/content/slides.json
-        label: Slides Data
-        fields:
-          - name: slides
-            label: Slides
-            widget: list
-            fields:
-              - name: title
-                label: Title
-                widget: string
-              - name: text
-                label: Text
-                widget: string
-              - name: image
-                label: Image
-                widget: string
-              - name: link
-                label: Link
-                widget: string
+  # - name: site_data
+  #   label: Site Data
+  #   files:
+  #     - name: slides_json
+  #       file: src/content/slides.json
+  #       label: Slides Data
+  #       fields:
+  #         - name: slides
+  #           label: Slides
+  #           widget: list
+  #           fields:
+  #             - name: title
+  #               label: Title
+  #               widget: string
+  #             - name: text
+  #               label: Text
+  #               widget: string
+  #             - name: image
+  #               label: Image
+  #               widget: string
+  #             - name: link
+  #               label: Link
+  #               widget: string
       - name: news_json
         file: src/content/newsdata.json
         label: ニュース

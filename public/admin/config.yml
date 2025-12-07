@@ -76,29 +76,35 @@ collections:
             label: Body
             widget: markdown
 
-  # - name: site_data
-  #   label: Site Data
-  #   files:
-  #     - name: slides_json
-  #       file: src/content/slides.json
-  #       label: Slides Data
-  #       fields:
-  #         - name: slides
-  #           label: Slides
-  #           widget: list
-  #           fields:
-  #             - name: title
-  #               label: Title
-  #               widget: string
-  #             - name: text
-  #               label: Text
-  #               widget: string
-  #             - name: image
-  #               label: Image
-  #               widget: string
-  #             - name: link
-  #               label: Link
-  #               widget: string
+  # Slides（スライド）
+  - name: site_slides
+    label: Slides Data
+    files:
+      - name: slides_json
+        file: src/content/slides.json
+        label: Slides Data
+        fields:
+          - name: slides
+            label: Slides
+            widget: list
+            fields:
+              - name: title
+                label: Title
+                widget: string
+              - name: text
+                label: Text
+                widget: string
+              - name: image
+                label: Image
+                widget: string
+              - name: link
+                label: Link
+                widget: string
+
+  # ニュース
+  - name: site_news
+    label: ニュース
+    files:
       - name: news_json
         file: src/content/newsdata.json
         label: ニュース
@@ -116,6 +122,11 @@ collections:
               - name: content
                 label: Content
                 widget: text
+
+  # 動画
+  - name: site_videos
+    label: Videos Data
+    files:
       - name: videos_json
         file: src/content/videos.json
         label: Videos Data

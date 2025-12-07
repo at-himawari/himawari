@@ -17,7 +17,7 @@ media_library:
 
 collections:
   - name: blog
-    label: ブログ
+    label: Blog Posts
     folder: src/content/blog/article
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
@@ -45,7 +45,7 @@ collections:
         widget: markdown
 
   - name: static_pages
-    label: 静的ページ
+    label: Static Pages
     files:
       - name: license_page
         label: ライセンス
@@ -77,7 +77,7 @@ collections:
             widget: markdown
 
   - name: site_data
-    label: サイトデータ
+    label: Site Data
     files:
       - name: slides_json
         file: src/content/slides.json

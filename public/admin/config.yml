@@ -1,14 +1,28 @@
 backend:
-  name: test-repo
+  name: github
+  repo: at-himawari/himawari
+  branch: main
+  base_url: https://himawari-cms-oauth.netlify.app
+  auth_endpoint: .netlify/functions/auth
+  squash_merges: true
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
+publish_mode: editorial_workflow
 
 collections:
-  - name: test
-    label: Test
-    folder: content/test
+  - name: blog
+    label: Blog Posts
+    folder: src/content/blog/article
     create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { name: title, label: Title, widget: string }
-      - { name: body, label: Body, widget: text }
+      - name: title
+        label: Title
+        widget: string
+      - name: date
+        label: Publish Date
+        widget: datetime
+      - name: body
+        label: Body
+        widget: markdown

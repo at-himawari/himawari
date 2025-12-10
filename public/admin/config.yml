@@ -2,42 +2,46 @@ backend:
   name: github
   repo: at-himawari/himawari
   branch: main
-  base_url: https://himawari-cms-oauth.netlify.app
-  auth_endpoint: .netlify/functions/auth
+  # カスタムドメイン用の設定
+  # 1. GitHubでOAuth Appを作成
+  # 2. Authorization callback URL: https://at-himawari.com/admin/
+  # 3. 下記のapp_idを実際のClient IDに置き換える
+  auth_type: implicit
+  app_id: "Ov23lio5B5AfeTYHyb5i"
   squash_merges: true
 
-media_folder: ""
-public_folder: ""
+media_folder: "public/images"
+public_folder: "/images"
 publish_mode: editorial_workflow
 
-media_library:
-  name: s3_signed
-  config:
-    apiUrl: https://himawari-cms-oauth.netlify.app/.netlify/functions/s3-handler
+# GitHub Pages環境では外部メディアライブラリを無効化
+# media_library:
+#   name: s3_signed
+#   config:
+#     apiUrl: https://himawari-cms-oauth.netlify.app/.netlify/functions/s3-handler
 
 collections:
-  - name: "pages"
-    label: "ページ"
+  - name: "static_pages"
+    label: "静的ページ"
     files:
-      - label: "ライセンス"
-        name: "license"
+      - name: "license_page"
+        label: "ライセンス"
         file: "src/content/license.md"
         fields:
           - { label: "Body", name: "body", widget: "markdown" }
-      - label: "プライバシーポリシー"
-        name: "privacy-policy"
+      - name: "privacy_page"
+        label: "プライバシーポリシー"
         file: "src/content/privacy-policy.md"
         fields:
-          - { label: "body", name: "body", widget: "markdown" }
-
-      - label: "プロジェクトポリシー"
-        name: "project_policy"
+          - { label: "Body", name: "body", widget: "markdown" }
+      - name: "project_page"
+        label: "プロジェクトポリシー"
         file: "src/content/project-policy.md"
         fields:
           - { label: "Body", name: "body", widget: "markdown" }
-      - label: "特定商取引法に基づく表記"
-        name: "commercial"
-        file: "src/content/commercial"
+      - name: "commercial_page"
+        label: "特定商取引法に基づく表記"
+        file: "src/content/commercial.md"
         fields:
           - { label: "Body", name: "body", widget: "markdown" }
 
@@ -88,35 +92,3 @@ collections:
       - name: body
         label: Body
         widget: markdown
-
-  - name: static_pages
-    label: Static Pages
-    files:
-      - name: license_page
-        label: ライセンス
-        file: src/content/license.md
-        fields:
-          - name: body
-            label: Body
-            widget: markdown
-      - name: privacy_page
-        label: プライバシーポリシー
-        file: src/content/privacy-policy.md
-        fields:
-          - name: body
-            label: Body
-            widget: markdown
-      - name: project_page
-        label: プロジェクトポリシー
-        file: src/content/project-policy.md
-        fields:
-          - name: body
-            label: Body
-            widget: markdown
-      - name: commercial_page
-        label: 特定商取引法に基づく表記
-        file: src/content/commercial.md
-        fields:
-          - name: body
-            label: Body
-            widget: markdown

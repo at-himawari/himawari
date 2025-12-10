@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>GitHub OAuth</title>
+  </head>
+  <body>
+    <script>
+      // GitHub OAuth認証後のコールバック処理
+      (function () {
+        function getParameterByName(name) {
+          name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+          var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+          return results === null
+            ? ""
+            : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        var code = getParameterByName("code");
+        var error = getParameterByName("error");
+
+        if (error) {
+          alert("Error: " + error);
+          window.close();
+          return;
+        }
+
+        if (code) {
+          // 認証コードを親ウィンドウに送信
+          if (window.opener) {
+            window.opener.postMessage(
+              {
+                type: "authorization_code",
+                code: code,
+              },
+              window.location.origin
+            );
+            window.close();
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -349,33 +349,45 @@ if (window.CMS) {
   CMS.registerMediaLibrary(s3MediaLibrary);
 }
 
-// config.ymlの読み込みとCMSの初期化 (キャッシュバスティング追加)
+// GitHub Pages環境用のCMS初期化
 window.addEventListener("DOMContentLoaded", async () => {
   try {
-    // キャッシュを回避するためにタイムスタンプを追加
-    const cacheBuster = new Date().getTime();
-    const response = await fetch(`/admin/config.yml?v=${cacheBuster}`, {
+    // GitHub Pages環境では相対パスでconfig.ymlを読み込み
+    const configPath = window.location.pathname.endsWith("/")
+      ? "./config.yml"
+      : "./admin/config.yml";
+
+    const response = await fetch(configPath, {
       cache: "no-store",
-      headers: {
-        "Cache-Control": "no-cache, no-store, must-revalidate",
-        Pragma: "no-cache",
-        Expires: "0",
-      },
     });
+
     if (!response.ok) {
       throw new Error(`Could not load config.yml. Status: ${response.status}`);
     }
+
     const configText = await response.text();
-    // js-yamlライブラリが読み込まれていることを想定
     const config = jsyaml.load(configText);
-    console.log("Loaded config:", config); // デバッグ用
-    console.log("Collections count:", config.collections.length);
-    console.log(
-      "Collection names:",
-      config.collections.map((c) => c.name)
-    );
+
+    console.log("Loaded config:", config);
+    console.log("Collections count:", config.collections?.length || 0);
+
+    // GitHub OAuth認証の設定
+    if (config.backend?.name === "github") {
+      // GitHub Pages環境用の認証設定
+      config.backend.auth_type = "implicit";
+      config.backend.app_id = "your-github-oauth-app-client-id"; // 実際のClient IDに置き換える
+    }
+
     CMS.init({ config });
   } catch (error) {
     console.error("CMS initialization failed:", error);
+    // エラー情報を画面に表示
+    document.body.innerHTML = `
+      <div style="padding: 20px; font-family: Arial, sans-serif;">
+        <h2>CMS Initialization Error</h2>
+        <p>Error: ${error.message}</p>
+        <p>Please check the browser console for more details.</p>
+      </div>
+    `;
   }
 });

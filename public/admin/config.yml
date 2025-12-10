@@ -46,24 +46,20 @@ collections:
           - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "slides"
-    label: "Slides"
+    label: "スライド"
     files:
-      - file: "src/content/slides.json"
-        label: "Slides Data"
-        name: "slides_data"
+      - name: "slides_data"
+        label: "スライドデータ"
+        file: "src/content/slides.json"
         fields:
-          - {
-              label: "Slides",
-              name: "slides",
-              widget: "list",
-              fields:
-                [
-                  { label: "Title", name: "title", widget: "string" },
-                  { label: "Text", name: "text", widget: "string" },
-                  { label: "Image", name: "image", widget: "string" },
-                  { label: "Link", name: "link", widget: "string" },
-                ],
-            }
+          - label: "Slides"
+            name: "slides"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "text", widget: "string" }
+              - { label: "Image", name: "image", widget: "string" }
+              - { label: "Link", name: "link", widget: "string" }
 
   - name: "blog"
     label: "ブログ"

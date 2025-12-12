@@ -17,6 +17,7 @@
   "dependencies": {
     "@mdx-js/rollup": "^3.1.0",
     "@twemoji/api": "^16.0.1",
+    "glob": "^13.0.0",
     "gray-matter": "^4.0.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

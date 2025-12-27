@@ -1,9 +1,8 @@
 ---
-title: "自己紹介"
+title: 自己紹介
 date: 2024-03-07
-coverImage: "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/スクリーンショット-2024-01-15-20.11.35.png"
+coverImage: https://dq7c5b6uxkdk2.cloudfront.net/posts/images/スクリーンショット-2024-01-15-20.11.35.png
 ---
-
 Himawari Project の羽ばたくエンジニアと申します！
 
 航空機や動画編集、プログラミング、写真など、多岐にわたる趣味を持つ私です。

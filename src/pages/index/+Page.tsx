@@ -157,7 +157,7 @@ function Page() {
               {/* ビデオコンテナ */}
               <div className="relative bg-black rounded-lg shadow-2xl overflow-hidden">
                 <video
-                  src="https://dq7c5b6uxkdk2.cloudfront.net/pages/HimawariProjectHeroMovie.mp4"
+                  src="https://dq7c5b6uxkdk2.cloudfront.net/pages/新春.mp4"
                   autoPlay
                   loop
                   muted

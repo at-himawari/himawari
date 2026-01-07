@@ -2,6 +2,12 @@
   "newsItems": [
     {
       "title": "サービスリリース",
+      "date": "2026.01.07",
+      "content": "議事録メーカーを公開しました！",
+      "link": "https://gijiroku-maker.at-himawari.com/"
+    },
+    {
+      "title": "サービスリリース",
       "date": "2025.11.30",
       "content": "あざらし君@AIを公開しました。友だち登録よろしくお願いします。",
       "link": "/software/line_ai"

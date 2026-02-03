@@ -121,7 +121,6 @@ export default function Page() {
               <ul className="space-y-3 text-gray-600">
                 <TechItem text="Node.js / TypeScript" />
                 <TechItem text="AWS Lambda (Serverless)" />
-                <TechItem text="Amazon DynamoDB" />
                 <TechItem text="Google Gemini API" />
               </ul>
             </div>

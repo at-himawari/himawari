@@ -15,17 +15,44 @@ const VideoProduction: React.FC = () => (
           原則として、開発に使用するソフトウェアはオープンソースであり、GitHubなどのプラットフォームを通じてコードを公開しています。また、開発の進捗や課題も定期的に共有し、コミュニティからのフィードバックを受け入れています。
           しかし、秘匿性の高いアプリケーションを取り扱う場合は、セキュリティやプライバシーの観点から、必要に応じて非公開のリポジトリを使用することもあります。
         </p>
-        <img
-          src="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/software_opensource_and_engineerfirst.png"
-          alt="オープンソース＆エンジニアファースト"
-          className="mt-8 w-full h-auto rounded-lg mb-2"
-        />
       </div>
     </section>
     <section id="videoCost" className="py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold text-orange-500">費用</h2>
         <p className="text-gray-600 text-lg mt-2">Cost</p>
+        <h3 className="text-3xl">LINE@ AI bot</h3>
+        <div className="overflow-x-auto mt-6">
+          <table className="table-auto w-full border-collapse border border-gray-300">
+            <thead className="bg-gray-200">
+              <tr>
+                <th className="border border-gray-300 px-4 py-2 text-left">
+                  サービス
+                </th>
+                <th className="border border-gray-300 px-4 py-2 text-left">
+                  コスト（USD/月）
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-gray-300 px-4 py-2">AWS Lambda</td>
+                <td className="border border-gray-300 px-4 py-2">$0.20</td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 px-4 py-2">
+                  Google Gemini 3 Pro
+                </td>
+                <td className="border border-gray-300 px-4 py-2">$14</td>
+              </tr>
+              <tr className="font-bold">
+                <td className="border border-gray-300 px-4 py-2">合計</td>
+                <td className="border border-gray-300 px-4 py-2">$14.20</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <h3 className="text-3xl">AI面接コーチ導入費用例</h3>
         <p>
           当プロジェクトで作成したアーキテクチャの一例を示します。為替リスクは当プロジェクトでは負担いたしません。
@@ -98,6 +125,9 @@ const VideoProduction: React.FC = () => (
           </div>
         </div>
       </div>
+      <p>
+        ※全ての料金は、概算料金であり、実際のコストは環境や使用量によって異なります。
+      </p>
     </section>
     <section id="videoCost" className="py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

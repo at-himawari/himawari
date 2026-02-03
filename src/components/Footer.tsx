@@ -126,7 +126,7 @@ const Footer: React.FC = () => {
         </a>
       </div>
       <div className="mt-8 text-center text-sm text-gray-400">
-        © 2024-2025 Himawari Project
+        © 2024-2026 Himawari Project
       </div>
     </footer>
   );

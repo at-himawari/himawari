@@ -222,10 +222,10 @@ function Page() {
                     VueやReactなどのフロントエンド技術の他に、PythonやJavaなどのバックエンド技術も扱うフルスタックエンジニア。
                     <br />
                     本プロジェクトでは、AWS, GCP,
-                    Azureなどを使ったプロダクト開発や、Vikeとさくらのインターネットを使ったホームページ開発を行っている。
+                    Azureなどを使ったプロダクト開発や、React+Vikeでホームページ開発を行っている。
                   </p>
                   <p className="mt-2 text-gray-500 text-sm">
-                    趣味：サカナクション、飛行機、カメラ
+                    趣味：飛行機、カメラ
                   </p>
                 </div>
               </div>

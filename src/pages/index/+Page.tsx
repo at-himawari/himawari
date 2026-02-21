@@ -152,7 +152,7 @@ function Page() {
 
         {/* ビデオセクション */}
         <section className="relative bg-gradient-to-b from-gray-50 to-gray-100 py-16">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 mb-12">
             <div className="max-w-5xl mx-auto">
               {/* ビデオコンテナ */}
               <div className="relative bg-black rounded-lg shadow-2xl overflow-hidden">

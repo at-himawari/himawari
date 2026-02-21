@@ -29,7 +29,7 @@ export function data(): HomePageData {
     }
 
     // 最新記事（日付順で上位3件）
-    const latestPosts = allPosts.slice(0, 3);
+    const latestPosts = allPosts.slice(0, 6);
     console.info(`Selected ${latestPosts.length} latest posts`);
 
     // おすすめ記事（スコア順で上位5件）
@@ -74,7 +74,7 @@ export function data(): HomePageData {
       .filter((post): post is PostSummary => post !== null);
 
     console.info(
-      `Successfully processed ${simplifiedLatestPosts.length} latest posts and ${simplifiedFeaturedPosts.length} featured posts`
+      `Successfully processed ${simplifiedLatestPosts.length} latest posts and ${simplifiedFeaturedPosts.length} featured posts`,
     );
 
     return {

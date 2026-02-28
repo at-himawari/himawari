@@ -11,12 +11,12 @@ export interface HomePageData {
   error?: string;
 }
 
-export function data(): HomePageData {
+export async function data(): Promise<HomePageData> {
   try {
     console.info("Loading blog data for homepage...");
 
     // 全記事を取得
-    const allPosts = getPosts();
+    const allPosts = await getPosts();
     console.info(`Loaded ${allPosts.length} total posts`);
 
     if (!allPosts || allPosts.length === 0) {

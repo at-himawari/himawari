@@ -1,59 +1,46 @@
-import fs from "node:fs";
-import path from "node:path";
-import matter from "gray-matter";
-import { createHash } from "node:crypto";
-import type { Post } from "../types/Post";
-import {
-  shouldShowTestPosts,
-  isTestPost,
-  logTestPostsStatus,
-} from "./testPostsManager";
+import { Post } from "../types/Post";
 
-// generateHash関数
-function generateHash(content: string) {
-  return createHash("sha256").update(content).digest("hex").slice(0, 8);
+interface StrapiArticle {
+  id: number;
+  attributes: {
+    slug: string;
+    title: string;
+    date: string;
+    content: string;
+    categories?: unknown[];
+    tags?: unknown[];
+    coverImage?: string;
+  };
 }
 
-const postsDirectory = path.join(process.cwd(), "src/content/blog/article");
+const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
 
-export function getPosts(): Post[] {
-  // 開発環境でのテスト記事表示状態をログ出力
-  logTestPostsStatus();
+export async function getPosts(): Promise<Post[]> {
+  const url =
+    `${STRAPI_URL}/api/articles` +
+    `?sort=date:desc` +
+    `&filters[publishedAt][$notNull]=true` + // 公開記事のみ
+    `&pagination[pageSize]=100`;
 
-  const filenames = fs.readdirSync(postsDirectory);
-  const showTests = shouldShowTestPosts();
+  const response = await fetch(url); // ← Authorizationなし
 
-  const posts = filenames
-    .filter((filename) => {
-      // .mdファイルのみを対象とする
-      if (!filename.endsWith(".md")) return false;
+  if (!response.ok) {
+    throw new Error(`Failed to fetch posts: ${response.statusText}`);
+  }
 
-      // READMEファイルを除外
-      if (filename.toLowerCase() === "readme.md") return false;
+  const { data } = await response.json();
 
-      // テスト記事の表示制御
-      if (isTestPost(filename) && !showTests) {
-        return false;
-      }
+  return data.map((item: StrapiArticle) => {
+    const attrs = item.attributes || item;
 
-      return true;
-    })
-    .map((filename) => {
-      const filePath = path.join(postsDirectory, filename);
-      const rawContent = fs.readFileSync(filePath, "utf8");
-
-      const { content, data } = matter(rawContent);
-      const slug = generateHash(rawContent);
-
-      return {
-        slug,
-        content,
-        ...data,
-      } as Post;
-    });
-
-  // 日付でソート
-  posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
-  return posts;
+    return {
+      slug: attrs.slug ?? "",
+      title: attrs.title ?? "No Title",
+      date: attrs.date ?? "",
+      content: attrs.content ?? "",
+      categories: attrs.categories ?? [],
+      tags: attrs.tags ?? [],
+      coverImage: attrs.coverImage ?? "",
+    };
+  });
 }

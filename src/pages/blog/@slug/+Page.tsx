@@ -53,11 +53,12 @@ export default function Page() {
   return (
     <>
       <Header />
-      <main className="bg-gray-50 py-8">
+      <div className="border-b border-gray-200"></div>
+      <main className="bg-gray-50 py-8 bg-white">
         <div className="container mx-auto px-4 relative">
           <ShareButtons postUrl={postUrl} title={title} />
           <MobileShareButtons postUrl={postUrl} title={title} />
-          <article className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-10">
+          <article className="max-w-3xl mx-auto rounded-lg p-6 md:p-10">
             {coverImage && (
               <img
                 src={coverImage}

@@ -1,8 +1,8 @@
 import { getPosts } from "../../utils/getPosts";
 import { Post } from "../../types/Post";
 
-export function data() {
-  const allPosts = getPosts();
+export async function data() {
+  const allPosts = await getPosts();
 
   // content を除外したメタデータのみを渡す
   const posts: Omit<Post, "content">[] = allPosts.map(

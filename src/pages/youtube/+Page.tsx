@@ -22,14 +22,14 @@ export default function Page() {
           <p className="text-gray-600 text-lg mt-2">
             羽ばたくエンジニア @at_himawari
           </p>
-          <p className="text-gray-700 mt-6">
+          <div className="text-gray-700 mt-6">
             <p>
               ライブ配信したり、飛行機の搭乗動画を撮ったり様々なジャンルでやってます。
             </p>
             <p>コラボ･出演者絶賛募集中です！</p>
             <p>依頼は以下のアドレスまで！</p>
             <p>info.youtube[@]at-himawari.com</p>
-          </p>
+          </div>
         </div>
       </section>
 

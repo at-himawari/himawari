@@ -13,7 +13,7 @@ interface StrapiArticle {
   };
 }
 
-const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
+const STRAPI_URL = "https://strapi-88618746452.asia-northeast1.run.app";
 
 export async function getPosts(): Promise<Post[]> {
   const url =

@@ -215,8 +215,6 @@ function Page() {
                   <p className="mt-4 text-gray-600 leading-relaxed">
                     2022年法政大学理工学部卒。
                     <br />
-                    学生時代にオープンキャンパススタッフとして、映像制作チームを牽引。
-                    <br />
                     新卒で、某ITコンサルティング会社に入社。
                     <br />
                     VueやReactなどのフロントエンド技術の他に、PythonやJavaなどのバックエンド技術も扱うフルスタックエンジニア。
@@ -225,7 +223,7 @@ function Page() {
                     Azureなどを使ったプロダクト開発や、React+Vikeでホームページ開発を行っている。
                   </p>
                   <p className="mt-2 text-gray-500 text-sm">
-                    趣味：飛行機、カメラ
+                    趣味：飛行機、カメラ、旅行、動画編集
                   </p>
                 </div>
               </div>

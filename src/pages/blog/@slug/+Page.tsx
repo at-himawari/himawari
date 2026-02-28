@@ -24,7 +24,7 @@ export default function Page() {
   };
   // サーバーサイドではpageContextから、クライアントサイドではwindow.locationからURLを取得
   const [postUrl, setPostUrl] = useState(
-    `https://at-himawari.com${pageContext.urlOriginal}`
+    `https://at-himawari.com${pageContext.urlOriginal}`,
   );
   useEffect(() => {
     setPostUrl(window.location.href);
@@ -46,7 +46,7 @@ export default function Page() {
   ) {
     console.warn(
       "Security issues detected in content:",
-      securityResult.warnings
+      securityResult.warnings,
     );
   }
 
@@ -76,7 +76,7 @@ export default function Page() {
                 ))}
               </div>
               <p className="text-gray-500 text-start mt-4">
-                投稿日 {new Date(date).toLocaleDateString()}
+                投稿日 {date ? date.split("T")[0].replace(/-/g, "/") : ""}
               </p>
             </header>
             <section className="prose max-w-none">
@@ -129,7 +129,7 @@ function ShareButtons({ postUrl, title }: { postUrl: string; title: string }) {
       <div className="flex flex-col items-center space-y-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-gray-200">
         <a
           href={`https://twitter.com/intent/tweet?url=${postUrl}&text=${encodeURIComponent(
-            title
+            title,
           )}`}
           target="_blank"
           rel="noopener noreferrer"
@@ -173,7 +173,7 @@ function MobileShareButtons({
       const hideThreshold = documentHeight - windowHeight - 200;
 
       setIsVisible(
-        scrollPosition > showThreshold && scrollPosition < hideThreshold
+        scrollPosition > showThreshold && scrollPosition < hideThreshold,
       );
     };
 
@@ -194,7 +194,7 @@ function MobileShareButtons({
         <span className="text-sm font-medium text-gray-700">シェア</span>
         <a
           href={`https://twitter.com/intent/tweet?url=${postUrl}&text=${encodeURIComponent(
-            title
+            title,
           )}`}
           target="_blank"
           rel="noopener noreferrer"

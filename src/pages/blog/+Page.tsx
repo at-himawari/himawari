@@ -4,7 +4,7 @@ import { usePageContext } from "vike-react/usePageContext";
 import { useState, useMemo, useEffect } from "react";
 import { Post } from "../../types/Post";
 
-type PostForList = Omit<Post, 'content'>;
+type PostForList = Omit<Post, "content">;
 
 export default function Page() {
   const pageContext = usePageContext() as { data: { posts: PostForList[] } };
@@ -17,22 +17,23 @@ export default function Page() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [allPosts, setAllPosts] = useState<Post[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-    // 検索入力があった場合に、全文データを非同期で読み込む
+  // 検索入力があった場合に、全文データを非同期で読み込む
   useEffect(() => {
     if (searchQuery && !allPosts) {
       setIsLoading(true);
       // 動的importの代わりに、作成したデータエンドポイントをfetchする
-      fetch('/blog/allPosts.data.json')
-        .then(response => response.json())
-        .then(data => {
+      fetch("/blog/allPosts.data.json")
+        .then((response) => response.json())
+        .then((data) => {
           setAllPosts(data);
-        }).catch(()=>setIsLoading(false));
+        })
+        .catch(() => setIsLoading(false));
     }
-  }, [searchQuery, allPosts,isLoading]);
+  }, [searchQuery, allPosts, isLoading]);
 
   const categories = useMemo(() => {
     if (!initialPosts) return [];
-    const allCategories = initialPosts.flatMap(post => post.categories || []);
+    const allCategories = initialPosts.flatMap((post) => post.categories || []);
     return [...new Set(allCategories)];
   }, [initialPosts]);
 
@@ -40,21 +41,26 @@ export default function Page() {
     const lowercasedQuery = searchQuery.toLowerCase();
 
     if (searchQuery && allPosts) {
-      return allPosts.filter(post => {
+      return allPosts.filter((post) => {
         const matchesSearch =
           post.title.toLowerCase().includes(lowercasedQuery) ||
-          (post.content && post.content.toLowerCase().includes(lowercasedQuery));
-        const matchesCategory = selectedCategory ? post.categories?.includes(selectedCategory) : true;
+          (post.content &&
+            post.content.toLowerCase().includes(lowercasedQuery));
+        const matchesCategory = selectedCategory
+          ? post.categories?.includes(selectedCategory)
+          : true;
         return matchesSearch && matchesCategory;
-      })
+      });
     }
     // 上記以外の場合（検索していない、または全文データ読み込み中）は、
     // initialPosts（本文なし）をフィルタリングする
-    return initialPosts.filter(post => {
+    return initialPosts.filter((post) => {
       const matchesSearch = searchQuery
         ? post.title.toLowerCase().includes(lowercasedQuery)
         : true;
-      const matchesCategory = selectedCategory ? post.categories?.includes(selectedCategory) : true;
+      const matchesCategory = selectedCategory
+        ? post.categories?.includes(selectedCategory)
+        : true;
       return matchesSearch && matchesCategory;
     });
   }, [initialPosts, allPosts, searchQuery, selectedCategory]);
@@ -91,29 +97,32 @@ export default function Page() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          
         </div>
         <div className="flex flex-wrap gap-2 mb-8">
+          <button
+            onClick={() => setSelectedCategory(null)}
+            className={`py-1 px-3 rounded-full text-sm ${
+              selectedCategory === null
+                ? "bg-orange-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          >
+            すべて
+          </button>
+          {categories.map((category) => (
             <button
-              onClick={() => setSelectedCategory(null)}
+              key={category}
+              onClick={() => setSelectedCategory(category)}
               className={`py-1 px-3 rounded-full text-sm ${
-                selectedCategory === null ? "bg-orange-500 text-white" : "bg-gray-200 text-gray-700"
+                selectedCategory === category
+                  ? "bg-orange-500 text-white"
+                  : "bg-gray-200 text-gray-700"
               }`}
             >
-              すべて
+              {category}
             </button>
-            {categories.map(category => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`py-1 px-3 rounded-full text-sm ${
-                  selectedCategory === category ? "bg-orange-500 text-white" : "bg-gray-200 text-gray-700"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+          ))}
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPosts.map((post) => (
@@ -124,14 +133,17 @@ export default function Page() {
             >
               <div className="h-48 overflow-hidden">
                 <img
-                  src={post.coverImage || "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/himawari.png"}
+                  src={
+                    post.coverImage ||
+                    "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/himawari.png"
+                  }
                   alt={post.title}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </div>
               <div className="p-6">
                 <p className="text-gray-500 text-sm mb-2">
-                  {new Date(post.date).toLocaleDateString()}
+                  {post.date ? post.date.split("T")[0].replace(/-/g, "/") : ""}
                 </p>
                 <h2 className="text-xl font-bold text-gray-800 group-hover:text-orange-500 transition-colors duration-300">
                   {post.title}

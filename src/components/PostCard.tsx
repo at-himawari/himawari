@@ -10,6 +10,25 @@ interface PostCardProps {
 const DEFAULT_IMAGE =
   "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/himawari.png";
 
+const formatShortDate = (dateStr?: string) => {
+  if (!dateStr) return "";
+  try {
+    const [y, m, d] = dateStr.split("T")[0].split("-");
+    return `${parseInt(m, 10)}月${parseInt(d, 10)}日`;
+  } catch {
+    return dateStr;
+  }
+};
+
+const formatFullDate = (dateStr?: string) => {
+  if (!dateStr) return "";
+  try {
+    return dateStr.split("T")[0].replace(/-/g, "/");
+  } catch {
+    return dateStr;
+  }
+};
+
 const PostCard = memo(
   function PostCard({
     post,
@@ -29,7 +48,7 @@ const PostCard = memo(
     const handleImageError = useCallback(() => {
       if (!imageError) {
         console.warn(
-          `Failed to load image for post "${post.title}": ${post.coverImage}`
+          `Failed to load image for post "${post.title}": ${post.coverImage}`,
         );
         setImageError(true);
         setImageLoading(false);
@@ -89,10 +108,7 @@ const PostCard = memo(
             <div className="flex-1 p-3 sm:p-4 min-w-0">
               <div className="flex items-start justify-between mb-1.5">
                 <time className="text-xs sm:text-sm text-gray-500 flex-shrink-0">
-                  {new Date(post.date).toLocaleDateString("ja-JP", {
-                    month: "short",
-                    day: "numeric",
-                  })}
+                  {formatShortDate(post.date)}
                 </time>
                 {featured && (
                   <span className="bg-orange-100 text-orange-800 text-xs px-2 py-0.5 rounded-full ml-2 hidden sm:inline">
@@ -150,7 +166,7 @@ const PostCard = memo(
             <div className="p-4 sm:p-6">
               <div className="flex items-center justify-between mb-3">
                 <time className="text-sm text-gray-500">
-                  {new Date(post.date).toLocaleDateString("ja-JP")}
+                  {formatFullDate(post.date)}
                 </time>
               </div>
               <h4 className="text-lg sm:text-xl font-bold text-gray-800 group-hover:text-orange-500 transition-colors duration-200 mb-3 leading-tight">
@@ -200,7 +216,7 @@ const PostCard = memo(
       JSON.stringify(prevProps.post.tags) ===
         JSON.stringify(nextProps.post.tags)
     );
-  }
+  },
 );
 
 export default PostCard;

@@ -1,5 +1,14 @@
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
 
+interface Video {
+  /** 動画のタイトル */
+  title: string;
+  /** 動画の説明文 */
+  description: string;
+  /** YouTubeなどの動画URL */
+  videoUrl: string;
+}
+
 interface StrapiVideoItem {
   id?: number;
   attributes?: {

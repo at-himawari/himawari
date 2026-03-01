@@ -1,6 +1,8 @@
 import { getPosts } from "../../utils/getPosts";
+import { getNewsItem } from "../../utils/getNewsItem";
 import { getFeaturedPosts } from "../../utils/featuredPosts";
 import type { Post } from "../../types/Post";
+import type { NewsItem } from "../../components/NewsSection";
 
 // ホームページ用の軽量版Post型（contentを除外）
 export type PostSummary = Omit<Post, "content">;
@@ -8,6 +10,7 @@ export type PostSummary = Omit<Post, "content">;
 export interface HomePageData {
   latestPosts: PostSummary[];
   featuredPosts: PostSummary[];
+  newsItems: NewsItem[];
   error?: string;
 }
 
@@ -16,7 +19,10 @@ export async function data(): Promise<HomePageData> {
     console.info("Loading blog data for homepage...");
 
     // 全記事を取得
-    const allPosts = await getPosts();
+    const [allPosts, newsItems] = await Promise.all([
+      getPosts(),
+      getNewsItem()
+    ]);
     console.info(`Loaded ${allPosts.length} total posts`);
 
     if (!allPosts || allPosts.length === 0) {
@@ -24,6 +30,7 @@ export async function data(): Promise<HomePageData> {
       return {
         latestPosts: [],
         featuredPosts: [],
+        newsItems,
         error: "記事が見つかりませんでした",
       };
     }
@@ -68,10 +75,10 @@ export async function data(): Promise<HomePageData> {
 
     const simplifiedLatestPosts = latestPosts
       .map(simplifyPost)
-      .filter((post): post is PostSummary => post !== null);
+      .filter((post:PostSummary | null): post is PostSummary => post !== null);
     const simplifiedFeaturedPosts = featuredPosts
       .map(simplifyPost)
-      .filter((post): post is PostSummary => post !== null);
+      .filter((post: PostSummary | null): post is PostSummary => post !== null);
 
     console.info(
       `Successfully processed ${simplifiedLatestPosts.length} latest posts and ${simplifiedFeaturedPosts.length} featured posts`,
@@ -80,6 +87,7 @@ export async function data(): Promise<HomePageData> {
     return {
       latestPosts: simplifiedLatestPosts,
       featuredPosts: simplifiedFeaturedPosts,
+      newsItems,
     };
   } catch (error) {
     console.error("Failed to load blog data for homepage:", error);
@@ -96,6 +104,7 @@ export async function data(): Promise<HomePageData> {
     return {
       latestPosts: [],
       featuredPosts: [],
+      newsItems: [],
       error:
         "ブログデータの読み込みに失敗しました。しばらく時間をおいて再度お試しください。",
     };

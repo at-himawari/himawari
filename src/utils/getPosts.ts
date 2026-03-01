@@ -39,7 +39,6 @@ export async function getPosts(): Promise<Post[]> {
     const response = await fetch(
       `${STRAPI_URL}/api/articles?sort=date:desc&populate=*`,
     );
-    console.log("Strapiからのレスポンス:", response);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch posts: ${response.statusText}`);

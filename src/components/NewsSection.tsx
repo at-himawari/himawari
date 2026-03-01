@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import newsData from "../content/newsdata.json";
 
 export interface NewsItem {
   title: string;
@@ -7,9 +6,11 @@ export interface NewsItem {
   content: string;
   link?: string;
 }
+interface NewsSectionProps {
+  newsItems: NewsItem[];
+}
 
-const NewsSection: React.FC = () => {
-  const newsItems: NewsItem[] = newsData.newsItems || [];
+const NewsSection: React.FC<NewsSectionProps> = ({ newsItems = [] }) => {
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -18,7 +19,7 @@ const NewsSection: React.FC = () => {
       <section id="news" className="py-12 bg-gray-100">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-bold text-gray-800">ニュース</h3>
-          <p className="mt-6">ニュースを読み込んでいます...</p>
+          <p className="mt-6 text-gray-500">現在、お知らせはありません。</p>
         </div>
       </section>
     );

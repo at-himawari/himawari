@@ -49,7 +49,7 @@ const useTypewriter = (
 
 function Page() {
   const pageContext = usePageContext();
-  const { latestPosts, featuredPosts, error } =
+  const { latestPosts, featuredPosts,newsItems, error } =
     pageContext.data as HomePageData;
 
   // キャッチコピーを設定
@@ -184,7 +184,7 @@ function Page() {
           </div>
         </section>
 
-        <NewsSection />
+        <NewsSection newsItems={newsItems} />
         <BlogSection
           latestPosts={latestPosts}
           featuredPosts={featuredPosts}

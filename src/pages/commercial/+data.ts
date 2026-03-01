@@ -1,18 +1,10 @@
-import fs from "node:fs";
-import path from "node:path";
-import matter from "gray-matter";
+// 修正後
+import { getPageContent } from "../../utils/getPages";
 
-export function data() {
-  const filePath = path.join(
-    process.cwd(),
-    "src",
-    "content",
-    "commercial.md"
-  );
-  const fileRawContent = fs.readFileSync(filePath, "utf-8");
-
-  const { content } = matter(fileRawContent);
+export async function data() {
+  // Strapiでslugを "commercial" として登録したデータを取得
+  const content = await getPageContent("commercial");
   return {
-      content,
+    content,
   };
 }

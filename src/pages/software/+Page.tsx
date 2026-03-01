@@ -52,6 +52,7 @@ const VideoProduction: React.FC = () => (
             </tbody>
           </table>
         </div>
+        <p className="my-6"></p>
 
         <h3 className="text-3xl">AI面接コーチ導入費用例</h3>
         <p>
@@ -124,10 +125,10 @@ const VideoProduction: React.FC = () => (
             </table>
           </div>
         </div>
+        <p>
+          ※全ての料金は、概算料金であり、実際のコストは環境や使用量によって異なります。
+        </p>
       </div>
-      <p>
-        ※全ての料金は、概算料金であり、実際のコストは環境や使用量によって異なります。
-      </p>
     </section>
     <section id="videoCost" className="py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

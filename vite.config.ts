@@ -47,7 +47,8 @@ export default defineConfig({
   publicDir: "public",
   server: {
     fs: {
-      strict: false,
+      strict: true,
+      allow:["src", "public", "node_modules"]
     },
   },
 });

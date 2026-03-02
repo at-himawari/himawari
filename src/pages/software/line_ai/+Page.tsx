@@ -86,6 +86,26 @@ export default function Page() {
             description="使いすぎ防止の制限機能付き。必要な分だけ使えるサブスクリプションにも対応。"
           />
         </section>
+        {/* --- Usage / FAQ (Card) --- */}
+        <section
+          className="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 md:p-10 animate-fade-in"
+          style={{ animationDelay: "0.6s" }}
+        >
+          <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">
+            3ステップで開始
+          </h2>
+          <div className="space-y-4 max-w-2xl mx-auto">
+            <Step
+              number={1}
+              text="「友だち追加」ボタン、またはQRコードから登録"
+            />
+            <Step number={2} text="トーク画面で、AIに聞きたいことを送信" />
+            <Step
+              number={3}
+              text="画像を送ると、その内容についてAIがコメント"
+            />
+          </div>
+        </section>
 
         {/* --- Tech Stack (Card) --- */}
         <section
@@ -155,27 +175,6 @@ export default function Page() {
               </svg>
               GitHubでソースコードを見る
             </a>
-          </div>
-        </section>
-
-        {/* --- Usage / FAQ (Card) --- */}
-        <section
-          className="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 md:p-10 animate-fade-in"
-          style={{ animationDelay: "0.6s" }}
-        >
-          <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">
-            3ステップで開始
-          </h2>
-          <div className="space-y-4 max-w-2xl mx-auto">
-            <Step
-              number={1}
-              text="「友だち追加」ボタン、またはQRコードから登録"
-            />
-            <Step number={2} text="トーク画面で、AIに聞きたいことを送信" />
-            <Step
-              number={3}
-              text="画像を送ると、その内容についてAIがコメント"
-            />
           </div>
         </section>
       </div>

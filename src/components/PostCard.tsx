@@ -42,7 +42,7 @@ const PostCard = memo(
       "bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200";
 
     const cardClasses = compact
-      ? `flex ${baseCardClasses} h-24 sm:h-28`
+      ? `flex ${baseCardClasses} min-h-24 sm:min-h-28`
       : `${baseCardClasses} max-w-sm mx-auto`;
 
     const handleImageError = useCallback(() => {

@@ -86,25 +86,11 @@ const Footer: React.FC = () => {
       {/* SNS Links */}
       <div className="mt-8 flex justify-center space-x-6 text-2xl">
         <a
-          href="https://x.com/at_himawari"
-          className="hover:text-gray-400"
-          aria-label="X"
-        >
-          <FaXTwitter />
-        </a>
-        <a
           href="https://github.com/at-himawari"
           className="hover:text-gray-400"
           aria-label="GitHub"
         >
           <FaGithub />
-        </a>
-        <a
-          href="https://www.instagram.com/at_himawari/profilecard/?igsh=MWV5ZjV3dGh4bGNrcQ=="
-          className="hover:text-gray-400"
-          aria-label="Instagram"
-        >
-          <FaInstagram />
         </a>
         <a
           href="https://www.youtube.com/@at_himawari"

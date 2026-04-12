@@ -50,7 +50,7 @@ export async function getPosts(): Promise<Post[]> {
     const { data } = (await response.json()) as StrapiResponse;
 
     if (!Array.isArray(data)) {
-      console.error("Strapiからのレスポンス形式が想定と異なります:", data);
+      console.warn("Strapiからのレスポンス形式が想定と異なります");
       return [];
     }
 
@@ -84,9 +84,9 @@ export async function getPosts(): Promise<Post[]> {
     });
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Error fetching posts from Strapi:", error.message);
+      console.warn("Posts are unavailable from Strapi:", error.message);
     } else {
-      console.error("Unknown error fetching posts from Strapi:", error);
+      console.warn("Posts are unavailable from Strapi");
     }
     return [];
   }

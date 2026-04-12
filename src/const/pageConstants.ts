@@ -9,4 +9,4 @@ export const twitterCard = "summary";
 export const twitterSite = "@at_himawari";
 export const postUrl = "https://at-himawari.com";
 export const selector =
-  ".container p,.container button.text-sm,h1,h2,h3,h4,h5,h6,span,li,a > *:not(div)";
+  ".container p,.container button.text-sm,h1,h2,h3,h4,h5,h6,li,a > *:not(div)";

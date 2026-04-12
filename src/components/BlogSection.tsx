@@ -16,7 +16,6 @@ const BlogSection = memo(
   }: BlogSectionProps) {
     // エラー状態のハンドリング
     if (error) {
-      console.error("BlogSection error:", error);
       return (
         <section className="py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-gray-50 to-gray-100">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">

@@ -16,7 +16,8 @@ export async function getPageContent(slug: string): Promise<string> {
     // 該当するslugのデータがあればそのcontentを返す
     return data[0]?.attributes?.content || data[0]?.content || "内容がありません。";
   } catch (error) {
-    console.error(`Error fetching page ${slug}:`, error);
+    const message = error instanceof Error ? error.message : "unknown error";
+    console.warn(`Page "${slug}" is unavailable from Strapi:`, message);
     return "データの取得に失敗しました。";
   }
 }

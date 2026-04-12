@@ -26,12 +26,10 @@ export async function data(): Promise<HomePageData> {
     console.info(`Loaded ${allPosts.length} total posts`);
 
     if (!allPosts || allPosts.length === 0) {
-      console.warn("No posts found");
       return {
         latestPosts: [],
         featuredPosts: [],
         newsItems,
-        error: "記事が見つかりませんでした",
       };
     }
 
@@ -47,15 +45,10 @@ export async function data(): Promise<HomePageData> {
     const simplifyPost = (post: Post): PostSummary | null => {
       try {
         if (!post) {
-          console.warn("Null or undefined post encountered");
           return null;
         }
 
         if (!post.slug || !post.title) {
-          console.warn("Post missing required fields:", {
-            slug: post.slug,
-            title: post.title,
-          });
           return null;
         }
 
@@ -68,7 +61,8 @@ export async function data(): Promise<HomePageData> {
           coverImage: post.coverImage,
         };
       } catch (error) {
-        console.error("Error simplifying post:", post, error);
+        const message = error instanceof Error ? error.message : "unknown error";
+        console.warn("Post summary could not be created:", message);
         return null;
       }
     };
@@ -90,23 +84,13 @@ export async function data(): Promise<HomePageData> {
       newsItems,
     };
   } catch (error) {
-    console.error("Failed to load blog data for homepage:", error);
-
-    // エラーの詳細をログに記録
-    if (error instanceof Error) {
-      console.error("Error details:", {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-      });
-    }
+    const message = error instanceof Error ? error.message : "unknown error";
+    console.warn("Homepage blog data is unavailable:", message);
 
     return {
       latestPosts: [],
       featuredPosts: [],
       newsItems: [],
-      error:
-        "ブログデータの読み込みに失敗しました。しばらく時間をおいて再度お試しください。",
     };
   }
 }

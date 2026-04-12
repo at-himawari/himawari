@@ -59,29 +59,30 @@ const useTypewriter = (
   const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    const characters = Array.from(text);
+    let timeout: number | undefined;
 
     // 開始遅延
-    const startTimeout = setTimeout(() => {
+    const startTimeout = window.setTimeout(() => {
       setIsTyping(true);
-      let currentIndex = 0;
 
-      const typeChar = () => {
-        if (currentIndex < text.length) {
-          setDisplayText(text.substring(0, currentIndex + 1));
-          currentIndex++;
-          timeout = setTimeout(typeChar, speed);
+      const typeChar = (currentIndex: number) => {
+        if (currentIndex < characters.length) {
+          setDisplayText(characters.slice(0, currentIndex + 1).join(""));
+          timeout = window.setTimeout(() => typeChar(currentIndex + 1), speed);
         } else {
           setIsTyping(false);
         }
       };
 
-      typeChar();
+      typeChar(0);
     }, delay);
 
     return () => {
       clearTimeout(startTimeout);
-      clearTimeout(timeout);
+      if (timeout) {
+        clearTimeout(timeout);
+      }
     };
   }, [text, speed, delay]);
 
@@ -146,7 +147,10 @@ function Page({ data }: { data: HomePageData }) {
                 <FaSearch size={20} />
               </div>
               <div className="flex-1 h-12 flex items-center px-2 overflow-hidden">
-                <span className="text-xl md:text-2xl text-gray-800 font-medium whitespace-nowrap">
+                <span
+                  className="text-xl md:text-2xl text-gray-800 font-medium whitespace-nowrap"
+                  data-rubyful-ignore="true"
+                >
                   {displayText}
                   {/* 点滅するカーソル */}
                   <span

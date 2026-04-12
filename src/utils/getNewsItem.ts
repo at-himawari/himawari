@@ -23,7 +23,7 @@ export async function getNewsItem(): Promise<NewsItem[]> {
   try {
     // コレクション名が「news」の場合（環境に合わせて変更してください）
     const response = await fetch(`${STRAPI_URL}/api/news-items?sort=date:desc`);
-    
+
     if (!response.ok) {
       throw new Error(`Failed to fetch news: ${response.statusText}`);
     }
@@ -46,7 +46,8 @@ export async function getNewsItem(): Promise<NewsItem[]> {
       };
     });
   } catch (error) {
-    console.error("Error fetching news from Strapi:", error);
+    const message = error instanceof Error ? error.message : "unknown error";
+    console.warn("News items are unavailable from Strapi:", message);
     return [];
   }
 }

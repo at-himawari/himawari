@@ -56,7 +56,8 @@ export async function getVideos(): Promise<Video[]> {
       };
     });
   } catch (error) {
-    console.error("Error fetching videos from Strapi:", error);
+    const message = error instanceof Error ? error.message : "unknown error";
+    console.warn("Videos are unavailable from Strapi:", message);
     return [];
   }
 }

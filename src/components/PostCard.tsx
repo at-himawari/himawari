@@ -13,7 +13,7 @@ const DEFAULT_IMAGE =
 const formatShortDate = (dateStr?: string) => {
   if (!dateStr) return "";
   try {
-    const [y, m, d] = dateStr.split("T")[0].split("-");
+    const [, m, d] = dateStr.split("T")[0].split("-");
     return `${parseInt(m, 10)}月${parseInt(d, 10)}日`;
   } catch {
     return dateStr;

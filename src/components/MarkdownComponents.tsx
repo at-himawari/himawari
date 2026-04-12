@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // Markdownの表示カスタマイズ
 export const markdownComponents = {
   // Existing Markdown elements

@@ -1,6 +1,6 @@
 # Himawari ブログ
 
-Himawari は、React + TypeScript + Vite を使用して構築された個人ブログ・ポートフォリオサイトです。静的サイト生成（SSG）により高速で SEO フレンドリーなサイトを実現しています。
+Himawari は、Next.js + React + TypeScript を使用して構築された個人ブログ・ポートフォリオサイトです。App Router により高速で SEO フレンドリーなサイトを実現しています。
 
 ## ✨ 主な機能
 
@@ -8,16 +8,15 @@ Himawari は、React + TypeScript + Vite を使用して構築された個人ブ
 - 🔒 **セキュリティ重視**: XSS 攻撃を防ぐ多層防御システム
 - 🎨 **Tailwind CSS**: 美しいレスポンシブデザイン
 - 📱 **CMS 統合**: Decap CMS による直感的なコンテンツ管理
-- ⚡ **高速表示**: Vite による最適化されたビルド
+- ⚡ **高速表示**: Next.js による最適化されたビルド
 - 🌐 **SEO 最適化**: メタタグ、OpenGraph 対応
 
 ## 🚀 技術スタック
 
 ### コアフレームワーク
 
-- **Vike** (旧 vite-plugin-ssr) - フルスタックフレームワーク
+- **Next.js** - App Router ベースのフルスタックフレームワーク
 - **React 19** + **TypeScript** - UI フレームワークと型安全性
-- **Vite** - ビルドツールと開発サーバー
 
 ### スタイリング・UI
 
@@ -294,7 +293,7 @@ npm run build
 
 ## 🙏 謝辞
 
-- [Vike](https://vike.dev/) - 素晴らしい SSG フレームワーク
+- [Next.js](https://nextjs.org/) - React フレームワーク
 - [ReactMarkdown](https://github.com/remarkjs/react-markdown) - Markdown レンダリング
 - [Tailwind CSS](https://tailwindcss.com/) - 美しい CSS フレームワーク
 - [Decap CMS](https://decapcms.org/) - 使いやすい CMS

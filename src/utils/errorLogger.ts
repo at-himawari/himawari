@@ -372,8 +372,9 @@ export const logger = {
     duration: number,
     context?: Record<string, unknown>
   ) => {
-    const level = duration > 1000 ? LogLevel.WARN : LogLevel.INFO;
-    errorLogger.log(level, `Performance: ${operation} took ${duration}ms`, {
+    const logPerformance =
+      duration > 1000 ? errorLogger.warn.bind(errorLogger) : errorLogger.info.bind(errorLogger);
+    logPerformance(`Performance: ${operation} took ${duration}ms`, {
       operation,
       duration,
       ...context,

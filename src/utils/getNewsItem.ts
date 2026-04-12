@@ -1,6 +1,9 @@
 import type { NewsItem } from "../components/NewsSection";
 
-const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
+const STRAPI_URL =
+  process.env.NEXT_PUBLIC_STRAPI_URL ||
+  process.env.VITE_STRAPI_URL ||
+  "http://localhost:1337";
 
 interface StrapiNewsItem {
   id?: number;

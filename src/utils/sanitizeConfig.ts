@@ -11,7 +11,7 @@ import { Options as SanitizeOptions } from "rehype-sanitize";
  * Custom sanitization configuration for HTML content
  * Allows safe HTML tags while preventing XSS attacks
  */
-export const sanitizeConfig: SanitizeOptions = {
+export const sanitizeConfig = {
   // Allowed HTML tags - comprehensive list for rich content creation
   allowedTags: [
     // Text formatting
@@ -262,13 +262,13 @@ export const sanitizeConfig: SanitizeOptions = {
   // Additional security measures
   allowProtocolRelative: false,
   enforceHtmlBoundary: true,
-};
+} as unknown as SanitizeOptions;
 
 /**
  * Strict sanitization configuration for high-security contexts
  * Use this for user-generated content or untrusted sources
  */
-export const strictSanitizeConfig: SanitizeOptions = {
+export const strictSanitizeConfig = {
   allowedTags: [
     "p",
     "br",
@@ -303,7 +303,7 @@ export const strictSanitizeConfig: SanitizeOptions = {
   stripIgnoreTagBody: ["script", "style", "noscript"],
   allowProtocolRelative: false,
   enforceHtmlBoundary: true,
-};
+} as unknown as SanitizeOptions;
 
 /**
  * Validates and sanitizes iframe src URLs

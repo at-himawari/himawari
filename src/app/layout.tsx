@@ -73,12 +73,12 @@ export default function RootLayout({
             `,
           }}
         />
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6651283997191475"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        ></script>
+
         <Script
           src="https://rubyful-v2.s3.ap-northeast-1.amazonaws.com/v2/rubyful.js?t=20250507022654"
           strategy="afterInteractive"

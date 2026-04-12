@@ -78,7 +78,7 @@ export class MarkdownErrorHandler {
 
     // Step 1: Validate and correct HTML structure
     const htmlValidation = this.validateAndCorrectHTML(content);
-    let processedContent = htmlValidation.correctedHTML || content;
+    const processedContent = htmlValidation.correctedHTML || content;
 
     if (!htmlValidation.isValid) {
       this.logError({
@@ -192,8 +192,6 @@ export class MarkdownErrorHandler {
    */
   private findUnclosedTags(content: string): string[] {
     const openTags: string[] = [];
-    const unclosedTags: string[] = [];
-
     // Self-closing tags that don't need closing
     const selfClosingTags = new Set([
       "img",
@@ -421,9 +419,9 @@ export class MarkdownErrorHandler {
    */
   private renderPlainText(content: string): string {
     // Remove HTML tags and markdown syntax
-    let plainText = content
+    const plainText = content
       .replace(/<[^>]*>/g, "") // Remove HTML tags
-      .replace(/[#*_`~\[\]()]/g, "") // Remove markdown syntax
+      .replace(/[#*_`~[\]()]/g, "") // Remove markdown syntax
       .replace(/\n{3,}/g, "\n\n") // Normalize line breaks
       .trim();
 

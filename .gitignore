@@ -12,6 +12,8 @@ coverage
 node_modules
 dist
 dist-ssr
+.next
+out
 *.local
 
 # Editor directories and files
@@ -28,6 +30,6 @@ dist-ssr
 public/content/blog/index.json
 public/content/blog/json/
 
-# Vike build artifacts
+# Build artifacts
 **/*.build-*.js
 **/*.build-*.mjs

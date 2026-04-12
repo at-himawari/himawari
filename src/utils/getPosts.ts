@@ -1,7 +1,10 @@
 // src/utils/getPosts.ts (Strapi v4/v5 リレーション対応・認証なし版)
 import type { Post } from "../types/Post";
 
-const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
+const STRAPI_URL =
+  process.env.NEXT_PUBLIC_STRAPI_URL ||
+  process.env.VITE_STRAPI_URL ||
+  "http://localhost:1337";
 
 // Category/Tagの型定義
 interface StrapiTerm {

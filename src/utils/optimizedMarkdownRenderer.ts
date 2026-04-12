@@ -31,7 +31,7 @@ async function lazyImport<T>(key: keyof typeof lazyImports): Promise<T> {
   const module = await lazyImports[key]();
   const result = module.default || module;
   importCache.set(key, result);
-  return result;
+  return result as T;
 }
 
 /**
@@ -247,6 +247,9 @@ export const performanceUtils = {
     const result = await renderFn();
     const end = performance.now();
     const duration = end - start;
+    if (process.env.NODE_ENV === "development") {
+      console.debug(`${label} completed in ${duration.toFixed(2)}ms`);
+    }
 
     return { result, duration };
   },

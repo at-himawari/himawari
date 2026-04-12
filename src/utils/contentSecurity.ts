@@ -84,7 +84,7 @@ export class ContentSecurityValidator {
     // Sanitize style attributes
     sanitized = sanitized.replace(
       /style\s*=\s*["']([^"']*)["']/gi,
-      (match, styleContent) => {
+      (_match, styleContent) => {
         const sanitizedStyle = securityUtils.sanitizeStyle(styleContent);
         return `style="${sanitizedStyle}"`;
       }

@@ -129,7 +129,7 @@ export const SafeMarkdownRenderer: React.FC<SafeMarkdownRendererProps> = ({
 
       try {
         // Try optimized rendering first for better performance
-        const { result: optimizedContent, duration } =
+        const { result: optimizedContent } =
           await performanceUtils.measureRenderTime(
             () =>
               renderMarkdownOptimized(content, {

@@ -130,7 +130,7 @@ function getRecencyScore(dateString: string): number {
     }
 
     return Math.max(0, 1 - daysDiff / 365);
-  } catch (error) {
+  } catch {
     console.warn(`Invalid date format: ${dateString}`);
     return 0;
   }

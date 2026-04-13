@@ -17,6 +17,12 @@ import rehypeSanitize from "rehype-sanitize";
 import { sanitizeConfig } from "../../../utils/sanitizeConfig";
 import { markdownComponents } from "../../../components/MarkdownComponents";
 
+declare global {
+  interface Window {
+    adsbygoogle?: unknown[];
+  }
+}
+
 // コンポーネント本体
 export default function Page({
   data,
@@ -93,6 +99,7 @@ export default function Page({
                 {securityResult.content}
               </ReactMarkdown>
             </section>
+            <InArticleAd />
           </article>
         </div>
       </main>
@@ -214,6 +221,32 @@ function MobileShareButtons({
           <HatenaIcon size={18} />
         </a>
       </div>
+    </div>
+  );
+}
+
+function InArticleAd() {
+  useEffect(() => {
+    try {
+      window.adsbygoogle = window.adsbygoogle || [];
+      window.adsbygoogle.push({});
+    } catch (error) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn("Failed to load in-article ad:", error);
+      }
+    }
+  }, []);
+
+  return (
+    <div className="my-10">
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block", textAlign: "center" }}
+        data-ad-layout="in-article"
+        data-ad-format="fluid"
+        data-ad-client="ca-pub-6651283997191475"
+        data-ad-slot="4402805704"
+      />
     </div>
   );
 }

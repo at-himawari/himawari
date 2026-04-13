@@ -7,6 +7,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import NewsSection from "../../components/NewsSection";
 import BlogSection from "../../components/BlogSection";
+import GoogleAd from "../../components/GoogleAd";
 import type { HomePageData } from "./+data";
 
 const featuredProducts = [
@@ -269,6 +270,16 @@ function Page({ data }: { data: HomePageData }) {
                 </div>
               )}
             </div>
+          </div>
+        </section>
+
+        <section className="bg-white py-8">
+          <div className="container mx-auto px-4">
+            <GoogleAd
+              slot="4759075102"
+              format="auto"
+              fullWidthResponsive
+            />
           </div>
         </section>
 

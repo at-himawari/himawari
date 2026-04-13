@@ -16,12 +16,7 @@ import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
 import { sanitizeConfig } from "../../../utils/sanitizeConfig";
 import { markdownComponents } from "../../../components/MarkdownComponents";
-
-declare global {
-  interface Window {
-    adsbygoogle?: unknown[];
-  }
-}
+import GoogleAd from "../../../components/GoogleAd";
 
 // コンポーネント本体
 export default function Page({
@@ -226,26 +221,13 @@ function MobileShareButtons({
 }
 
 function InArticleAd() {
-  useEffect(() => {
-    try {
-      window.adsbygoogle = window.adsbygoogle || [];
-      window.adsbygoogle.push({});
-    } catch (error) {
-      if (process.env.NODE_ENV === "development") {
-        console.warn("Failed to load in-article ad:", error);
-      }
-    }
-  }, []);
-
   return (
     <div className="my-10">
-      <ins
-        className="adsbygoogle"
+      <GoogleAd
+        slot="4402805704"
+        layout="in-article"
+        format="fluid"
         style={{ display: "block", textAlign: "center" }}
-        data-ad-layout="in-article"
-        data-ad-format="fluid"
-        data-ad-client="ca-pub-6651283997191475"
-        data-ad-slot="4402805704"
       />
     </div>
   );

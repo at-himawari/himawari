@@ -273,6 +273,7 @@ function Page({ data }: { data: HomePageData }) {
           </div>
         </section>
 
+        <MainPageAd />
         <NewsSection newsItems={newsItems} />
         <MainPageAd />
         <BlogSection
@@ -280,6 +281,7 @@ function Page({ data }: { data: HomePageData }) {
           featuredPosts={featuredPosts}
           error={error}
         />
+        <MainPageAd compact />
         <section id="profile" className="py-12">
           {/* プロフィールセクション（既存のコード） */}
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -325,9 +327,12 @@ function Page({ data }: { data: HomePageData }) {
 
 export default Page;
 
-function MainPageAd() {
+function MainPageAd({ compact = false }: { compact?: boolean }) {
   return (
-    <section className="bg-white py-8" aria-label="広告">
+    <section
+      className={`bg-white ${compact ? "py-6" : "py-8"}`}
+      aria-label="広告"
+    >
       <div className="container mx-auto px-4">
         <div className="mx-auto min-h-[120px] max-w-5xl">
           <GoogleAd

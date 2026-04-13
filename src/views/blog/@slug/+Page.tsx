@@ -53,6 +53,9 @@ export default function Page({
   }
 
   const adPlacement = splitContentForAd(securityResult.content);
+  const showEndAd = Boolean(
+    adPlacement.after && adPlacement.after.length >= 1200,
+  );
 
   return (
     <>
@@ -90,6 +93,7 @@ export default function Page({
                 <MarkdownContent content={adPlacement.after} />
               )}
             </section>
+            {showEndAd && <ArticleEndAd />}
           </article>
         </div>
       </main>
@@ -287,6 +291,19 @@ function InArticleAd() {
         style={{ display: "block", textAlign: "center" }}
       />
     </div>
+  );
+}
+
+function ArticleEndAd() {
+  return (
+    <aside className="mt-12 border-t border-gray-100 pt-8" aria-label="広告">
+      <GoogleAd
+        slot="4402805704"
+        layout="in-article"
+        format="fluid"
+        style={{ display: "block", textAlign: "center" }}
+      />
+    </aside>
   );
 }
 

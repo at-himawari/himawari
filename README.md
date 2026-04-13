@@ -1,299 +1,212 @@
-# Himawari ブログ
+# Himawari
 
-Himawari は、Next.js + React + TypeScript を使用して構築された個人ブログ・ポートフォリオサイトです。App Router により高速で SEO フレンドリーなサイトを実現しています。
+Himawari は、Next.js App Router、React、TypeScript で構築されたポートフォリオ兼ブログサイトです。トップページ、ブログ、制作実績、サービス紹介、動画関連ページ、LINE AI サービスページを提供します。
 
-## ✨ 主な機能
+コンテンツは主に Strapi API から取得し、API が利用できない環境でも空データへフォールバックしてビルドできるようになっています。
 
-- 📝 **Markdown + HTML サポート**: リッチなコンテンツ作成が可能
-- 🔒 **セキュリティ重視**: XSS 攻撃を防ぐ多層防御システム
-- 🎨 **Tailwind CSS**: 美しいレスポンシブデザイン
-- 📱 **CMS 統合**: Decap CMS による直感的なコンテンツ管理
-- ⚡ **高速表示**: Next.js による最適化されたビルド
-- 🌐 **SEO 最適化**: メタタグ、OpenGraph 対応
+## 主な機能
 
-## 🚀 技術スタック
+- トップページ: プロダクト紹介、ニュース、ブログ、プロフィールを表示
+- ニュース: Strapi の `news-items` から取得し、トップページでページネーション表示
+- ブログ: Strapi の `articles` から取得し、一覧と記事詳細を表示
+- 動画: Strapi の `video-items` から取得
+- 固定ページ: `project`、`commercial`、`software`、`license`、`privacy` などを Strapi から取得
+- Markdown/HTML レンダリング: `react-markdown`、`rehype-raw`、`rehype-sanitize`、`remark-gfm`、`remark-math`、`rehype-katex` を使用
+- セキュリティ: HTML サニタイズ、Markdown エラーハンドリング、危険なコンテンツの検証
+- テスト: Vitest + Testing Library によるコンポーネント、Markdown、CMS 互換、セキュリティ、パフォーマンステスト
 
-### コアフレームワーク
+## 技術スタック
 
-- **Next.js** - App Router ベースのフルスタックフレームワーク
-- **React 19** + **TypeScript** - UI フレームワークと型安全性
+- Next.js 15
+- React 19
+- TypeScript
+- Tailwind CSS
+- React Markdown
+- Vitest
+- Testing Library
+- ESLint
 
-### スタイリング・UI
+## セットアップ
 
-- **Tailwind CSS** - ユーティリティファースト CSS
-- **@tailwindcss/typography** - プロースコンテンツ用プラグイン
-- **PostCSS** + **Autoprefixer** - CSS 処理
+### 必要なもの
 
-### コンテンツ・Markdown
-
-- **ReactMarkdown** - React での Markdown レンダリング
-- **rehype-raw** - HTML タグサポート
-- **rehype-sanitize** - セキュリティサニタイゼーション
-- **remark-gfm** - GitHub Flavored Markdown
-- **remark-math** + **rehype-katex** - 数式レンダリング
-
-## 📖 ドキュメント
-
-### HTML コンテンツ使用ガイド
-
-Markdown 内で HTML タグを安全に使用するための包括的なドキュメントを用意しています：
-
-- **[📚 ドキュメント概要](docs/README.md)** - 全ドキュメントの概要
-- **[🏷️ HTML タグ使用ガイド](docs/HTML_USAGE_GUIDE.md)** - HTML タグの使用方法と実例
-- **[🔒 セキュリティガイドライン](docs/SECURITY_GUIDELINES.md)** - セキュリティ対策と制限事項
-- **[🔧 トラブルシューティング](docs/TROUBLESHOOTING_GUIDE.md)** - 問題解決方法
-
-## 🛠️ 開発環境のセットアップ
-
-### 前提条件
-
-- Node.js 18.0 以上
-- npm または yarn
+- Node.js 18 以上
+- npm
 
 ### インストール
 
 ```bash
-# リポジトリのクローン
-git clone <repository-url>
-cd himawari-blog
-
-# 依存関係のインストール
 npm install
-
-# 開発サーバーの起動
-npm run dev
 ```
 
-### よく使用するコマンド
+### 環境変数
+
+Strapi の URL は次の順で参照されます。
 
 ```bash
-npm run dev          # 開発サーバー起動
-npm run build        # プロダクションビルド
-npm run preview      # ビルド結果のプレビュー
-npm run lint         # ESLint 実行
-npm run test         # テスト実行
+NEXT_PUBLIC_STRAPI_URL=https://your-strapi.example.com
+# または
+VITE_STRAPI_URL=https://your-strapi.example.com
 ```
 
-## 📁 プロジェクト構造
+未設定の場合は `http://localhost:1337` が使用されます。Strapi に接続できない場合、各取得関数は警告を出しつつ空データへフォールバックします。
 
+## 開発コマンド
+
+```bash
+npm run dev          # 開発サーバーを起動
+npm run build        # 本番ビルド
+npm run preview      # next start でビルド済みアプリを起動
+npm run lint         # ESLint
+npm run test         # Vitest の watch モード
+npm run test:run     # 全テストを一度だけ実行
+npm run perf:test    # パフォーマンステスト
+npm run perf:benchmark
+npm run perf:bundle
 ```
+
+## ルート
+
+主な App Router のルートは次の通りです。
+
+```text
+/
+/blog
+/blog/[slug]
+/commercial
+/license
+/privacy
+/project
+/software
+/software/line_ai
+/software/line_ai/account/success
+/software/line_ai/account/cancel
+/video
+/youtube
+```
+
+`src/app/*/page.tsx` はルート定義を担当し、画面本体とデータ取得は `src/views/*` 配下に分けています。
+
+## プロジェクト構成
+
+```text
 src/
-├── components/          # 再利用可能な React コンポーネント
-│   ├── Header.tsx       # サイトナビゲーション
-│   ├── Footer.tsx       # サイトフッター
-│   ├── MarkdownComponents.tsx  # カスタム Markdown レンダラー
-│   └── SafeMarkdownRenderer.tsx # セキュアな Markdown レンダリング
-├── content/             # 静的コンテンツとデータ
-│   ├── blog/
-│   │   └─ article/     # Markdown ブログ記事
-│   └── *.md            # 静的ページ
-├── pages/               # Vike ルート定義
-│   ├── index/           # ホームページ (/)
-│   ├── blog/            # ブログ一覧 (/blog)
-│   │   └── @slug/       # 動的ブログ記事 (/blog/[slug])
-│   └── ...
-├── utils/               # ユーティリティ関数
-│   ├── sanitizeConfig.ts    # HTML サニタイゼーション設定
-│   ├── contentSecurity.ts   # コンテンツセキュリティ
-│   └── markdownErrorHandler.ts # エラーハンドリング
-└── types/               # TypeScript 型定義
+├── app/                  # Next.js App Router
+├── components/           # 共通 React コンポーネント
+├── const/                # 定数
+├── styles/               # グローバル CSS
+├── test/                 # Vitest テスト
+├── types/                # TypeScript 型
+├── utils/                # データ取得、Markdown、セキュリティ関連
+└── views/                # ページ単位の表示・データ取得
 ```
 
-## 🔒 セキュリティ機能
+主なファイル:
 
-### 多層防御システム
+- `src/utils/getPosts.ts`: Strapi の `articles` からブログ記事を取得
+- `src/utils/getNewsItem.ts`: Strapi の `news-items` からニュースを取得
+- `src/utils/getPages.ts`: 固定ページを取得
+- `src/utils/getVideos.ts`: 動画項目を取得
+- `src/components/NewsSection.tsx`: トップページのニュース表示とページネーション
+- `src/components/SafeMarkdownRenderer.tsx`: 安全な Markdown/HTML レンダリング
+- `src/utils/sanitizeConfig.ts`: HTML サニタイズ設定
 
-1. **事前サニタイゼーション**: 危険なタグ・属性の除去
-2. **rehype-sanitize**: ホワイトリスト方式での HTML 検証
-3. **ランタイム検証**: iframe ドメイン制限、コンテンツ長制限
+## Strapi データ
 
-### 許可されている HTML タグ
+### ブログ記事
 
-- テキスト装飾: `<strong>`, `<em>`, `<u>`, `<mark>` など
-- レイアウト: `<div>`, `<section>`, `<article>` など
-- メディア: `<img>`, `<video>`, `<audio>`, `<iframe>` (制限付き)
-- テーブル: `<table>`, `<tr>`, `<td>` など
+`getPosts()` は次の API を参照します。
 
-詳細は [セキュリティガイドライン](docs/SECURITY_GUIDELINES.md) を参照してください。
-
-## 💳 Stripe 決済ページ
-
-このプロジェクトには、Stripe Checkout の決済フロー用の静的ページが含まれています。
-
-### 利用可能なページ
-
-#### 決済成功ページ (`/lineat_ai/account/success`)
-
-- **URL**: `https://yourdomain.com/lineat_ai/account/success`
-- **用途**: Stripe Checkout の成功時リダイレクト先
-- **表示内容**:
-  - 決済完了メッセージ
-  - 感謝のメッセージ
-  - ホームページへのリンク
-
-#### 決済キャンセルページ (`/lineat_ai/account/cancel`)
-
-- **URL**: `https://yourdomain.com/lineat_ai/account/cancel`
-- **用途**: Stripe Checkout のキャンセル時リダイレクト先
-- **表示内容**:
-  - キャンセル確認メッセージ
-  - 再試行リンク
-  - ホームページへのリンク
-
-### Stripe 設定手順
-
-1. **Stripe ダッシュボードにログイン**
-
-   - [Stripe Dashboard](https://dashboard.stripe.com/) にアクセス
-
-2. **Checkout セッションの設定**
-
-   - Checkout セッション作成時に以下の URL を指定：
-
-   ```javascript
-   const session = await stripe.checkout.sessions.create({
-     success_url: "https://yourdomain.com/lineat_ai/account/success",
-     cancel_url: "https://yourdomain.com/lineat_ai/account/cancel",
-     // その他の設定...
-   });
-   ```
-
-3. **環境変数の設定**
-
-   - `.env.local` ファイルに以下を追加：
-
-   ```bash
-   STRIPE_SUCCESS_URL=https://yourdomain.com/lineat_ai/account/success
-   STRIPE_CANCEL_URL=https://yourdomain.com/lineat_ai/account/cancel
-   ```
-
-4. **本番環境での確認**
-   - デプロイ後、実際の決済フローで両ページが正しく表示されることを確認
-   - レスポンシブデザインの動作確認（モバイル、タブレット、デスクトップ）
-
-### ページの特徴
-
-- **静的生成**: 両ページは静的に生成され（SSG）、高速に配信されます
-- **レスポンシブデザイン**: すべてのデバイスで最適な表示
-- **日本語対応**: 日本語フォントで読みやすく表示
-- **サイト統一デザイン**: 既存のヘッダー・フッターと統合
-
-## 📝 コンテンツ作成
-
-### ブログ記事の作成
-
-1. `src/content/blog/article/` に Markdown ファイルを作成
-2. フロントマターでメタデータを設定
-3. HTML タグを使用してリッチなコンテンツを作成
-
-**記事ファイルの例**:
-
-```markdown
----
-title: "記事タイトル"
-date: "2024-01-01"
-description: "記事の説明"
-tags: ["tag1", "tag2"]
-coverImage: "https://example.com/image.jpg"
----
-
-# 記事の内容
-
-通常の Markdown と HTML タグを混在できます。
-
-<div class="bg-blue-100 p-4 rounded-lg">
-  <p>HTML コンテンツの例</p>
-</div>
+```text
+/api/articles?sort=date:desc&populate=*
 ```
 
-**重要**:
+期待する主なフィールド:
 
-- 記事データは Markdown ファイルから直接取得されます
-- 記事の slug は Markdown ファイルの内容から自動生成されます
+- `slug`
+- `title`
+- `date`
+- `content`
+- `coverImage`
+- `categories`
+- `tags`
 
-```markdown
-# 記事タイトル
+### ニュース
 
-通常の Markdown テキスト。
+`getNewsItem()` は次の API を参照します。
 
-<div class="bg-blue-100 p-4 rounded-lg">
-  <h3>HTML コンテナ</h3>
-  <p>HTML と Markdown を組み合わせたコンテンツ</p>
-</div>
-
-**Markdown の強調**と<strong>HTML の強調</strong>を混在できます。
+```text
+/api/news-items?sort=date:desc
 ```
 
-### CMS を使用した編集
+期待する主なフィールド:
 
-Decap CMS を使用してブラウザから直接コンテンツを編集できます：
+- `title`
+- `date`
+- `content`
+- `link`
 
-1. `/admin` にアクセス
-2. GitHub でログイン
-3. 記事の作成・編集・プレビュー
+`content` は文字列だけでなく Strapi のリッチテキスト配列/オブジェクトでも受け取り、表示前にプレーンテキストへ正規化します。これにより、トップページのニュース 2 ページ目など、特定の項目がリッチテキスト形式でも React の描画エラーを避けられます。
 
-## 🔧 データ管理の仕組み
+## Markdown と HTML
 
-### ブログ記事の処理フロー
+ブログ本文などの Markdown は、HTML 混在を許可しつつ `rehype-sanitize` で安全性を担保しています。
 
-```
-Markdown ファイル → getPosts() → ハッシュ生成 → 静的ページ生成
-```
+関連ドキュメント:
 
-1. **記事読み込み**: `src/utils/getPosts.ts` が `src/content/blog/article/` から Markdown ファイルを読み込み
-2. **メタデータ解析**: `gray-matter` でフロントマターを解析
-3. **Slug 生成**: ファイル内容のハッシュから一意の slug を生成
-4. **静的ページ生成**: Vike が各記事の静的 HTML を生成
+- [docs/README.md](docs/README.md)
+- [docs/HTML_USAGE_GUIDE.md](docs/HTML_USAGE_GUIDE.md)
+- [docs/SECURITY_GUIDELINES.md](docs/SECURITY_GUIDELINES.md)
+- [docs/TROUBLESHOOTING_GUIDE.md](docs/TROUBLESHOOTING_GUIDE.md)
 
-## 🧪 テスト
+## テスト
+
+全テストは次で実行します。
 
 ```bash
-# 全テスト実行
-npm run test
-
-# セキュリティテスト
-npm run test:security
-
-# パフォーマンステスト
-npm run test:performance
-
-# CMS 互換性テスト
-npm run test:cms
+npm run test:run
 ```
 
-## 🚀 デプロイ
+現在のテスト対象には、Markdown/HTML レンダリング、セキュリティ、CMS 互換性、レスポンシブ、パフォーマンス、ニュースページネーションが含まれます。
 
-### 静的サイトとしてデプロイ
+CMS 互換テストは、過去の Decap CMS 用ファイルがリポジトリに存在しない環境でも検証できるよう、`src/test/setup.ts` で `public/admin/*` と `src/content/blog/article/*` のテスト用パスだけを `fs` 部分モックしています。それ以外のファイル操作は実ファイルへフォールバックします。
+
+ニュースの回帰テストは `src/test/NewsSection.test.tsx` にあり、2 ページ目に表示されるニュース本文が Strapi リッチテキスト形式でも落ちないことを確認します。
+
+## ビルドとデプロイ
 
 ```bash
-# ビルド
 npm run build
-
-# dist/ フォルダを静的ホスティングサービスにデプロイ
 ```
 
-### 推奨ホスティングサービス
+Next.js の通常ビルドを行います。`next.config.ts` では `trailingSlash: true` と `images.unoptimized: true` を設定しています。
+
+デプロイ先は Next.js に対応したホスティングを想定しています。
 
 - Vercel
 - Netlify
-- GitHub Pages
 - Cloudflare Pages
+- Node.js で `next start` を実行できる環境
 
-## 🤝 コントリビューション
+## LINE AI 決済関連ページ
 
-1. Fork このリポジトリ
-2. フィーチャーブランチを作成 (`git checkout -b feature/amazing-feature`)
-3. 変更をコミット (`git commit -m 'Add amazing feature'`)
-4. ブランチにプッシュ (`git push origin feature/amazing-feature`)
-5. Pull Request を作成
+LINE AI アカウント関連の完了/キャンセルページを提供しています。
 
-## 📄 ライセンス
+```text
+/software/line_ai/account/success
+/software/line_ai/account/cancel
+```
 
-このプロジェクトは MIT ライセンスの下で公開されています。詳細は [LICENSE](LICENSE) ファイルを参照してください。
+Stripe Checkout などのリダイレクト先に使う場合は、現在のルートに合わせて次のように設定してください。
 
-## 🙏 謝辞
+```ts
+const session = await stripe.checkout.sessions.create({
+  success_url: "https://yourdomain.com/software/line_ai/account/success",
+  cancel_url: "https://yourdomain.com/software/line_ai/account/cancel",
+  // ...
+});
+```
 
-- [Next.js](https://nextjs.org/) - React フレームワーク
-- [ReactMarkdown](https://github.com/remarkjs/react-markdown) - Markdown レンダリング
-- [Tailwind CSS](https://tailwindcss.com/) - 美しい CSS フレームワーク
-- [Decap CMS](https://decapcms.org/) - 使いやすい CMS
+## ライセンス
+
+このプロジェクトは MIT ライセンスです。詳細は [LICENSE](LICENSE) を参照してください。

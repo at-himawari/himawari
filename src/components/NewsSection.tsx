@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 
 export interface NewsItem {
@@ -8,6 +10,38 @@ export interface NewsItem {
 }
 interface NewsSectionProps {
   newsItems: NewsItem[];
+}
+
+function toDisplayText(value: unknown): string {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(toDisplayText).filter(Boolean).join("\n");
+  }
+
+  if (value && typeof value === "object") {
+    const record = value as Record<string, unknown>;
+
+    if (typeof record.text === "string") {
+      return record.text;
+    }
+
+    if (Array.isArray(record.children)) {
+      return toDisplayText(record.children);
+    }
+
+    if (Array.isArray(record.content)) {
+      return toDisplayText(record.content);
+    }
+  }
+
+  return "";
 }
 
 const NewsSection: React.FC<NewsSectionProps> = ({ newsItems = [] }) => {
@@ -51,25 +85,29 @@ const NewsSection: React.FC<NewsSectionProps> = ({ newsItems = [] }) => {
         <div className="mt-6 bg-white shadow rounded-lg overflow-hidden">
           <ul className="divide-y divide-gray-200">
             {displayedItems.map((item: NewsItem, index: number) => {
+              const title = toDisplayText(item.title) || "お知らせ";
+              const date = toDisplayText(item.date);
+              const content = toDisplayText(item.content);
+              const link = toDisplayText(item.link);
               const listContent = (
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
                   <span className="text-gray-500 text-sm sm:text-base whitespace-nowrap">
-                    {item.date}
+                    {date}
                   </span>
                   <span className="text-orange-500 font-semibold text-sm sm:text-base">
-                    {item.title}
+                    {title}
                   </span>
                   <span className="text-gray-700 text-sm sm:text-base flex-1">
-                    {item.content}
+                    {content}
                   </span>
                 </div>
               );
 
-              if (item.link) {
+              if (link) {
                 return (
                   <li key={index}>
                     <a
-                      href={item.link}
+                      href={link}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="block px-4 sm:px-6 py-4 hover:bg-gray-50 transition-colors duration-200"

@@ -6,7 +6,7 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 import matter from "gray-matter";
 
@@ -227,10 +227,9 @@ describe("CMS機能サマリー検証", () => {
       const articlesDir = join(process.cwd(), "src/content/blog/article");
 
       if (existsSync(articlesDir)) {
-        const fs = require("fs");
-        const files = fs
-          .readdirSync(articlesDir)
-          .filter((file: string) => file.endsWith(".md"));
+        const files = readdirSync(articlesDir).filter((file) =>
+          file.endsWith(".md")
+        );
 
         if (files.length > 0) {
           const sampleFile = files[0];

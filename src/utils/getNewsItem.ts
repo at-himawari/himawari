@@ -8,15 +8,55 @@ const STRAPI_URL =
 interface StrapiNewsItem {
   id?: number;
   documentId?: string;
-  title?: string;
-  date?: string;
-  content?: string;
-  link?: string;
+  title?: unknown;
+  date?: unknown;
+  content?: unknown;
+  link?: unknown;
   attributes?: Omit<StrapiNewsItem, "attributes" | "id">;
 }
 
 interface StrapiResponse {
   data: StrapiNewsItem[];
+}
+
+function strapiRichTextToPlainText(value: unknown): string {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+
+  if (Array.isArray(value)) {
+    return value
+      .map(strapiRichTextToPlainText)
+      .filter(Boolean)
+      .join("\n");
+  }
+
+  if (value && typeof value === "object") {
+    const record = value as Record<string, unknown>;
+
+    if (typeof record.text === "string") {
+      return record.text;
+    }
+
+    if (Array.isArray(record.children)) {
+      return strapiRichTextToPlainText(record.children);
+    }
+
+    if (Array.isArray(record.content)) {
+      return strapiRichTextToPlainText(record.content);
+    }
+  }
+
+  return "";
+}
+
+function optionalString(value: unknown): string | undefined {
+  const text = strapiRichTextToPlainText(value).trim();
+  return text || undefined;
 }
 
 export async function getNewsItem(): Promise<NewsItem[]> {
@@ -39,10 +79,10 @@ export async function getNewsItem(): Promise<NewsItem[]> {
       const attrs = item.attributes || item;
 
       return {
-        title: attrs.title || "お知らせ",
-        date: attrs.date || "",
-        content: attrs.content || "",
-        link: attrs.link || undefined,
+        title: optionalString(attrs.title) || "お知らせ",
+        date: optionalString(attrs.date) || "",
+        content: optionalString(attrs.content) || "",
+        link: optionalString(attrs.link),
       };
     });
   } catch (error) {

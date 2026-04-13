@@ -298,10 +298,8 @@ function ArticleEndAd() {
   return (
     <aside className="mt-12 border-t border-gray-100 pt-8" aria-label="広告">
       <GoogleAd
-        slot="4402805704"
-        layout="in-article"
-        format="fluid"
-        style={{ display: "block", textAlign: "center" }}
+        slot="3904112253"
+        format="autorelaxed"
       />
     </aside>
   );

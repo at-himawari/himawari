@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRef } from "react";
 
 declare global {
   interface Window {
@@ -25,19 +26,47 @@ export default function GoogleAd({
   className = "",
   style = { display: "block" },
 }: GoogleAdProps) {
+  const adRef = useRef<HTMLModElement | null>(null);
+  const hasPushedRef = useRef(false);
+
   useEffect(() => {
-    try {
-      window.adsbygoogle = window.adsbygoogle || [];
-      window.adsbygoogle.push({});
-    } catch (error) {
-      if (process.env.NODE_ENV === "development") {
-        console.warn("Failed to load Google ad:", error);
+    const pushAd = () => {
+      if (hasPushedRef.current) return;
+
+      try {
+        window.adsbygoogle = window.adsbygoogle || [];
+        window.adsbygoogle.push({});
+        hasPushedRef.current = true;
+      } catch (error) {
+        if (process.env.NODE_ENV === "development") {
+          console.warn("Failed to load Google ad:", error);
+        }
       }
+    };
+
+    if (!adRef.current || !("IntersectionObserver" in window)) {
+      pushAd();
+      return;
     }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          pushAd();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" },
+    );
+
+    observer.observe(adRef.current);
+
+    return () => observer.disconnect();
   }, []);
 
   return (
     <ins
+      ref={adRef}
       className={`adsbygoogle ${className}`.trim()}
       style={style}
       data-ad-layout={layout}

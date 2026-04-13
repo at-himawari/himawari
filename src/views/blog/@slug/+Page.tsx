@@ -52,6 +52,8 @@ export default function Page({
     );
   }
 
+  const adPlacement = splitContentForAd(securityResult.content);
+
   return (
     <>
       <Header />
@@ -82,24 +84,33 @@ export default function Page({
               </p>
             </header>
             <section className="prose max-w-none">
-              <ReactMarkdown
-                rehypePlugins={[
-                  rehypeRaw,
-                  rehypeKatex,
-                  [rehypeSanitize, sanitizeConfig],
-                ]}
-                remarkPlugins={[remarkGfm, remarkMath]}
-                components={markdownComponents}
-              >
-                {securityResult.content}
-              </ReactMarkdown>
+              <MarkdownContent content={adPlacement.before} />
+              <InArticleAd />
+              {adPlacement.after && (
+                <MarkdownContent content={adPlacement.after} />
+              )}
             </section>
-            <InArticleAd />
           </article>
         </div>
       </main>
       <Footer />
     </>
+  );
+}
+
+function MarkdownContent({ content }: { content: string }) {
+  return (
+    <ReactMarkdown
+      rehypePlugins={[
+        rehypeRaw,
+        rehypeKatex,
+        [rehypeSanitize, sanitizeConfig],
+      ]}
+      remarkPlugins={[remarkGfm, remarkMath]}
+      components={markdownComponents}
+    >
+      {content}
+    </ReactMarkdown>
   );
 }
 
@@ -218,6 +229,52 @@ function MobileShareButtons({
       </div>
     </div>
   );
+}
+
+function splitContentForAd(content: string) {
+  const minimumIntroLength = 600;
+  const minimumRemainingLength = 300;
+
+  const headingMatches = Array.from(content.matchAll(/\n(?=#{2,3}\s+)/g));
+  const headingIndex = headingMatches.find((match) => {
+    const index = match.index ?? 0;
+    return (
+      index >= minimumIntroLength &&
+      content.length - index >= minimumRemainingLength
+    );
+  })?.index;
+
+  if (headingIndex) {
+    return {
+      before: content.slice(0, headingIndex).trim(),
+      after: content.slice(headingIndex).trim(),
+    };
+  }
+
+  const paragraphSeparator = /\n{2,}/g;
+  let paragraphCount = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = paragraphSeparator.exec(content)) !== null) {
+    const index = match.index + match[0].length;
+    paragraphCount += 1;
+
+    if (
+      paragraphCount >= 3 &&
+      index >= minimumIntroLength &&
+      content.length - index >= minimumRemainingLength
+    ) {
+      return {
+        before: content.slice(0, index).trim(),
+        after: content.slice(index).trim(),
+      };
+    }
+  }
+
+  return {
+    before: content,
+    after: null,
+  };
 }
 
 function InArticleAd() {

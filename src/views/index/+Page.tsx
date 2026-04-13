@@ -273,17 +273,8 @@ function Page({ data }: { data: HomePageData }) {
           </div>
         </section>
 
-        <section className="bg-white py-8">
-          <div className="container mx-auto px-4">
-            <GoogleAd
-              slot="4759075102"
-              format="auto"
-              fullWidthResponsive
-            />
-          </div>
-        </section>
-
         <NewsSection newsItems={newsItems} />
+        <MainPageAd />
         <BlogSection
           latestPosts={latestPosts}
           featuredPosts={featuredPosts}
@@ -333,3 +324,19 @@ function Page({ data }: { data: HomePageData }) {
 }
 
 export default Page;
+
+function MainPageAd() {
+  return (
+    <section className="bg-white py-8" aria-label="広告">
+      <div className="container mx-auto px-4">
+        <div className="mx-auto min-h-[120px] max-w-5xl">
+          <GoogleAd
+            slot="4759075102"
+            format="auto"
+            fullWidthResponsive
+          />
+        </div>
+      </div>
+    </section>
+  );
+}

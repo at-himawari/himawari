@@ -1,5 +1,7 @@
 # Himawari
 
+[![CI](https://github.com/at-himawari/himawari/actions/workflows/ci.yml/badge.svg)](https://github.com/at-himawari/himawari/actions/workflows/ci.yml)
+
 Himawari は、Next.js App Router、React、TypeScript で構築されたポートフォリオ兼ブログサイトです。トップページ、ブログ、制作実績、サービス紹介、動画関連ページ、LINE AI サービスページを提供します。
 
 コンテンツは主に Strapi API から取得し、API が利用できない環境でも空データへフォールバックしてビルドできるようになっています。
@@ -172,6 +174,19 @@ npm run test:run
 CMS 互換テストは、過去の Decap CMS 用ファイルがリポジトリに存在しない環境でも検証できるよう、`src/test/setup.ts` で `public/admin/*` と `src/content/blog/article/*` のテスト用パスだけを `fs` 部分モックしています。それ以外のファイル操作は実ファイルへフォールバックします。
 
 ニュースの回帰テストは `src/test/NewsSection.test.tsx` にあり、2 ページ目に表示されるニュース本文が Strapi リッチテキスト形式でも落ちないことを確認します。
+
+## CI
+
+GitHub Actions の CI は `.github/workflows/ci.yml` で管理しています。`main` への push と pull request で次を実行します。
+
+```bash
+npm ci
+npm run lint
+npm run test:run
+npm run build
+```
+
+Node.js 20 と npm cache を使用します。Strapi に接続できない CI 環境でも、データ取得関数のフォールバックによりビルドは継続できます。
 
 ## ビルドとデプロイ
 

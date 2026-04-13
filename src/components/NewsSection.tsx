@@ -44,6 +44,16 @@ function toDisplayText(value: unknown): string {
   return "";
 }
 
+function getNewsItemKey(item: NewsItem, absoluteIndex: number): string {
+  return [
+    toDisplayText(item.date),
+    toDisplayText(item.title),
+    toDisplayText(item.content),
+    toDisplayText(item.link),
+    absoluteIndex,
+  ].join("|");
+}
+
 const NewsSection: React.FC<NewsSectionProps> = ({ newsItems = [] }) => {
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
@@ -85,6 +95,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ newsItems = [] }) => {
         <div className="mt-6 bg-white shadow rounded-lg overflow-hidden">
           <ul className="divide-y divide-gray-200">
             {displayedItems.map((item: NewsItem, index: number) => {
+              const absoluteIndex = startIndex + index;
               const title = toDisplayText(item.title) || "お知らせ";
               const date = toDisplayText(item.date);
               const content = toDisplayText(item.content);
@@ -105,7 +116,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ newsItems = [] }) => {
 
               if (link) {
                 return (
-                  <li key={index}>
+                  <li key={getNewsItemKey(item, absoluteIndex)}>
                     <a
                       href={link}
                       target="_blank"
@@ -119,7 +130,10 @@ const NewsSection: React.FC<NewsSectionProps> = ({ newsItems = [] }) => {
               }
 
               return (
-                <li key={index} className="px-4 sm:px-6 py-4">
+                <li
+                  key={getNewsItemKey(item, absoluteIndex)}
+                  className="px-4 sm:px-6 py-4"
+                >
                   {listContent}
                 </li>
               );

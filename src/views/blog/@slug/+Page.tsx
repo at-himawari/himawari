@@ -53,9 +53,6 @@ export default function Page({
   }
 
   const adPlacement = splitContentForAd(securityResult.content);
-  const showEndAd = Boolean(
-    adPlacement.after && adPlacement.after.length >= 1200,
-  );
 
   return (
     <>
@@ -93,7 +90,7 @@ export default function Page({
                 <MarkdownContent content={adPlacement.after} />
               )}
             </section>
-            {showEndAd && <ArticleEndAd />}
+            <ArticleEndAd />
           </article>
         </div>
       </main>

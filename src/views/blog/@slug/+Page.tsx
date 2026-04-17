@@ -52,8 +52,6 @@ export default function Page({
     );
   }
 
-  const adPlacement = splitContentForAd(securityResult.content);
-
   return (
     <>
       <Header />
@@ -84,11 +82,7 @@ export default function Page({
               </p>
             </header>
             <section className="prose max-w-none">
-              <MarkdownContent content={adPlacement.before} />
-              <InArticleAd />
-              {adPlacement.after && (
-                <MarkdownContent content={adPlacement.after} />
-              )}
+              <MarkdownContent content={securityResult.content} />
             </section>
             <ArticleEndAd />
           </article>
@@ -232,68 +226,10 @@ function MobileShareButtons({
   );
 }
 
-function splitContentForAd(content: string) {
-  const minimumIntroLength = 600;
-  const minimumRemainingLength = 300;
-
-  const headingMatches = Array.from(content.matchAll(/\n(?=#{2,3}\s+)/g));
-  const headingIndex = headingMatches.find((match) => {
-    const index = match.index ?? 0;
-    return (
-      index >= minimumIntroLength &&
-      content.length - index >= minimumRemainingLength
-    );
-  })?.index;
-
-  if (headingIndex) {
-    return {
-      before: content.slice(0, headingIndex).trim(),
-      after: content.slice(headingIndex).trim(),
-    };
-  }
-
-  const paragraphSeparator = /\n{2,}/g;
-  let paragraphCount = 0;
-  let match: RegExpExecArray | null;
-
-  while ((match = paragraphSeparator.exec(content)) !== null) {
-    const index = match.index + match[0].length;
-    paragraphCount += 1;
-
-    if (
-      paragraphCount >= 3 &&
-      index >= minimumIntroLength &&
-      content.length - index >= minimumRemainingLength
-    ) {
-      return {
-        before: content.slice(0, index).trim(),
-        after: content.slice(index).trim(),
-      };
-    }
-  }
-
-  return {
-    before: content,
-    after: null,
-  };
-}
-
-function InArticleAd() {
-  return (
-    <div className="my-10">
-      <GoogleAd
-        slot="4402805704"
-        layout="in-article"
-        format="fluid"
-        style={{ display: "block", textAlign: "center" }}
-      />
-    </div>
-  );
-}
-
 function ArticleEndAd() {
   return (
     <aside className="mt-12 border-t border-gray-100 pt-8" aria-label="広告">
+      <p className="text-sm text-gray-500 mb-4">スポンサーリンク</p>
       <GoogleAd
         slot="3904112253"
         format="autorelaxed"

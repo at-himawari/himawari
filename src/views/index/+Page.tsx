@@ -273,15 +273,12 @@ function Page({ data }: { data: HomePageData }) {
           </div>
         </section>
 
-        <MainPageAd />
         <NewsSection newsItems={newsItems} />
-        <MainPageAd />
         <BlogSection
           latestPosts={latestPosts}
           featuredPosts={featuredPosts}
           error={error}
         />
-        <MainPageAd compact />
         <section id="profile" className="py-12">
           {/* プロフィールセクション（既存のコード） */}
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -309,7 +306,8 @@ function Page({ data }: { data: HomePageData }) {
                     <br />
                     フロントエンドからバックエンド、クラウドまで幅広く扱い、技術と対話の両面から課題解決を支えるフルスタックエンジニアです。
                     <br />
-                    Himawari Projectでは、AWS・GCP・Azureを活用したプロダクト開発や、React+VikeによるWebサイト制作に取り組んでいます。
+                    Himawari
+                    Projectでは、AWS・GCP・Azureを活用したプロダクト開発や、React+VikeによるWebサイト制作に取り組んでいます。
                   </p>
                   <p className="mt-2 text-gray-500 text-sm">
                     趣味：飛行機、カメラ、旅行、映像編集
@@ -319,6 +317,7 @@ function Page({ data }: { data: HomePageData }) {
             </div>
           </div>
         </section>
+        <MainPageAd compact />
         <Footer />
       </div>
     </>
@@ -335,11 +334,8 @@ function MainPageAd({ compact = false }: { compact?: boolean }) {
     >
       <div className="container mx-auto px-4">
         <div className="mx-auto min-h-[120px] max-w-5xl">
-          <GoogleAd
-            slot="4759075102"
-            format="auto"
-            fullWidthResponsive
-          />
+          <p className="text-sm text-gray-500 mb-4">スポンサーリンク</p>
+          <GoogleAd slot="4759075102" format="auto" fullWidthResponsive />
         </div>
       </div>
     </section>

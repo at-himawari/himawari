@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import NewsSection, { type NewsItem } from "../components/NewsSection";
+import PostCard from "../components/PostCard";
 
 const createNewsItems = (): NewsItem[] =>
   [
@@ -31,5 +32,24 @@ describe("NewsSection", () => {
 
     expect(screen.getByText("リッチテキストのお知らせ")).toBeInTheDocument();
     expect(screen.getByText("Strapiのリッチテキスト本文")).toBeInTheDocument();
+  });
+
+  it("記事カードではふりがな変換を無効化する", () => {
+    render(
+      <PostCard
+        compact={true}
+        post={{
+          slug: "sample-post",
+          title: "スマホでタイトルが消えないこと",
+          date: "2026-04-18",
+          categories: ["技術"],
+        }}
+      />,
+    );
+
+    expect(screen.getByRole("link")).toHaveAttribute(
+      "data-rubyful-ignore",
+      "true",
+    );
   });
 });

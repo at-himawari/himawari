@@ -70,6 +70,7 @@ const PostCard = memo(
       <a
         href={`/blog/${post.slug}`}
         className={`block ${cardClasses} group contain-layout gpu-accelerated`}
+        data-rubyful-ignore="true"
       >
         {compact ? (
           <>

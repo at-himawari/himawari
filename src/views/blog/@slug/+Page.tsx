@@ -17,6 +17,7 @@ import rehypeSanitize from "rehype-sanitize";
 import { sanitizeConfig } from "../../../utils/sanitizeConfig";
 import { markdownComponents } from "../../../components/MarkdownComponents";
 import GoogleAd from "../../../components/GoogleAd";
+import ArticleEngagement from "../../../components/ArticleEngagement";
 
 // コンポーネント本体
 export default function Page({
@@ -36,7 +37,7 @@ export default function Page({
 
   if (!post) return <div>記事が見つかりません</div>;
 
-  const { title, date, tags, coverImage, content } = post;
+  const { slug, title, date, tags, coverImage, content } = post;
 
   // Apply security validation and pre-sanitization
   const securityResult = secureMarkdownContent(content || "");
@@ -84,6 +85,7 @@ export default function Page({
             <section className="prose max-w-none">
               <MarkdownContent content={securityResult.content} />
             </section>
+            <ArticleEngagement slug={slug} />
             <ArticleEndAd />
           </article>
         </div>

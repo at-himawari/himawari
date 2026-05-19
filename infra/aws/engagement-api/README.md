@@ -1,0 +1,53 @@
+# Engagement API
+
+ブログ記事ごとのいいねとコメントを扱う、`API Gateway HTTP API + Lambda + DynamoDB` の CDK 構成です。
+
+## 構成
+
+- `bin/engagement-api.ts`
+  - CDK アプリのエントリーポイント
+- `lib/engagement-api-stack.ts`
+  - HTTP API、Lambda、DynamoDB の定義
+- `src/app.js`
+  - 記事ごとのエンゲージメント API
+- `src/package.json`
+  - Lambda に同梱する AWS SDK v3
+
+## エンドポイント
+
+- `GET /health`
+- `GET /articles/{slug}/engagement`
+  - いいね数、コメント数、コメント一覧、現在のブラウザのいいね状態
+- `POST /articles/{slug}/likes`
+  - いいね
+- `DELETE /articles/{slug}/likes`
+  - いいね取り消し
+- `POST /articles/{slug}/comments`
+  - コメント投稿
+
+## データモデル
+
+単一テーブルで `PK` / `SK` を使います。
+
+- `PK=ARTICLE#{slug}, SK=META`
+  - 記事ごとの集計
+- `PK=ARTICLE#{slug}, SK=LIKE#{visitorId}`
+  - ブラウザ単位のいいね
+- `PK=ARTICLE#{slug}, SK=COMMENT#{timestamp}#{commentId}`
+  - コメント
+
+## デプロイ例
+
+```bash
+cd infra/aws/engagement-api
+npm install
+cd src
+npm install
+cd ..
+npx cdk bootstrap
+npx cdk deploy \
+  --parameters FrontendOrigin=https://yourdomain.com \
+  --parameters CommentAutoPublish=true
+```
+
+デプロイ後に出力される `EngagementApiUrl` を、フロント側の `NEXT_PUBLIC_ENGAGEMENT_API_URL` に設定します。

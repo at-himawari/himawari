@@ -1,0 +1,22 @@
+{
+  "name": "himawari-engagement-api",
+  "private": true,
+  "version": "0.1.0",
+  "description": "CDK app for Himawari engagement API",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "synth": "cdk synth",
+    "deploy": "cdk deploy"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.214.0",
+    "constructs": "^10.4.2",
+    "source-map-support": "^0.5.21"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.2"
+  }
+}

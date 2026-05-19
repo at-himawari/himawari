@@ -1,22 +1,14 @@
 import type { Metadata } from "next";
 import LineAiPage from "../../../views/software/line_ai/+Page";
-import { ogImageUrl, postUrl } from "../../../const/pageConstants";
+import { ogImageUrl } from "../../../const/pageConstants";
+import { createPageMetadata } from "../../../utils/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "あざらし君@AI LINE公式アカウント",
   description: "あなたのとなりのAI",
-  openGraph: {
-    title: "あざらし君@AI LINE公式アカウント",
-    description: "あなたのとなりのAI",
-    url: `${postUrl}/software/line_ai`,
-    images: [ogImageUrl],
-  },
-  twitter: {
-    title: "あざらし君@AI LINE公式アカウント",
-    description: "あなたのとなりのAI",
-    images: [ogImageUrl],
-  },
-};
+  path: "/software/line_ai",
+  image: ogImageUrl,
+});
 
 export default function Page() {
   return <LineAiPage />;

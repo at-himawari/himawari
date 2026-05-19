@@ -10,11 +10,56 @@ import {
   title,
   twitterSite,
 } from "../const/pageConstants";
+import { absoluteUrl } from "../utils/seo";
+
+const siteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: title,
+  url: absoluteUrl("/"),
+  description,
+  inLanguage: "ja",
+  publisher: {
+    "@type": "Organization",
+    name: title,
+    url: absoluteUrl("/"),
+    logo: favicon,
+    sameAs: [`https://x.com/${twitterSite.replace("@", "")}`],
+  },
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(postUrl),
-  title,
+  title: {
+    default: title,
+    template: `%s | ${title}`,
+  },
   description,
+  applicationName: title,
+  authors: [{ name: title, url: postUrl }],
+  creator: title,
+  publisher: title,
+  keywords: [
+    "Himawari Project",
+    "技術ブログ",
+    "AI",
+    "ソフトウェア開発",
+    "Web制作",
+  ],
+  alternates: {
+    canonical: absoluteUrl("/"),
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   icons: {
     icon: favicon,
   },
@@ -25,6 +70,7 @@ export const metadata: Metadata = {
     siteName: title,
     images: [ogImageUrl],
     type: "website",
+    locale: "ja_JP",
   },
   twitter: {
     card: "summary",
@@ -59,6 +105,14 @@ export default function RootLayout({
               'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
               })(window,document,'script','dataLayer','GTM-KSRLPFZ9');
             `,
+          }}
+        />
+        <Script
+          id="site-json-ld"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(siteJsonLd),
           }}
         />
       </head>

@@ -22,7 +22,8 @@ const featuredProducts = [
   },
   {
     title: "AI面接コーチ",
-    description: "面接練習のサポートを行います。近々大幅アップデート予定",
+    description:
+      "AIと対話して面接練習を行います。自身のレジュメをもとに、模擬面接やフィードバックを提供するサービスです。",
     href: "https://aimensetsu.at-himawari.com/",
     badge: "Career",
     accentClass: "from-sky-500 via-cyan-500 to-emerald-500",

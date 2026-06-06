@@ -6,6 +6,7 @@ import type {
   EngagementComment,
   EngagementResponse,
 } from "../types/engagement";
+import { sendGAEvent } from "../utils/analytics";
 
 type Props = {
   slug: string;
@@ -108,6 +109,10 @@ export default function ArticleEngagement({ slug }: Props) {
 
       const data = (await response.json()) as EngagementResponse;
       setEngagement(data);
+      sendGAEvent(engagement.viewerHasLiked ? "remove_like" : "like", {
+        content_type: "article",
+        item_id: slug,
+      });
     } catch (fetchError) {
       setError(
         fetchError instanceof Error
@@ -166,6 +171,12 @@ export default function ArticleEngagement({ slug }: Props) {
         }));
         setCommentNotice("コメントを投稿しました。");
       }
+
+      sendGAEvent("post_comment", {
+        content_type: "article",
+        item_id: slug,
+        moderation: Boolean(result.moderation),
+      });
 
       setCommentName("");
       setCommentBody("");

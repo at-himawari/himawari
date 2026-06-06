@@ -1,3 +1,5 @@
+import { trackOutboundClick } from "../utils/analytics";
+
 // Markdownの表示カスタマイズ
 export const markdownComponents = {
   // Existing Markdown elements
@@ -39,6 +41,11 @@ export const markdownComponents = {
       className="text-blue-600 hover:underline"
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => {
+        if (typeof props.href === "string") {
+          trackOutboundClick(String(props.children || props.href), props.href);
+        }
+      }}
       {...props}
     />
   ),

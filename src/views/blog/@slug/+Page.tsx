@@ -18,6 +18,7 @@ import { sanitizeConfig } from "../../../utils/sanitizeConfig";
 import { markdownComponents } from "../../../components/MarkdownComponents";
 import GoogleAd from "../../../components/GoogleAd";
 import ArticleEngagement from "../../../components/ArticleEngagement";
+import { sendGAEvent } from "../../../utils/analytics";
 
 // コンポーネント本体
 export default function Page({
@@ -33,7 +34,19 @@ export default function Page({
     setPostUrl(window.location.href);
   }, []);
 
-  const post = data?.post || "読み込み中...";
+  const post = data?.post;
+
+  useEffect(() => {
+    if (!post) {
+      return;
+    }
+
+    sendGAEvent("view_item", {
+      content_type: "article",
+      item_id: post.slug,
+      item_name: post.title,
+    });
+  }, [post]);
 
   if (!post) return <div>記事が見つかりません</div>;
 
@@ -146,6 +159,13 @@ function ShareButtons({ postUrl, title }: { postUrl: string; title: string }) {
           rel="noopener noreferrer"
           className="text-gray-500 hover:text-blue-500 transition-all duration-200 p-2 rounded-full hover:bg-blue-50 hover:scale-110"
           aria-label="Xでシェア"
+          onClick={() =>
+            sendGAEvent("share", {
+              method: "x",
+              content_type: "article",
+              item_id: postUrl,
+            })
+          }
         >
           <FaXTwitter size={20} />
         </a>
@@ -155,6 +175,13 @@ function ShareButtons({ postUrl, title }: { postUrl: string; title: string }) {
           rel="noopener noreferrer"
           className="text-gray-500 hover:text-blue-400 transition-all duration-200 p-2 rounded-full hover:bg-blue-50 hover:scale-110"
           aria-label="はてなブックマークに追加"
+          onClick={() =>
+            sendGAEvent("share", {
+              method: "hatena",
+              content_type: "article",
+              item_id: postUrl,
+            })
+          }
         >
           <HatenaIcon size={20} />
         </a>
@@ -211,6 +238,13 @@ function MobileShareButtons({
           rel="noopener noreferrer"
           className="text-gray-500 hover:text-blue-500 transition-all duration-200 p-2 rounded-full hover:bg-blue-50"
           aria-label="Xでシェア"
+          onClick={() =>
+            sendGAEvent("share", {
+              method: "x",
+              content_type: "article",
+              item_id: postUrl,
+            })
+          }
         >
           <FaXTwitter size={18} />
         </a>
@@ -220,6 +254,13 @@ function MobileShareButtons({
           rel="noopener noreferrer"
           className="text-gray-500 hover:text-blue-400 transition-all duration-200 p-2 rounded-full hover:bg-blue-50"
           aria-label="はてなブックマークに追加"
+          onClick={() =>
+            sendGAEvent("share", {
+              method: "hatena",
+              content_type: "article",
+              item_id: postUrl,
+            })
+          }
         >
           <HatenaIcon size={18} />
         </a>

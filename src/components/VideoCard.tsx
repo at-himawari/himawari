@@ -1,5 +1,6 @@
 import React from "react";
 import { getThumbnailUrl } from "../utils/youtube";
+import { trackSelectContent } from "../utils/analytics";
 
 interface VideoCardProps {
   title: string;
@@ -13,10 +14,18 @@ const VideoCard: React.FC<VideoCardProps> = ({
   videoUrl,
 }) => {
   const thumbnailUrl = getThumbnailUrl(videoUrl);
+  const trackVideoClick = () => {
+    trackSelectContent("video", videoUrl, title);
+  };
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg m-4 bg-white">
-      <a href={videoUrl} target="_blank" rel="noopener noreferrer">
+      <a
+        href={videoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={trackVideoClick}
+      >
         <img className="w-full" src={thumbnailUrl} alt={title} />
       </a>
       <div className="px-6 py-4">
@@ -29,6 +38,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-500 hover:underline"
+          onClick={trackVideoClick}
         >
           動画を見る
         </a>

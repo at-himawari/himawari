@@ -9,6 +9,7 @@ import NewsSection from "../../components/NewsSection";
 import BlogSection from "../../components/BlogSection";
 import GoogleAd from "../../components/GoogleAd";
 import type { HomePageData } from "./+data";
+import { trackLead, trackSelectContent } from "../../utils/analytics";
 
 const featuredProducts = [
   {
@@ -105,6 +106,7 @@ function Page({ data }: { data: HomePageData }) {
     if (profileSection) {
       profileSection.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+    trackSelectContent("section", "profile", "プロフィール");
   };
 
   const visibleProducts = showAllProducts
@@ -192,6 +194,12 @@ function Page({ data }: { data: HomePageData }) {
                 <a
                   href="https://forms.gle/D8WSByjAnYGGtoGw9"
                   className="bg-gray-800 text-white px-6 py-2 rounded-full hover:bg-gray-700 transition-colors text-sm font-bold shadow-lg"
+                  onClick={() =>
+                    trackLead(
+                      "home_contact",
+                      "https://forms.gle/D8WSByjAnYGGtoGw9",
+                    )
+                  }
                 >
                   相談してみる
                 </a>
@@ -227,6 +235,9 @@ function Page({ data }: { data: HomePageData }) {
                     key={product.title}
                     href={product.href}
                     className="group flex h-full flex-col rounded-3xl border border-white/70 bg-white p-7 shadow-lg shadow-orange-100/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                    onClick={() =>
+                      trackSelectContent("product", product.href, product.title)
+                    }
                   >
                     <div
                       className={`mb-6 h-2 w-24 rounded-full bg-gradient-to-r ${product.accentClass}`}

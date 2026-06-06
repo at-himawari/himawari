@@ -1,5 +1,6 @@
 import { useState, memo, useCallback } from "react";
 import type { Post } from "../types/Post";
+import { trackSelectContent } from "../utils/analytics";
 
 interface PostCardProps {
   post: Omit<Post, "content">;
@@ -66,11 +67,16 @@ const PostCard = memo(
       return post.coverImage;
     }, [imageError, post.coverImage]);
 
+    const handleCardClick = useCallback(() => {
+      trackSelectContent("article", post.slug, post.title);
+    }, [post.slug, post.title]);
+
     return (
       <a
         href={`/blog/${post.slug}`}
         className={`block ${cardClasses} group contain-layout gpu-accelerated`}
         data-rubyful-ignore="true"
+        onClick={handleCardClick}
       >
         {compact ? (
           <>

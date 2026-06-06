@@ -1,5 +1,12 @@
+"use client";
+
 import React from "react";
 import { FaGithub, FaYoutube } from "react-icons/fa6";
+import {
+  trackLead,
+  trackOutboundClick,
+  trackSelectContent,
+} from "../utils/analytics";
 
 const Footer: React.FC = () => {
   return (
@@ -22,7 +29,14 @@ const Footer: React.FC = () => {
               <a href="/blog">ブログ</a>
             </li>
             <li>
-              <a href="https://forms.gle/D8WSByjAnYGGtoGw9">お問い合わせ</a>
+              <a
+                href="https://forms.gle/D8WSByjAnYGGtoGw9"
+                onClick={() =>
+                  trackLead("footer_contact", "https://forms.gle/D8WSByjAnYGGtoGw9")
+                }
+              >
+                お問い合わせ
+              </a>
             </li>
           </ul>
         </div>
@@ -33,6 +47,13 @@ const Footer: React.FC = () => {
               <a
                 href="https://gijiroku-maker.at-himawari.com/"
                 className="hover:underline"
+                onClick={() =>
+                  trackSelectContent(
+                    "product",
+                    "gijiroku-maker",
+                    "議事録メーカー",
+                  )
+                }
               >
                 議事録メーカー
               </a>
@@ -41,6 +62,9 @@ const Footer: React.FC = () => {
               <a
                 href="https://aimensetsu.at-himawari.com/"
                 className="hover:underline"
+                onClick={() =>
+                  trackSelectContent("product", "aimensetsu", "AI面接コーチ")
+                }
               >
                 AI面接コーチ
               </a>
@@ -89,6 +113,9 @@ const Footer: React.FC = () => {
           href="https://github.com/at-himawari"
           className="hover:text-gray-400"
           aria-label="GitHub"
+          onClick={() =>
+            trackOutboundClick("GitHub", "https://github.com/at-himawari")
+          }
         >
           <FaGithub />
         </a>
@@ -96,6 +123,12 @@ const Footer: React.FC = () => {
           href="https://www.youtube.com/@at_himawari"
           className="hover:text-gray-400"
           aria-label="YouTube"
+          onClick={() =>
+            trackOutboundClick(
+              "YouTube",
+              "https://www.youtube.com/@at_himawari",
+            )
+          }
         >
           <FaYoutube />
         </a>
@@ -103,6 +136,9 @@ const Footer: React.FC = () => {
           href="https://qiita.com/at_himawari"
           className="hover:text-gray-400"
           aria-label="Qiita"
+          onClick={() =>
+            trackOutboundClick("Qiita", "https://qiita.com/at_himawari")
+          }
         >
           <img
             src="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/qiita-icon.png"

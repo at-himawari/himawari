@@ -10,6 +10,7 @@ import {
   title,
   twitterSite,
 } from "../const/pageConstants";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 import { absoluteUrl } from "../utils/seo";
 
 const siteJsonLd = {
@@ -95,23 +96,6 @@ export default function RootLayout({
           crossOrigin="anonymous"
         ></script>
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-S8J4Z721EH"
-          strategy="afterInteractive"
-        />
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-S8J4Z721EH');
-    `,
-          }}
-        />
-        <Script
           id="site-json-ld"
           type="application/ld+json"
           strategy="beforeInteractive"
@@ -121,6 +105,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <GoogleAnalytics />
         {children}
         <Script
           id="clarity"

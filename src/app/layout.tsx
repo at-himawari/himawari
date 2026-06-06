@@ -95,16 +95,20 @@ export default function RootLayout({
           crossOrigin="anonymous"
         ></script>
         <Script
-          id="google-tag-manager"
-          strategy="beforeInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-S8J4Z721EH"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-KSRLPFZ9');
-            `,
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-S8J4Z721EH');
+    `,
           }}
         />
         <Script
@@ -117,14 +121,6 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-KSRLPFZ9"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
         {children}
         <Script
           id="clarity"

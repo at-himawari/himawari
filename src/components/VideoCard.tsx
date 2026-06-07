@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { getThumbnailUrl } from "../utils/youtube";
 import { trackSelectContent } from "../utils/analytics";

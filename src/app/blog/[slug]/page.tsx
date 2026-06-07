@@ -13,17 +13,7 @@ type Params = {
   slug: string;
 };
 
-export const dynamicParams = false;
-export const dynamic = "force-static";
-
-export async function generateStaticParams(): Promise<Params[]> {
-  const posts = await getPosts();
-  return posts
-    .filter((post) => post.slug)
-    .map((post) => ({
-      slug: post.slug,
-    }));
-}
+export const runtime = "edge";
 
 export async function generateMetadata({
   params,

@@ -3,7 +3,7 @@
 import { Suspense, useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
-import { GA_MEASUREMENT_ID } from "../utils/analytics";
+import { GA_MEASUREMENT_ID, trackOutboundClick } from "../utils/analytics";
 
 function PageViewTracker() {
   const pathname = usePathname();
@@ -23,6 +23,36 @@ function PageViewTracker() {
       page_title: document.title,
     });
   }, [pathname, searchParams]);
+
+  return null;
+}
+
+function OutboundLinkTracker() {
+  useEffect(() => {
+    const handleClick = (event: MouseEvent) => {
+      const target = event.target;
+
+      if (!(target instanceof Element)) {
+        return;
+      }
+
+      const link = target.closest<HTMLAnchorElement>(
+        "a[data-track-outbound-link='true']",
+      );
+
+      if (!link?.href) {
+        return;
+      }
+
+      trackOutboundClick(link.textContent?.trim() || link.href, link.href);
+    };
+
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   return null;
 }
@@ -53,6 +83,7 @@ export default function GoogleAnalytics() {
       <Suspense fallback={null}>
         <PageViewTracker />
       </Suspense>
+      <OutboundLinkTracker />
     </>
   );
 }

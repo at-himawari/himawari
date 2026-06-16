@@ -8,7 +8,7 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { readFileSync, writeFileSync, existsSync, unlinkSync } from "fs";
 import { join } from "path";
-import matter from "gray-matter";
+import matter from "./utils/frontMatter";
 
 // テスト用の記事データ
 const testArticleData = {

@@ -16,7 +16,7 @@ import { markdownComponents } from "../components/MarkdownComponents";
 import { sanitizeConfig } from "../utils/sanitizeConfig";
 import fs from "fs";
 import path from "path";
-import matter from "gray-matter";
+import matter from "./utils/frontMatter";
 
 describe("Test Article Integration", () => {
   let testArticleContent: string;

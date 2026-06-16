@@ -10,7 +10,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
-import matter from "gray-matter";
+import matter from "./utils/frontMatter";
 
 // CMS設定の読み込み
 const loadCMSConfig = () => {

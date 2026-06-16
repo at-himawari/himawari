@@ -8,7 +8,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
-import matter from "gray-matter";
+import matter from "./utils/frontMatter";
 
 describe("CMS機能サマリー検証", () => {
   describe("要件 3.1: Decap CMS インターフェースとの互換性", () => {

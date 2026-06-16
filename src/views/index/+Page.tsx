@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa"; // 虫眼鏡アイコン
 import { FaXTwitter } from "react-icons/fa6";
 import Header from "../../components/Header";

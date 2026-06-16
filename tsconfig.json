@@ -18,7 +18,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
@@ -37,7 +37,8 @@
     "next-env.d.ts",
     "src",
     ".next/types/**/*.ts",
-    "public/admin/custom-cms-loader.js"
+    "public/admin/custom-cms-loader.js",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

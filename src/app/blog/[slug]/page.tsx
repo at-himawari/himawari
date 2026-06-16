@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import JsonLd from "../../../components/JsonLd";
 import BlogPostPage from "../../../views/blog/@slug/+Page";
 import { getPosts } from "../../../utils/getPosts";
 import {
@@ -62,31 +63,59 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const url = absoluteUrl(`/blog/${post.slug}`);
   const articleJsonLd = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: createDescription(post.content || post.title),
-    image: post.coverImage ? [post.coverImage] : undefined,
-    datePublished: new Date(post.date).toISOString(),
-    dateModified: new Date(post.date).toISOString(),
-    mainEntityOfPage: url,
-    author: {
-      "@type": "Organization",
-      name: siteTitle,
-      url: absoluteUrl("/"),
-    },
-    publisher: {
-      "@type": "Organization",
-      name: siteTitle,
-      url: absoluteUrl("/"),
-    },
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${url}#article`,
+        headline: post.title,
+        description: createDescription(post.content || post.title),
+        image: post.coverImage ? [post.coverImage] : undefined,
+        datePublished: new Date(post.date).toISOString(),
+        dateModified: new Date(post.date).toISOString(),
+        mainEntityOfPage: url,
+        keywords: post.tags,
+        articleSection: post.categories,
+        inLanguage: "ja",
+        author: {
+          "@type": "Organization",
+          name: siteTitle,
+          url: absoluteUrl("/"),
+        },
+        publisher: {
+          "@type": "Organization",
+          name: siteTitle,
+          url: absoluteUrl("/"),
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: absoluteUrl("/"),
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Blog",
+            item: absoluteUrl("/blog"),
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: post.title,
+            item: url,
+          },
+        ],
+      },
+    ],
   };
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
+      <JsonLd id="article-json-ld" data={articleJsonLd} />
       <BlogPostPage data={{ post }} url={url} />
     </>
   );

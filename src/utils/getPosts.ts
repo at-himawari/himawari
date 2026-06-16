@@ -33,28 +33,57 @@ interface StrapiArticleItem {
 
 interface StrapiResponse {
   data: StrapiArticleItem[];
+  meta?: {
+    pagination?: {
+      page?: number;
+      pageSize?: number;
+      pageCount?: number;
+      total?: number;
+    };
+  };
+}
+
+const ARTICLE_PAGE_SIZE = 100;
+const ARTICLE_REVALIDATE_SECONDS = 60 * 60;
+
+async function fetchArticlePage(page: number): Promise<StrapiResponse> {
+  const params = new URLSearchParams({
+    sort: "date:desc",
+    populate: "*",
+    "pagination[page]": String(page),
+    "pagination[pageSize]": String(ARTICLE_PAGE_SIZE),
+  });
+
+  const response = await fetch(`${STRAPI_URL}/api/articles?${params}`, {
+    next: { revalidate: ARTICLE_REVALIDATE_SECONDS },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch posts: ${response.statusText}`);
+  }
+
+  return (await response.json()) as StrapiResponse;
 }
 
 export async function getPosts(): Promise<Post[]> {
   try {
-    // URLの最後に &populate=categories,tags を追加してリレーションデータも取得する
-    // 認証ヘッダー(headers)を削除しました
-    const response = await fetch(
-      `${STRAPI_URL}/api/articles?sort=date:desc&populate=*`,
-    );
+    const firstPage = await fetchArticlePage(1);
+    const firstPageItems = Array.isArray(firstPage.data) ? firstPage.data : [];
+    const allItems = [...firstPageItems];
+    const pageCount = firstPage.meta?.pagination?.pageCount || 1;
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch posts: ${response.statusText}`);
+    for (let page = 2; page <= pageCount; page += 1) {
+      const pageData = await fetchArticlePage(page);
+      const pageItems = Array.isArray(pageData.data) ? pageData.data : [];
+      allItems.push(...pageItems);
     }
 
-    const { data } = (await response.json()) as StrapiResponse;
-
-    if (!Array.isArray(data)) {
+    if (!Array.isArray(firstPage.data)) {
       console.warn("Strapiからのレスポンス形式が想定と異なります");
       return [];
     }
 
-    return data.map((item) => {
+    return allItems.map((item) => {
       const attrs = item.attributes || item;
 
       // Strapiから返ってきたリレーションオブジェクトの配列を文字列の配列(string[])に変換する

@@ -8,17 +8,14 @@ import { PageContextPost } from "../../../types/pageContextPost";
 import { secureMarkdownContent } from "../../../utils/contentSecurity";
 
 import { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
-import rehypeRaw from "rehype-raw";
-import rehypeSanitize from "rehype-sanitize";
-import { sanitizeConfig } from "../../../utils/sanitizeConfig";
-import { markdownComponents } from "../../../components/MarkdownComponents";
+import dynamic from "next/dynamic";
 import GoogleAd from "../../../components/GoogleAd";
 import ArticleEngagement from "../../../components/ArticleEngagement";
 import { sendGAEvent } from "../../../utils/analytics";
+
+const MarkdownContent = dynamic(() => import("./MarkdownContent"), {
+  ssr: false,
+});
 
 // コンポーネント本体
 export default function Page({
@@ -95,7 +92,7 @@ export default function Page({
                 投稿日 {date ? date.split("T")[0].replace(/-/g, "/") : ""}
               </p>
             </header>
-            <section className="prose max-w-none">
+            <section className="prose max-w-none min-h-24">
               <MarkdownContent content={securityResult.content} />
             </section>
             <ArticleEngagement slug={slug} />
@@ -105,22 +102,6 @@ export default function Page({
       </main>
       <Footer />
     </>
-  );
-}
-
-function MarkdownContent({ content }: { content: string }) {
-  return (
-    <ReactMarkdown
-      rehypePlugins={[
-        rehypeRaw,
-        rehypeKatex,
-        [rehypeSanitize, sanitizeConfig],
-      ]}
-      remarkPlugins={[remarkGfm, remarkMath]}
-      components={markdownComponents}
-    >
-      {content}
-    </ReactMarkdown>
   );
 }
 

@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "video_items",
+  "info": {
+    "singularName": "video-item",
+    "pluralName": "video-items",
+    "displayName": "Video Item"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "videoUrl": {
+      "type": "string",
+      "required": true
+    },
+    "thumbnailUrl": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "date": {
+      "type": "date"
+    }
+  }
+}

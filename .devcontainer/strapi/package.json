@@ -1,0 +1,29 @@
+{
+  "name": "himawari-strapi-dev",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start"
+  },
+  "dependencies": {
+    "@strapi/plugin-cloud": "^5.0.0",
+    "@strapi/plugin-users-permissions": "^5.0.0",
+    "@strapi/strapi": "^5.0.0",
+    "pg": "^8.13.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "styled-components": "^6.1.19"
+  },
+  "devDependencies": {
+    "@strapi/typescript-utils": "^5.0.0",
+    "typescript": "^5.6.2"
+  },
+  "engines": {
+    "node": ">=20 <=22.x.x",
+    "npm": ">=9.0.0"
+  },
+  "strapi": {
+    "uuid": "60bb93e4-a79e-4fe0-9c23-b401ac08e57d"
+  }
+}

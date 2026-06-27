@@ -1,0 +1,63 @@
+services:
+  app:
+    image: node:22-bookworm
+    init: true
+    working_dir: /workspace/himawari
+    command: sleep infinity
+    environment:
+      NEXT_PUBLIC_STRAPI_URL: http://strapi:1337
+      VITE_STRAPI_URL: http://strapi:1337
+    volumes:
+      - ..:/workspace/himawari:cached
+      - app-node-modules:/workspace/himawari/node_modules
+    depends_on:
+      strapi:
+        condition: service_started
+    ports:
+      - "3000:3000"
+
+  strapi:
+    build:
+      context: ./strapi
+    init: true
+    environment:
+      HOST: 0.0.0.0
+      PORT: 1337
+      NODE_ENV: development
+      APP_KEYS: local-dev-key-1,local-dev-key-2
+      API_TOKEN_SALT: local-dev-api-token-salt
+      ADMIN_JWT_SECRET: local-dev-admin-jwt-secret
+      TRANSFER_TOKEN_SALT: local-dev-transfer-token-salt
+      JWT_SECRET: local-dev-jwt-secret
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: strapi-db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: strapi
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: strapi
+    volumes:
+      - strapi-uploads:/opt/app/public/uploads
+    depends_on:
+      strapi-db:
+        condition: service_healthy
+    ports:
+      - "1337:1337"
+
+  strapi-db:
+    image: postgres:16-bookworm
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: strapi
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U strapi -d strapi"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - strapi-db-data:/var/lib/postgresql/data
+
+volumes:
+  app-node-modules:
+  strapi-db-data:
+  strapi-uploads:

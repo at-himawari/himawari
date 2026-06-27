@@ -4,6 +4,8 @@ import BlogPage from "../../views/blog/+Page";
 import { data } from "../../views/blog/+data";
 import { absoluteUrl, createPageMetadata } from "../../utils/seo";
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = createPageMetadata({
   title: "技術ブログ",
   description:
@@ -12,7 +14,7 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default async function Page() {
-  const { posts } = await data();
+  const { posts } = await data({ throwOnError: true });
   const blogJsonLd = {
     "@context": "https://schema.org",
     "@graph": [

@@ -1,8 +1,12 @@
 import { getPosts } from "../../utils/getPosts";
 import { Post } from "../../types/Post";
 
-export async function data() {
-  const allPosts = await getPosts();
+type BlogDataOptions = {
+  throwOnError?: boolean;
+};
+
+export async function data(options: BlogDataOptions = {}) {
+  const allPosts = await getPosts(options);
 
   // content を除外したメタデータのみを渡す
   const posts: Omit<Post, "content">[] = allPosts.map(

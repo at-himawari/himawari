@@ -22,7 +22,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const posts = await getPosts();
+  const posts = await getPosts({ throwOnError: true });
   const post = posts.find((item) => item.slug === slug);
 
   if (!post) {
@@ -53,7 +53,7 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const posts = await getPosts();
+  const posts = await getPosts({ throwOnError: true });
   const post = posts.find((item) => item.slug === slug);
 
   if (!post) {

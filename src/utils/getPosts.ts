@@ -7,14 +7,16 @@ const STRAPI_URL =
   "http://localhost:1337";
 
 // Category/Tagの型定義
-interface StrapiTerm {
+type StrapiTerm =
+  | string
+  | {
   id?: number;
   documentId?: string;
   name?: string;
   attributes?: {
     name: string;
   };
-}
+};
 
 interface StrapiArticleItem {
   id?: number;
@@ -44,7 +46,11 @@ interface StrapiResponse {
 }
 
 const ARTICLE_PAGE_SIZE = 100;
-const ARTICLE_REVALIDATE_SECONDS = 60 * 60;
+export const ARTICLE_REVALIDATE_SECONDS = 60 * 60;
+
+type GetPostsOptions = {
+  throwOnError?: boolean;
+};
 
 async function fetchArticlePage(page: number): Promise<StrapiResponse> {
   const params = new URLSearchParams({
@@ -65,7 +71,7 @@ async function fetchArticlePage(page: number): Promise<StrapiResponse> {
   return (await response.json()) as StrapiResponse;
 }
 
-export async function getPosts(): Promise<Post[]> {
+export async function getPosts(options: GetPostsOptions = {}): Promise<Post[]> {
   try {
     const firstPage = await fetchArticlePage(1);
     const firstPageItems = Array.isArray(firstPage.data) ? firstPage.data : [];
@@ -79,7 +85,11 @@ export async function getPosts(): Promise<Post[]> {
     }
 
     if (!Array.isArray(firstPage.data)) {
-      console.warn("Strapiからのレスポンス形式が想定と異なります");
+      const message = "Strapiからのレスポンス形式が想定と異なります";
+      if (options.throwOnError) {
+        throw new Error(message);
+      }
+      console.warn(message);
       return [];
     }
 
@@ -90,16 +100,20 @@ export async function getPosts(): Promise<Post[]> {
       const categoriesData = Array.isArray(attrs.categories)
         ? attrs.categories
         : attrs.categories?.data || [];
-      const extractedCategories = categoriesData.map(
-        (c) => c.attributes?.name || c.name || "",
-      );
+      const extractedCategories = categoriesData
+        .map((c) =>
+          typeof c === "string" ? c : c.attributes?.name || c.name || "",
+        )
+        .filter(Boolean);
 
       const tagsData = Array.isArray(attrs.tags)
         ? attrs.tags
         : attrs.tags?.data || [];
-      const extractedTags = tagsData.map(
-        (t) => t.attributes?.name || t.name || "",
-      );
+      const extractedTags = tagsData
+        .map((t) =>
+          typeof t === "string" ? t : t.attributes?.name || t.name || "",
+        )
+        .filter(Boolean);
 
       return {
         slug: attrs.slug || "",
@@ -112,6 +126,10 @@ export async function getPosts(): Promise<Post[]> {
       };
     });
   } catch (error) {
+    if (options.throwOnError) {
+      throw error;
+    }
+
     if (error instanceof Error) {
       console.warn("Posts are unavailable from Strapi:", error.message);
     } else {

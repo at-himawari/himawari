@@ -14,7 +14,15 @@ type Params = {
   slug: string;
 };
 
-export const runtime = "edge";
+export const dynamicParams = false;
+
+export async function generateStaticParams(): Promise<Params[]> {
+  const posts = await getPosts({ throwOnError: true });
+  return posts
+    .map((post) => post.slug)
+    .filter((slug): slug is string => Boolean(slug))
+    .map((slug) => ({ slug }));
+}
 
 export async function generateMetadata({
   params,

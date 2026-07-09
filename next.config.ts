@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 import path from "path";
 
 const nextConfig: NextConfig = {
@@ -9,5 +10,7 @@ const nextConfig: NextConfig = {
   },
   trailingSlash: true,
 };
+
+initOpenNextCloudflareForDev();
 
 export default nextConfig;

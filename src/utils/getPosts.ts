@@ -46,7 +46,6 @@ interface StrapiResponse {
 }
 
 const ARTICLE_PAGE_SIZE = 100;
-export const ARTICLE_REVALIDATE_SECONDS = 60 * 60;
 
 type GetPostsOptions = {
   throwOnError?: boolean;
@@ -61,7 +60,7 @@ async function fetchArticlePage(page: number): Promise<StrapiResponse> {
   });
 
   const response = await fetch(`${STRAPI_URL}/api/articles?${params}`, {
-    next: { revalidate: ARTICLE_REVALIDATE_SECONDS },
+    cache: "force-cache",
   });
 
   if (!response.ok) {

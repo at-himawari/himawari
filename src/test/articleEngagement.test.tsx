@@ -108,8 +108,8 @@ describe("ArticleEngagement", () => {
 
     render(<ArticleEngagement slug="sample-post" />);
 
-    expect(await screen.findByText("Sign in with Google")).toBeInTheDocument();
-    expect(screen.queryByText("2 いいね / 1 コメント")).not.toBeInTheDocument();
+    expect(await screen.findByText("2 いいね / 1 コメント")).toBeInTheDocument();
+    expect(screen.getByText("Sign in with Google")).toBeInTheDocument();
     expect(screen.queryByText("最初のコメント")).not.toBeInTheDocument();
     expect(
       screen.queryByRole("button", { name: "コメントを送信" }),
@@ -118,7 +118,6 @@ describe("ArticleEngagement", () => {
     googleCallback?.({ credential: idToken });
 
     expect(await screen.findByText("taro@example.com")).toBeInTheDocument();
-    expect(await screen.findByText("2 いいね / 1 コメント")).toBeInTheDocument();
     expect(screen.getByText("最初のコメント")).toBeInTheDocument();
 
     fireEvent.change(screen.getByLabelText("名前"), {

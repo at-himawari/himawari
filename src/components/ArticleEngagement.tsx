@@ -397,13 +397,13 @@ export default function ArticleEngagement({ slug }: Props) {
     <section className="mt-12 border-t border-gray-200 pt-8" aria-label="記事への反応">
       <div className="flex flex-wrap items-center gap-3">
         <h2 className="text-xl font-semibold text-gray-900">この記事への反応</h2>
-        {signedInUser && isLoading ? (
+        {isLoading ? (
           <span className="text-sm text-gray-500">読み込み中...</span>
-        ) : signedInUser ? (
+        ) : (
           <span className="text-sm text-gray-500">
             {engagement.likeCount} いいね / {engagement.commentCount} コメント
           </span>
-        ) : null}
+        )}
       </div>
 
       {!signedInUser ? (

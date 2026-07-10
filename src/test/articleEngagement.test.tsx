@@ -48,7 +48,7 @@ describe("ArticleEngagement", () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  test("hides engagement controls until Google login and allows posting a comment", async () => {
+  test("shows comments without Google login and allows posting after login", async () => {
     process.env.NEXT_PUBLIC_ENGAGEMENT_API_URL = "https://api.example.com";
     process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID = "google-client-id";
     const idToken = createGoogleIdToken({
@@ -71,7 +71,6 @@ describe("ArticleEngagement", () => {
               name: "ひまわり",
               body: "最初のコメント",
               createdAt: "2026-04-18T12:00:00.000Z",
-              canDelete: true,
             },
           ],
         }),
@@ -133,10 +132,21 @@ describe("ArticleEngagement", () => {
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "いいね" })).toBeInTheDocument();
     expect(screen.getByText("Sign in with Google")).toBeInTheDocument();
-    expect(screen.queryByText("最初のコメント")).not.toBeInTheDocument();
+    expect(screen.getByText("最初のコメント")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "コメントを削除" }),
+    ).not.toBeInTheDocument();
     expect(
       screen.queryByRole("button", { name: "コメントを送信" }),
     ).not.toBeInTheDocument();
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      1,
+      "https://api.example.com/articles/sample-post/engagement",
+      expect.objectContaining({
+        headers: undefined,
+        credentials: "include",
+      }),
+    );
 
     googleCallback?.({ credential: idToken });
 

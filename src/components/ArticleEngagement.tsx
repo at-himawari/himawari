@@ -571,6 +571,17 @@ export default function ArticleEngagement({ slug }: Props) {
       {!signedInUser && error ? (
         <p className="mt-4 text-sm text-red-600">{error}</p>
       ) : null}
+
+      {!signedInUser ? (
+        <div className="mt-10">
+          <CommentsList
+            comments={engagement.comments}
+            isLoading={isLoading}
+            deletingCommentId={deletingCommentId}
+            onDeleteComment={handleDeleteComment}
+          />
+        </div>
+      ) : null}
     </section>
   );
 }

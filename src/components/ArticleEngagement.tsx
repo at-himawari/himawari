@@ -391,14 +391,7 @@ export default function ArticleEngagement({ slug }: Props) {
   }
 
   if (!googleClientId) {
-    return (
-      <section className="mt-12 border-t border-gray-200 pt-8" aria-label="記事への反応">
-        <h2 className="text-xl font-semibold text-gray-900">この記事への反応</h2>
-        <p className="mt-3 text-sm text-gray-600">
-          いいねとコメントは、Googleログイン設定後に有効になります。
-        </p>
-      </section>
-    );
+    return null;
   }
 
   return (

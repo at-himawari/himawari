@@ -391,25 +391,31 @@ export default function ArticleEngagement({ slug }: Props) {
     return null;
   }
 
+  const signedInUser = isSignedIn ? authUser : null;
+
   return (
     <section className="mt-12 border-t border-gray-200 pt-8" aria-label="記事への反応">
       <div className="flex flex-wrap items-center gap-3">
         <h2 className="text-xl font-semibold text-gray-900">この記事への反応</h2>
-        {isLoading ? (
+        {signedInUser && isLoading ? (
           <span className="text-sm text-gray-500">読み込み中...</span>
-        ) : (
+        ) : signedInUser ? (
           <span className="text-sm text-gray-500">
             {engagement.likeCount} いいね / {engagement.commentCount} コメント
           </span>
-        )}
+        ) : null}
       </div>
 
-      <div className="mt-5 flex flex-wrap items-center gap-3 rounded-md border border-gray-200 bg-gray-50 p-4">
-        {authUser ? (
-          <>
-            {authUser.picture ? (
+      {!signedInUser ? (
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          <div ref={googleButtonRef} />
+        </div>
+      ) : (
+        <>
+          <div className="mt-5 flex flex-wrap items-center gap-3 rounded-md border border-gray-200 bg-gray-50 p-4">
+            {signedInUser.picture ? (
               <img
-                src={authUser.picture}
+                src={signedInUser.picture}
                 alt=""
                 className="h-8 w-8 rounded-full"
                 referrerPolicy="no-referrer"
@@ -417,10 +423,10 @@ export default function ArticleEngagement({ slug }: Props) {
             ) : null}
             <div className="min-w-0">
               <p className="truncate text-sm font-medium text-gray-900">
-                {authUser.name}
+                {signedInUser.name}
               </p>
               <p className="truncate text-xs text-gray-500">
-                {authUser.email}
+                {signedInUser.email}
               </p>
             </div>
             <button
@@ -430,106 +436,99 @@ export default function ArticleEngagement({ slug }: Props) {
             >
               ログアウト
             </button>
-          </>
-        ) : (
-          <>
-            <div ref={googleButtonRef} />
-            <span className="text-sm text-gray-600">
-              いいねとコメントにはGoogleログインが必要です。
+          </div>
+
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={handleToggleLike}
+              disabled={isLoading || isSubmittingLike}
+              className={`inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60 ${
+                engagement.viewerHasLiked
+                  ? "border-orange-500 bg-orange-50 text-orange-700"
+                  : "border-gray-300 bg-white text-gray-700"
+              }`}
+            >
+              <span aria-hidden="true">{engagement.viewerHasLiked ? "♥" : "♡"}</span>
+              {engagement.viewerHasLiked ? "いいね済み" : "いいね"}
+            </button>
+            <span className="text-sm text-gray-500">
+              同じGoogleアカウントでは1回までです。
             </span>
-          </>
-        )}
-      </div>
-
-      <div className="mt-5 flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          onClick={handleToggleLike}
-          disabled={isLoading || isSubmittingLike}
-          className={`inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60 ${
-            engagement.viewerHasLiked
-              ? "border-orange-500 bg-orange-50 text-orange-700"
-              : "border-gray-300 bg-white text-gray-700"
-          }`}
-        >
-          <span aria-hidden="true">{engagement.viewerHasLiked ? "♥" : "♡"}</span>
-          {engagement.viewerHasLiked ? "いいね済み" : "いいね"}
-        </button>
-        <span className="text-sm text-gray-500">
-          同じGoogleアカウントでは1回までです。
-        </span>
-      </div>
-
-      {error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
-
-      <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
-        <form className="space-y-4" onSubmit={handleSubmitComment}>
-          <div>
-            <label
-              htmlFor="comment-name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              名前
-            </label>
-            <input
-              id="comment-name"
-              name="name"
-              value={commentName}
-              onChange={(event) => setCommentName(event.target.value)}
-              maxLength={40}
-              required
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-500"
-            />
           </div>
 
-          <div className="hidden" aria-hidden="true">
-            <label htmlFor="comment-website">Website</label>
-            <input
-              id="comment-website"
-              name="website"
-              tabIndex={-1}
-              autoComplete="off"
-            />
+          {error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
+
+          <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+            <form className="space-y-4" onSubmit={handleSubmitComment}>
+              <div>
+                <label
+                  htmlFor="comment-name"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  名前
+                </label>
+                <input
+                  id="comment-name"
+                  name="name"
+                  value={commentName}
+                  onChange={(event) => setCommentName(event.target.value)}
+                  maxLength={40}
+                  required
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-500"
+                />
+              </div>
+
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="comment-website">Website</label>
+                <input
+                  id="comment-website"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="comment-body"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  コメント
+                </label>
+                <textarea
+                  id="comment-body"
+                  name="body"
+                  value={commentBody}
+                  onChange={(event) => setCommentBody(event.target.value)}
+                  maxLength={1000}
+                  required
+                  rows={5}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-500"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmittingComment}
+                className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isSubmittingComment ? "送信中..." : "コメントを送信"}
+              </button>
+
+              {commentNotice ? (
+                <p className="text-sm text-green-700">{commentNotice}</p>
+              ) : null}
+            </form>
+
+            <CommentsList comments={engagement.comments} isLoading={isLoading} />
           </div>
+        </>
+      )}
 
-          <div>
-            <label
-              htmlFor="comment-body"
-              className="block text-sm font-medium text-gray-700"
-            >
-              コメント
-            </label>
-            <textarea
-              id="comment-body"
-              name="body"
-              value={commentBody}
-              onChange={(event) => setCommentBody(event.target.value)}
-              maxLength={1000}
-              required
-              rows={5}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-500"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={isSubmittingComment || !isSignedIn}
-            className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {isSubmittingComment
-              ? "送信中..."
-              : isSignedIn
-                ? "コメントを送信"
-                : "Googleログイン後に送信"}
-          </button>
-
-          {commentNotice ? (
-            <p className="text-sm text-green-700">{commentNotice}</p>
-          ) : null}
-        </form>
-
-        <CommentsList comments={engagement.comments} isLoading={isLoading} />
-      </div>
+      {!signedInUser && error ? (
+        <p className="mt-4 text-sm text-red-600">{error}</p>
+      ) : null}
     </section>
   );
 }

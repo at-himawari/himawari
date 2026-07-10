@@ -48,7 +48,7 @@ describe("ArticleEngagement", () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  test("loads engagement summary and allows posting a comment", async () => {
+  test("hides engagement controls until Google login and allows posting a comment", async () => {
     process.env.NEXT_PUBLIC_ENGAGEMENT_API_URL = "https://api.example.com";
     process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID = "google-client-id";
     const idToken = createGoogleIdToken({
@@ -108,12 +108,18 @@ describe("ArticleEngagement", () => {
 
     render(<ArticleEngagement slug="sample-post" />);
 
-    expect(await screen.findByText("2 いいね / 1 コメント")).toBeInTheDocument();
-    expect(screen.getByText("最初のコメント")).toBeInTheDocument();
+    expect(await screen.findByText("Sign in with Google")).toBeInTheDocument();
+    expect(screen.queryByText("2 いいね / 1 コメント")).not.toBeInTheDocument();
+    expect(screen.queryByText("最初のコメント")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "コメントを送信" }),
+    ).not.toBeInTheDocument();
 
     googleCallback?.({ credential: idToken });
 
     expect(await screen.findByText("taro@example.com")).toBeInTheDocument();
+    expect(await screen.findByText("2 いいね / 1 コメント")).toBeInTheDocument();
+    expect(screen.getByText("最初のコメント")).toBeInTheDocument();
 
     fireEvent.change(screen.getByLabelText("名前"), {
       target: { value: "太郎" },

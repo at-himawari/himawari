@@ -380,14 +380,7 @@ export default function ArticleEngagement({ slug }: Props) {
   }
 
   if (!apiBaseUrl) {
-    return (
-      <section className="mt-12 border-t border-gray-200 pt-8" aria-label="記事への反応">
-        <h2 className="text-xl font-semibold text-gray-900">この記事への反応</h2>
-        <p className="mt-3 text-sm text-gray-600">
-          いいねとコメントは、公開用 API の設定後に有効になります。
-        </p>
-      </section>
-    );
+    return null;
   }
 
   if (!googleClientId) {

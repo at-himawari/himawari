@@ -39,15 +39,13 @@ describe("ArticleEngagement", () => {
     fetchMock.mockReset();
   });
 
-  test("shows setup notice when API URL is not configured", () => {
+  test("renders nothing when API URL is not configured", () => {
     process.env.NEXT_PUBLIC_ENGAGEMENT_API_URL = "";
     process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID = "google-client-id";
 
-    render(<ArticleEngagement slug="sample-post" />);
+    const { container } = render(<ArticleEngagement slug="sample-post" />);
 
-    expect(
-      screen.getByText("いいねとコメントは、公開用 API の設定後に有効になります。"),
-    ).toBeInTheDocument();
+    expect(container).toBeEmptyDOMElement();
   });
 
   test("loads engagement summary and allows posting a comment", async () => {

@@ -111,6 +111,7 @@ describe("ArticleEngagement", () => {
     expect(
       await screen.findByLabelText("2 いいね、1 コメント"),
     ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "いいね" })).toBeInTheDocument();
     expect(screen.getByText("Sign in with Google")).toBeInTheDocument();
     expect(screen.queryByText("最初のコメント")).not.toBeInTheDocument();
     expect(
@@ -121,6 +122,7 @@ describe("ArticleEngagement", () => {
 
     expect(await screen.findByText("taro@example.com")).toBeInTheDocument();
     expect(screen.getByText("最初のコメント")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "いいね" })).toBeInTheDocument();
 
     fireEvent.change(screen.getByLabelText("名前"), {
       target: { value: "太郎" },

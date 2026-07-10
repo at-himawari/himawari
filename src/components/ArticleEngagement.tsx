@@ -404,6 +404,9 @@ export default function ArticleEngagement({ slug }: Props) {
           <EngagementSummary
             likeCount={engagement.likeCount}
             commentCount={engagement.commentCount}
+            viewerHasLiked={engagement.viewerHasLiked}
+            isSubmittingLike={isSubmittingLike}
+            onLike={handleToggleLike}
           />
         )}
       </div>
@@ -438,29 +441,6 @@ export default function ArticleEngagement({ slug }: Props) {
             >
               ログアウト
             </button>
-          </div>
-
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={handleToggleLike}
-              disabled={isLoading || isSubmittingLike}
-              className={`inline-flex h-14 w-14 items-center justify-center rounded-full border-2 text-xl transition disabled:cursor-not-allowed disabled:opacity-60 ${
-                engagement.viewerHasLiked
-                  ? "border-rose-500 bg-rose-50 text-rose-500"
-                  : "border-rose-500 bg-white text-rose-500 hover:bg-rose-50"
-              }`}
-              aria-label={engagement.viewerHasLiked ? "いいねを取り消す" : "いいね"}
-            >
-              {engagement.viewerHasLiked ? (
-                <BsHeartFill aria-hidden="true" />
-              ) : (
-                <BsHeart aria-hidden="true" />
-              )}
-            </button>
-            <span className="text-sm text-gray-500">
-              同じGoogleアカウントでは1回までです。
-            </span>
           </div>
 
           {error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
@@ -542,18 +522,38 @@ export default function ArticleEngagement({ slug }: Props) {
 function EngagementSummary({
   likeCount,
   commentCount,
+  viewerHasLiked,
+  isSubmittingLike,
+  onLike,
 }: {
   likeCount: number;
   commentCount: number;
+  viewerHasLiked: boolean;
+  isSubmittingLike: boolean;
+  onLike: () => void;
 }) {
   return (
     <div
       className="flex items-center gap-5 text-gray-500"
       aria-label={`${likeCount} いいね、${commentCount} コメント`}
     >
-      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-rose-500 text-base text-rose-500">
-        <BsHeart aria-hidden="true" />
-      </span>
+      <button
+        type="button"
+        onClick={onLike}
+        disabled={isSubmittingLike}
+        className={`inline-flex h-8 w-8 items-center justify-center rounded-full border-2 text-base transition disabled:cursor-not-allowed disabled:opacity-60 ${
+          viewerHasLiked
+            ? "border-rose-500 bg-rose-50 text-rose-500"
+            : "border-rose-500 bg-white text-rose-500 hover:bg-rose-50"
+        }`}
+        aria-label={viewerHasLiked ? "いいねを取り消す" : "いいね"}
+      >
+        {viewerHasLiked ? (
+          <BsHeartFill aria-hidden="true" />
+        ) : (
+          <BsHeart aria-hidden="true" />
+        )}
+      </button>
       <span className="text-2xl font-medium tabular-nums text-gray-600">
         {likeCount}
       </span>

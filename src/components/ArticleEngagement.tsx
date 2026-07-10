@@ -68,11 +68,15 @@ const EMPTY_ENGAGEMENT: EngagementResponse = {
   comments: [],
 };
 
+function normalizeApiBaseUrl(value = "") {
+  return value.replace(/\/$/, "");
+}
+
 export default function ArticleEngagement({ slug }: Props) {
-  const apiBaseUrl = useMemo(() => {
-    const value = process.env.NEXT_PUBLIC_ENGAGEMENT_API_URL || "";
-    return value.replace(/\/$/, "");
-  }, []);
+  const apiBaseUrl = useMemo(
+    () => normalizeApiBaseUrl(process.env.NEXT_PUBLIC_ENGAGEMENT_API_URL || ""),
+    [],
+  );
   const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "";
   const googleButtonRef = useRef<HTMLDivElement>(null);
   const [engagement, setEngagement] = useState<EngagementResponse>({

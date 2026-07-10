@@ -76,6 +76,7 @@ NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-oauth-client-id.apps.googleusercontent.
 未設定の場合は `http://localhost:1337` が使用されます。Strapi に接続できない場合、各取得関数は警告を出しつつ空データへフォールバックします。
 `NEXT_PUBLIC_ENGAGEMENT_API_URL` は記事ごとのいいね・コメント API の URL です。未設定でもサイトは動作しますが、記事詳細ページの反応セクションは案内表示になります。
 `NEXT_PUBLIC_GOOGLE_CLIENT_ID` は、いいね・コメント投稿に使う Google Identity Services の OAuth クライアント ID です。Google Cloud Console で Web アプリケーション用クライアントを作成し、本番ドメインと `http://localhost:3000` を承認済み JavaScript 生成元に追加してください。
+Cloudflare では、これらの `NEXT_PUBLIC_*` 変数をビルド時環境変数として設定し、設定後に再ビルド・再デプロイしてください。Worker 実行時の Variables / Secrets だけに設定しても、ブラウザ向け JavaScript には反映されません。
 
 ## 開発コマンド
 
@@ -275,4 +276,3 @@ npx cdk deploy \
 ## ライセンス
 
 このプロジェクトは MIT ライセンスです。詳細は [LICENSE](LICENSE) を参照してください。
-

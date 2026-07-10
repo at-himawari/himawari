@@ -551,13 +551,13 @@ function EngagementSummary({
       className="flex items-center gap-5 text-gray-500"
       aria-label={`${likeCount} いいね、${commentCount} コメント`}
     >
-      <span className="inline-flex h-14 w-14 items-center justify-center rounded-full border-2 border-rose-500 text-2xl text-rose-500">
+      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-rose-500 text-base text-rose-500">
         <BsHeart aria-hidden="true" />
       </span>
       <span className="text-2xl font-medium tabular-nums text-gray-600">
         {likeCount}
       </span>
-      <span className="text-3xl text-gray-400">
+      <span className="text-2xl text-gray-400">
         <BsChat aria-hidden="true" />
       </span>
       <span className="sr-only">{commentCount} コメント</span>

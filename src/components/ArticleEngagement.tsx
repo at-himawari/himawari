@@ -8,6 +8,7 @@ import type {
   GoogleAuthUser,
 } from "../types/engagement";
 import { sendGAEvent } from "../utils/analytics";
+import { BsChat, BsHeart, BsHeartFill } from "react-icons/bs";
 
 type Props = {
   slug: string;
@@ -400,9 +401,10 @@ export default function ArticleEngagement({ slug }: Props) {
         {isLoading ? (
           <span className="text-sm text-gray-500">読み込み中...</span>
         ) : (
-          <span className="text-sm text-gray-500">
-            {engagement.likeCount} いいね / {engagement.commentCount} コメント
-          </span>
+          <EngagementSummary
+            likeCount={engagement.likeCount}
+            commentCount={engagement.commentCount}
+          />
         )}
       </div>
 
@@ -443,14 +445,18 @@ export default function ArticleEngagement({ slug }: Props) {
               type="button"
               onClick={handleToggleLike}
               disabled={isLoading || isSubmittingLike}
-              className={`inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60 ${
+              className={`inline-flex h-14 w-14 items-center justify-center rounded-full border-2 text-xl transition disabled:cursor-not-allowed disabled:opacity-60 ${
                 engagement.viewerHasLiked
-                  ? "border-orange-500 bg-orange-50 text-orange-700"
-                  : "border-gray-300 bg-white text-gray-700"
+                  ? "border-rose-500 bg-rose-50 text-rose-500"
+                  : "border-rose-500 bg-white text-rose-500 hover:bg-rose-50"
               }`}
+              aria-label={engagement.viewerHasLiked ? "いいねを取り消す" : "いいね"}
             >
-              <span aria-hidden="true">{engagement.viewerHasLiked ? "♥" : "♡"}</span>
-              {engagement.viewerHasLiked ? "いいね済み" : "いいね"}
+              {engagement.viewerHasLiked ? (
+                <BsHeartFill aria-hidden="true" />
+              ) : (
+                <BsHeart aria-hidden="true" />
+              )}
             </button>
             <span className="text-sm text-gray-500">
               同じGoogleアカウントでは1回までです。
@@ -530,6 +536,32 @@ export default function ArticleEngagement({ slug }: Props) {
         <p className="mt-4 text-sm text-red-600">{error}</p>
       ) : null}
     </section>
+  );
+}
+
+function EngagementSummary({
+  likeCount,
+  commentCount,
+}: {
+  likeCount: number;
+  commentCount: number;
+}) {
+  return (
+    <div
+      className="flex items-center gap-5 text-gray-500"
+      aria-label={`${likeCount} いいね、${commentCount} コメント`}
+    >
+      <span className="inline-flex h-14 w-14 items-center justify-center rounded-full border-2 border-rose-500 text-2xl text-rose-500">
+        <BsHeart aria-hidden="true" />
+      </span>
+      <span className="text-2xl font-medium tabular-nums text-gray-600">
+        {likeCount}
+      </span>
+      <span className="text-3xl text-gray-400">
+        <BsChat aria-hidden="true" />
+      </span>
+      <span className="sr-only">{commentCount} コメント</span>
+    </div>
   );
 }
 

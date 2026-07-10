@@ -108,7 +108,9 @@ describe("ArticleEngagement", () => {
 
     render(<ArticleEngagement slug="sample-post" />);
 
-    expect(await screen.findByText("2 いいね / 1 コメント")).toBeInTheDocument();
+    expect(
+      await screen.findByLabelText("2 いいね、1 コメント"),
+    ).toBeInTheDocument();
     expect(screen.getByText("Sign in with Google")).toBeInTheDocument();
     expect(screen.queryByText("最初のコメント")).not.toBeInTheDocument();
     expect(
@@ -133,7 +135,7 @@ describe("ArticleEngagement", () => {
     });
 
     expect(screen.getByText("こんにちは")).toBeInTheDocument();
-    expect(screen.getByText("2 いいね / 2 コメント")).toBeInTheDocument();
+    expect(screen.getByLabelText("2 いいね、2 コメント")).toBeInTheDocument();
     expect(fetchMock).toHaveBeenNthCalledWith(
       3,
       "https://api.example.com/articles/sample-post/comments",

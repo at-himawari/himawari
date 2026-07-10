@@ -271,7 +271,7 @@ npx cdk deploy \
   --parameters GoogleClientId=your-google-oauth-client-id.apps.googleusercontent.com
 ```
 
-デプロイ後に出力される URL を `.env.local` の `NEXT_PUBLIC_ENGAGEMENT_API_URL` に設定し、同じ Google OAuth クライアント ID を `NEXT_PUBLIC_GOOGLE_CLIENT_ID` に設定すると、記事詳細ページのいいね・コメント UI が Googleログイン必須で API と通信します。API 側では Google ID トークンを検証し、同一 Google アカウントにつき1記事1いいねに制限します。コメントに保存するメールアドレスと Google 識別子は管理用の非公開データで、公開レスポンスには含めません。
+デプロイ後に出力される URL を `.env.local` の `NEXT_PUBLIC_ENGAGEMENT_API_URL` に設定し、同じ Google OAuth クライアント ID を `NEXT_PUBLIC_GOOGLE_CLIENT_ID` に設定すると、記事詳細ページのいいね・コメント UI が Googleログイン必須で API と通信します。API 側では Google ID トークンを検証し、同一 Google アカウントにつき1記事1いいねに制限します。コメントは投稿した Google アカウント本人のみ削除できます。コメントに保存するメールアドレスと Google 識別子は管理用の非公開データで、公開レスポンスには含めません。
 
 ## ライセンス
 

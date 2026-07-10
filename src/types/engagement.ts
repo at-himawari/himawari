@@ -4,6 +4,7 @@ export type EngagementComment = {
   body: string;
   createdAt: string;
   status?: string;
+  canDelete?: boolean;
 };
 
 export type GoogleAuthUser = {

@@ -71,6 +71,7 @@ describe("ArticleEngagement", () => {
               name: "ひまわり",
               body: "最初のコメント",
               createdAt: "2026-04-18T12:00:00.000Z",
+              canDelete: true,
             },
           ],
         }),
@@ -102,7 +103,26 @@ describe("ArticleEngagement", () => {
             name: "太郎",
             body: "こんにちは",
             createdAt: "2026-04-18T13:00:00.000Z",
+            canDelete: true,
           },
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          slug: "sample-post",
+          likeCount: 2,
+          commentCount: 1,
+          viewerHasLiked: false,
+          comments: [
+            {
+              id: "comment-1",
+              name: "ひまわり",
+              body: "最初のコメント",
+              createdAt: "2026-04-18T12:00:00.000Z",
+              canDelete: true,
+            },
+          ],
         }),
       });
 
@@ -143,6 +163,26 @@ describe("ArticleEngagement", () => {
       "https://api.example.com/articles/sample-post/comments",
       expect.objectContaining({
         method: "POST",
+        credentials: "include",
+        headers: expect.objectContaining({
+          authorization: `Bearer ${idToken}`,
+        }),
+      }),
+    );
+
+    fireEvent.click(screen.getAllByRole("button", { name: "コメントを削除" })[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText("コメントを削除しました。")).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText("こんにちは")).not.toBeInTheDocument();
+    expect(screen.getByLabelText("2 いいね、1 コメント")).toBeInTheDocument();
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      4,
+      "https://api.example.com/articles/sample-post/comments/comment-2",
+      expect.objectContaining({
+        method: "DELETE",
         credentials: "include",
         headers: expect.objectContaining({
           authorization: `Bearer ${idToken}`,

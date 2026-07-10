@@ -326,17 +326,14 @@ async function createComment(slug, visitorId, user, payload) {
   return {
     accepted: true,
     moderation: status === "pending",
-    comment: serializeComment(
-      {
-        commentId,
-        name,
-        body,
-        createdAt: now,
-        status,
-        googleSub: user.googleSub,
-      },
-      user.googleSub,
-    ),
+    comment: serializeComment({
+      commentId,
+      name,
+      body,
+      createdAt: now,
+      status,
+      googleSub: user.googleSub,
+    }, user.googleSub),
   };
 }
 

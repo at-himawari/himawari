@@ -106,6 +106,12 @@ export class EngagementApiStack extends cdk.Stack {
       integration,
     });
 
+    httpApi.addRoutes({
+      path: "/articles/{slug}/comments/{commentId}",
+      methods: [apigwv2.HttpMethod.DELETE],
+      integration,
+    });
+
     new cdk.CfnOutput(this, "EngagementApiUrl", {
       description: "Base URL for the engagement HTTP API.",
       value: httpApi.apiEndpoint,

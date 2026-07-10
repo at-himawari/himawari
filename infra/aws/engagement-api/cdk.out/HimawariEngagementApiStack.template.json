@@ -159,7 +159,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-093884019621-ap-northeast-1",
-     "S3Key": "67d7fa045df3f2f9b21c9d612f1da0e6beefdfbc092d594b7e9c33c1f967bc77.zip"
+     "S3Key": "3c4c319ef9ff0ad2cffeafbedd1c1ddd54569541c9f5064179bef7e8115abcfc.zip"
     },
     "Environment": {
      "Variables": {
@@ -194,7 +194,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "HimawariEngagementApiStack/EngagementFunction/Resource",
-    "aws:asset:path": "asset.67d7fa045df3f2f9b21c9d612f1da0e6beefdfbc092d594b7e9c33c1f967bc77",
+    "aws:asset:path": "asset.3c4c319ef9ff0ad2cffeafbedd1c1ddd54569541c9f5064179bef7e8115abcfc",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -538,6 +538,62 @@
    },
    "Metadata": {
     "aws:cdk:path": "HimawariEngagementApiStack/EngagementHttpApi/POST--articles--{slug}--comments/Resource"
+   }
+  },
+  "EngagementHttpApiDELETEarticlesslugcommentscommentIdEngagementLambdaIntegrationPermissionE9D8A067": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "EngagementFunction933DF643",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-1:093884019621:",
+       {
+        "Ref": "EngagementHttpApi5A7A335B"
+       },
+       "/*/*/articles/{slug}/comments/{commentId}"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HimawariEngagementApiStack/EngagementHttpApi/DELETE--articles--{slug}--comments--{commentId}/EngagementLambdaIntegration-Permission"
+   }
+  },
+  "EngagementHttpApiDELETEarticlesslugcommentscommentIdC64CBA9A": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "EngagementHttpApi5A7A335B"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "DELETE /articles/{slug}/comments/{commentId}",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "EngagementHttpApiGEThealthEngagementLambdaIntegrationF7DE2880"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HimawariEngagementApiStack/EngagementHttpApi/DELETE--articles--{slug}--comments--{commentId}/Resource"
    }
   },
   "CDKMetadata": {

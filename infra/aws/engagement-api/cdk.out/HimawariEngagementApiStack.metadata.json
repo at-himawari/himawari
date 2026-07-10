@@ -62,7 +62,7 @@
     {
       "type": "aws:cdk:creationStack",
       "data": [
-        "new EngagementApiStack (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/lib/engagement-api-stack.ts:2:3986)",
+        "new EngagementApiStack (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/lib/engagement-api-stack.ts:2:4100)",
         "/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/bin/engagement-api.ts:3:9 (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/bin/engagement-api.ts:3:95)",
         "<anonymous> (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/bin/engagement-api.ts:4:3)",
         "...node internals, tsx..."
@@ -77,7 +77,7 @@
     {
       "type": "aws:cdk:creationStack",
       "data": [
-        "new EngagementApiStack (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/lib/engagement-api-stack.ts:2:4109)",
+        "new EngagementApiStack (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/lib/engagement-api-stack.ts:2:4223)",
         "/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/bin/engagement-api.ts:3:9 (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/bin/engagement-api.ts:3:95)",
         "<anonymous> (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/bin/engagement-api.ts:4:3)",
         "...node internals, tsx..."
@@ -362,6 +362,39 @@
         "Array.map (:)",
         "...WrappedClass.<anonymous> in aws-cdk-lib...",
         "new EngagementApiStack (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/lib/engagement-api-stack.ts:2:3894)",
+        "/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/bin/engagement-api.ts:3:9 (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/bin/engagement-api.ts:3:95)",
+        "<anonymous> (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/bin/engagement-api.ts:4:3)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/HimawariEngagementApiStack/EngagementHttpApi/DELETE--articles--{slug}--comments--{commentId}/EngagementLambdaIntegration-Permission": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EngagementHttpApiDELETEarticlesslugcommentscommentIdEngagementLambdaIntegrationPermissionE9D8A067"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        ".../Users/n-syuichi/projects/himawari/infra/aws/engagement-api/node_modules/aws-cdk-lib/aws-apigatewayv2/lib/http/api.js:1:96 in aws-cdk-lib...",
+        "Array.map (:)",
+        "...WrappedClass.<anonymous> in aws-cdk-lib...",
+        "new EngagementApiStack (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/lib/engagement-api-stack.ts:2:3994)"
+      ]
+    }
+  ],
+  "/HimawariEngagementApiStack/EngagementHttpApi/DELETE--articles--{slug}--comments--{commentId}/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EngagementHttpApiDELETEarticlesslugcommentscommentIdC64CBA9A"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        ".../Users/n-syuichi/projects/himawari/infra/aws/engagement-api/node_modules/aws-cdk-lib/aws-apigatewayv2/lib/http/api.js:1:96 in aws-cdk-lib...",
+        "Array.map (:)",
+        "...WrappedClass.<anonymous> in aws-cdk-lib...",
+        "new EngagementApiStack (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/lib/engagement-api-stack.ts:2:3994)",
         "/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/bin/engagement-api.ts:3:9 (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/bin/engagement-api.ts:3:95)",
         "<anonymous> (/Users/n-syuichi/projects/himawari/infra/aws/engagement-api/bin/engagement-api.ts:4:3)",
         "...node internals..."

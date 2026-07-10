@@ -24,6 +24,8 @@
   - いいね取り消し。Googleログイン必須
 - `POST /articles/{slug}/comments`
   - コメント投稿。Googleログイン必須
+- `DELETE /articles/{slug}/comments/{commentId}`
+  - コメント削除。Googleログイン必須。投稿したGoogleアカウント本人のみ削除可能
 
 ## データモデル
 

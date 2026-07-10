@@ -89,6 +89,7 @@ export default function ArticleEngagement({ slug }: Props) {
   const [error, setError] = useState("");
   const [isSubmittingLike, setIsSubmittingLike] = useState(false);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+  const [deletingCommentId, setDeletingCommentId] = useState("");
   const [idToken, setIdToken] = useState("");
   const [authUser, setAuthUser] = useState<GoogleAuthUser | null>(null);
   const [commentName, setCommentName] = useState("");
@@ -368,6 +369,56 @@ export default function ArticleEngagement({ slug }: Props) {
     }
   }
 
+  async function handleDeleteComment(commentId: string) {
+    if (!apiBaseUrl || deletingCommentId) {
+      return;
+    }
+
+    if (!idToken) {
+      requestGoogleSignIn();
+      setError("コメントを削除するにはGoogleログインが必要です。");
+      return;
+    }
+
+    setDeletingCommentId(commentId);
+    setError("");
+    setCommentNotice("");
+
+    try {
+      const response = await fetch(
+        `${apiBaseUrl}/articles/${slug}/comments/${encodeURIComponent(commentId)}`,
+        {
+          method: "DELETE",
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+          credentials: "include",
+        },
+      );
+
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => ({}))) as ErrorResponse;
+        throw new Error(payload.message || "コメントを削除できませんでした。");
+      }
+
+      const data = (await response.json()) as EngagementResponse;
+      setEngagement(data);
+      setCommentNotice("コメントを削除しました。");
+      sendGAEvent("delete_comment", {
+        content_type: "article",
+        item_id: slug,
+      });
+    } catch (fetchError) {
+      setError(
+        fetchError instanceof Error
+          ? fetchError.message
+          : "コメントを削除できませんでした。",
+      );
+    } finally {
+      setDeletingCommentId("");
+    }
+  }
+
   function handleSignOut() {
     window.google?.accounts?.id?.disableAutoSelect();
     window.google?.accounts?.id?.cancel();
@@ -507,7 +558,12 @@ export default function ArticleEngagement({ slug }: Props) {
               ) : null}
             </form>
 
-            <CommentsList comments={engagement.comments} isLoading={isLoading} />
+            <CommentsList
+              comments={engagement.comments}
+              isLoading={isLoading}
+              deletingCommentId={deletingCommentId}
+              onDeleteComment={handleDeleteComment}
+            />
           </div>
         </>
       )}
@@ -560,7 +616,9 @@ function EngagementSummary({
       <span className="text-2xl text-gray-400">
         <BsChat aria-hidden="true" />
       </span>
-      <span className="sr-only">{commentCount} コメント</span>
+      <span className="text-2xl font-medium tabular-nums text-gray-600">
+        {commentCount}
+      </span>
     </div>
   );
 }
@@ -589,9 +647,13 @@ function decodeGoogleCredential(token: string): GoogleJwtPayload | null {
 function CommentsList({
   comments,
   isLoading,
+  deletingCommentId,
+  onDeleteComment,
 }: {
   comments: EngagementComment[];
   isLoading: boolean;
+  deletingCommentId: string;
+  onDeleteComment: (commentId: string) => void;
 }) {
   if (isLoading) {
     return <p className="text-sm text-gray-500">コメントを読み込んでいます。</p>;
@@ -613,6 +675,17 @@ function CommentsList({
             <time className="text-xs text-gray-500" dateTime={comment.createdAt}>
               {new Date(comment.createdAt).toLocaleDateString("ja-JP")}
             </time>
+            {comment.canDelete ? (
+              <button
+                type="button"
+                onClick={() => onDeleteComment(comment.id)}
+                disabled={deletingCommentId === comment.id}
+                aria-label="コメントを削除"
+                className="ml-auto rounded-md border border-gray-300 px-2 py-1 text-xs text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {deletingCommentId === comment.id ? "削除中..." : "削除"}
+              </button>
+            ) : null}
           </div>
           <p className="mt-2 whitespace-pre-wrap text-sm leading-7 text-gray-700">
             {comment.body}

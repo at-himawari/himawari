@@ -6,6 +6,12 @@ export type EngagementComment = {
   status?: string;
 };
 
+export type GoogleAuthUser = {
+  name: string;
+  email: string;
+  picture?: string;
+};
+
 export type EngagementResponse = {
   slug: string;
   likeCount: number;

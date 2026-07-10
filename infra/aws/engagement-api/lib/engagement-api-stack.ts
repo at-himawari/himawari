@@ -23,6 +23,12 @@ export class EngagementApiStack extends cdk.Stack {
       description: "Whether newly submitted comments become visible immediately.",
     });
 
+    const googleClientId = new cdk.CfnParameter(this, "GoogleClientId", {
+      type: "String",
+      description: "Google OAuth 2.0 web client ID for Sign in with Google.",
+      noEcho: true,
+    });
+
     const engagementTable = new dynamodb.Table(this, "EngagementTable", {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       partitionKey: {
@@ -50,6 +56,7 @@ export class EngagementApiStack extends cdk.Stack {
         TABLE_NAME: engagementTable.tableName,
         FRONTEND_ORIGIN: frontendOrigin.valueAsString,
         COMMENT_AUTO_PUBLISH: commentAutoPublish.valueAsString,
+        GOOGLE_CLIENT_ID: googleClientId.valueAsString,
       },
     });
 
@@ -64,7 +71,7 @@ export class EngagementApiStack extends cdk.Stack {
           apigwv2.CorsHttpMethod.DELETE,
           apigwv2.CorsHttpMethod.OPTIONS,
         ],
-        allowHeaders: ["content-type"],
+        allowHeaders: ["authorization", "content-type"],
         allowCredentials: true,
         maxAge: cdk.Duration.days(1),
       },

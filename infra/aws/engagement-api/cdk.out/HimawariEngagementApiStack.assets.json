@@ -1,0 +1,36 @@
+{
+  "version": "54.0.0",
+  "files": {
+    "67d7fa045df3f2f9b21c9d612f1da0e6beefdfbc092d594b7e9c33c1f967bc77": {
+      "displayName": "EngagementFunction/Code",
+      "source": {
+        "path": "asset.67d7fa045df3f2f9b21c9d612f1da0e6beefdfbc092d594b7e9c33c1f967bc77",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "093884019621-ap-northeast-1-93fa6f8b": {
+          "bucketName": "cdk-hnb659fds-assets-093884019621-ap-northeast-1",
+          "objectKey": "67d7fa045df3f2f9b21c9d612f1da0e6beefdfbc092d594b7e9c33c1f967bc77.zip",
+          "region": "ap-northeast-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::093884019621:role/cdk-hnb659fds-file-publishing-role-093884019621-ap-northeast-1"
+        }
+      }
+    },
+    "ad0a4b217a2a2c77dec68e1556f3589e0464378e87630dc9bdf4d7c64251dd0f": {
+      "displayName": "HimawariEngagementApiStack Template",
+      "source": {
+        "path": "HimawariEngagementApiStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "093884019621-ap-northeast-1-6beadffb": {
+          "bucketName": "cdk-hnb659fds-assets-093884019621-ap-northeast-1",
+          "objectKey": "ad0a4b217a2a2c77dec68e1556f3589e0464378e87630dc9bdf4d7c64251dd0f.json",
+          "region": "ap-northeast-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::093884019621:role/cdk-hnb659fds-file-publishing-role-093884019621-ap-northeast-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

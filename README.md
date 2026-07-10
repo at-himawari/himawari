@@ -70,10 +70,12 @@ NEXT_PUBLIC_STRAPI_URL=https://your-strapi.example.com
 # または
 VITE_STRAPI_URL=https://your-strapi.example.com
 NEXT_PUBLIC_ENGAGEMENT_API_URL=https://your-engagement-api.example.com
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-oauth-client-id.apps.googleusercontent.com
 ```
 
 未設定の場合は `http://localhost:1337` が使用されます。Strapi に接続できない場合、各取得関数は警告を出しつつ空データへフォールバックします。
 `NEXT_PUBLIC_ENGAGEMENT_API_URL` は記事ごとのいいね・コメント API の URL です。未設定でもサイトは動作しますが、記事詳細ページの反応セクションは案内表示になります。
+`NEXT_PUBLIC_GOOGLE_CLIENT_ID` は、いいね・コメント投稿に使う Google Identity Services の OAuth クライアント ID です。Google Cloud Console で Web アプリケーション用クライアントを作成し、本番ドメインと `http://localhost:3000` を承認済み JavaScript 生成元に追加してください。
 
 ## 開発コマンド
 
@@ -264,11 +266,13 @@ cd ..
 npx cdk bootstrap
 npx cdk deploy \
   --parameters FrontendOrigin=https://yourdomain.com \
-  --parameters CommentAutoPublish=true
+  --parameters CommentAutoPublish=true \
+  --parameters GoogleClientId=your-google-oauth-client-id.apps.googleusercontent.com
 ```
 
-デプロイ後に出力される URL を `.env.local` の `NEXT_PUBLIC_ENGAGEMENT_API_URL` に設定すると、記事詳細ページのいいね・コメント UI が API と通信します。
+デプロイ後に出力される URL を `.env.local` の `NEXT_PUBLIC_ENGAGEMENT_API_URL` に設定し、同じ Google OAuth クライアント ID を `NEXT_PUBLIC_GOOGLE_CLIENT_ID` に設定すると、記事詳細ページのいいね・コメント UI が Googleログイン必須で API と通信します。API 側では Google ID トークンを検証し、同一 Google アカウントにつき1記事1いいねに制限します。コメントに保存するメールアドレスと Google 識別子は管理用の非公開データで、公開レスポンスには含めません。
 
 ## ライセンス
 
 このプロジェクトは MIT ライセンスです。詳細は [LICENSE](LICENSE) を参照してください。
+

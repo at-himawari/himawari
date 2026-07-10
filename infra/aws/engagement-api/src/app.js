@@ -9,6 +9,7 @@ const {
   QueryCommand,
   TransactWriteCommand,
 } = require("@aws-sdk/lib-dynamodb");
+const { moderateComment } = require("./openai-moderation");
 
 const TABLE_NAME = process.env.TABLE_NAME;
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || "*";
@@ -270,6 +271,21 @@ async function createComment(slug, visitorId, user, payload) {
   }
   if (!body || body.length > 1000) {
     throw badRequest("Comment must be between 1 and 1000 characters");
+  }
+
+  let moderation;
+  try {
+    moderation = await moderateComment({ name, body });
+  } catch (error) {
+    console.error("Comment moderation failed", error);
+    throw serviceUnavailable(
+      "コメントを現在審査できません。しばらくしてから再度お試しください。",
+    );
+  }
+  if (!moderation.allowed) {
+    throw unprocessableEntity(
+      "コメントに不適切な表現が含まれているため、投稿できません。",
+    );
   }
 
   const now = new Date().toISOString();
@@ -685,9 +701,21 @@ function notFound(message) {
   return error;
 }
 
+function unprocessableEntity(message) {
+  const error = new Error(message);
+  error.statusCode = 422;
+  return error;
+}
+
 function serverError(message) {
   const error = new Error(message);
   error.statusCode = 500;
+  return error;
+}
+
+function serviceUnavailable(message) {
+  const error = new Error(message);
+  error.statusCode = 503;
   return error;
 }
 

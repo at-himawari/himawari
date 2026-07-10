@@ -29,6 +29,12 @@ export class EngagementApiStack extends cdk.Stack {
       noEcho: true,
     });
 
+    const openAiApiKey = new cdk.CfnParameter(this, "OpenAiApiKey", {
+      type: "String",
+      description: "OpenAI API key passed to the Lambda environment.",
+      noEcho: true,
+    });
+
     const engagementTable = new dynamodb.Table(this, "EngagementTable", {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       partitionKey: {
@@ -56,6 +62,7 @@ export class EngagementApiStack extends cdk.Stack {
         TABLE_NAME: engagementTable.tableName,
         FRONTEND_ORIGIN: frontendOrigin.valueAsString,
         COMMENT_AUTO_PUBLISH: commentAutoPublish.valueAsString,
+        OPENAI_API_KEY: openAiApiKey.valueAsString,
         GOOGLE_CLIENT_ID: googleClientId.valueAsString,
       },
     });

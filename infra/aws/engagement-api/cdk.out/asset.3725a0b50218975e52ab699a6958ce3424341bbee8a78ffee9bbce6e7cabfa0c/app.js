@@ -282,12 +282,6 @@ async function createComment(slug, visitorId, user, payload) {
       "コメントを現在審査できません。しばらくしてから再度お試しください。",
     );
   }
-  console.info("Comment moderation result", {
-    allowed: moderation.allowed,
-    flagged: moderation.flagged,
-    sexualScore: moderation.sexualScore,
-    sexualThreshold: moderation.sexualThreshold,
-  });
   if (!moderation.allowed) {
     throw unprocessableEntity(
       "コメントに不適切な表現が含まれているため、投稿できません。",

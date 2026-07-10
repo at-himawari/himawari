@@ -35,6 +35,19 @@ export class EngagementApiStack extends cdk.Stack {
       noEcho: true,
     });
 
+    const moderationSexualScoreThreshold = new cdk.CfnParameter(
+      this,
+      "ModerationSexualScoreThreshold",
+      {
+        type: "Number",
+        default: 0.25,
+        minValue: 0,
+        maxValue: 1,
+        description:
+          "Reject comments at or above this OpenAI sexual category score.",
+      },
+    );
+
     const engagementTable = new dynamodb.Table(this, "EngagementTable", {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       partitionKey: {
@@ -63,6 +76,8 @@ export class EngagementApiStack extends cdk.Stack {
         FRONTEND_ORIGIN: frontendOrigin.valueAsString,
         COMMENT_AUTO_PUBLISH: commentAutoPublish.valueAsString,
         OPENAI_API_KEY: openAiApiKey.valueAsString,
+        MODERATION_SEXUAL_SCORE_THRESHOLD:
+          moderationSexualScoreThreshold.valueAsString,
         GOOGLE_CLIENT_ID: googleClientId.valueAsString,
       },
     });

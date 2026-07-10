@@ -3,7 +3,6 @@
 const MODERATION_ENDPOINT = "https://api.openai.com/v1/moderations";
 const MODERATION_MODEL = "omni-moderation-latest";
 const MODERATION_TIMEOUT_MS = 4_000;
-const DEFAULT_SEXUAL_SCORE_THRESHOLD = 0.25;
 
 function getOpenAiApiKey() {
   const apiKey = process.env.OPENAI_API_KEY?.trim();
@@ -13,27 +12,11 @@ function getOpenAiApiKey() {
   return apiKey;
 }
 
-function getSexualScoreThreshold() {
-  const configuredValue = process.env.MODERATION_SEXUAL_SCORE_THRESHOLD?.trim();
-  if (!configuredValue) {
-    return DEFAULT_SEXUAL_SCORE_THRESHOLD;
-  }
-
-  const threshold = Number(configuredValue);
-  if (!Number.isFinite(threshold) || threshold < 0 || threshold > 1) {
-    throw new Error(
-      "MODERATION_SEXUAL_SCORE_THRESHOLD must be a number between 0 and 1",
-    );
-  }
-  return threshold;
-}
-
 async function moderateComment(
   { name, body },
   {
     fetchImpl = fetch,
     getApiKey = getOpenAiApiKey,
-    getSexualThreshold = getSexualScoreThreshold,
     signal = AbortSignal.timeout(MODERATION_TIMEOUT_MS),
   } = {},
 ) {
@@ -56,36 +39,16 @@ async function moderateComment(
   }
 
   const result = await response.json();
-  const moderationResult = result?.results?.[0];
-  const flagged = moderationResult?.flagged;
-  const sexualScore = moderationResult?.category_scores?.sexual;
+  const flagged = result?.results?.[0]?.flagged;
   if (typeof flagged !== "boolean") {
     throw new Error("OpenAI moderation response is invalid");
   }
-  if (
-    typeof sexualScore !== "number" ||
-    !Number.isFinite(sexualScore) ||
-    sexualScore < 0 ||
-    sexualScore > 1
-  ) {
-    throw new Error("OpenAI moderation sexual score is invalid");
-  }
 
-  const sexualThreshold = await getSexualThreshold();
-  const sexualPolicyViolation = sexualScore >= sexualThreshold;
-
-  return {
-    allowed: !flagged && !sexualPolicyViolation,
-    flagged,
-    sexualScore,
-    sexualThreshold,
-  };
+  return { allowed: !flagged };
 }
 
 module.exports = {
-  DEFAULT_SEXUAL_SCORE_THRESHOLD,
   MODERATION_ENDPOINT,
   MODERATION_MODEL,
-  getSexualScoreThreshold,
   moderateComment,
 };

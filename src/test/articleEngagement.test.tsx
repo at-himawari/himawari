@@ -12,6 +12,7 @@ describe("ArticleEngagement", () => {
 
   beforeEach(() => {
     googleCallback = undefined;
+    window.sessionStorage.clear();
     vi.stubGlobal("fetch", fetchMock);
     vi.stubGlobal("google", {
       accounts: {
@@ -35,6 +36,7 @@ describe("ArticleEngagement", () => {
   afterEach(() => {
     process.env.NEXT_PUBLIC_ENGAGEMENT_API_URL = originalEnv;
     process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID = originalGoogleClientId;
+    window.sessionStorage.clear();
     vi.unstubAllGlobals();
     fetchMock.mockReset();
   });
@@ -151,6 +153,9 @@ describe("ArticleEngagement", () => {
     googleCallback?.({ credential: idToken });
 
     expect(await screen.findByText("taro@example.com")).toBeInTheDocument();
+    expect(window.sessionStorage.getItem("himawari.google-id-token")).toBe(
+      idToken,
+    );
     expect(screen.getByText("最初のコメント")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "いいね" })).toBeInTheDocument();
 
@@ -200,12 +205,86 @@ describe("ArticleEngagement", () => {
       }),
     );
   });
+
+  test("restores a valid Google login after a page reload", async () => {
+    process.env.NEXT_PUBLIC_ENGAGEMENT_API_URL = "https://api.example.com";
+    process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID = "google-client-id";
+    const idToken = createGoogleIdToken({
+      email: "taro@example.com",
+      name: "太郎",
+    });
+    window.sessionStorage.setItem("himawari.google-id-token", idToken);
+    fetchMock.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        slug: "sample-post",
+        likeCount: 2,
+        commentCount: 0,
+        viewerHasLiked: true,
+        comments: [],
+      }),
+    });
+
+    render(<ArticleEngagement slug="sample-post" />);
+
+    expect(await screen.findByText("taro@example.com")).toBeInTheDocument();
+    expect(
+      screen.queryByText("Sign in with Google"),
+    ).not.toBeInTheDocument();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://api.example.com/articles/sample-post/engagement",
+      expect.objectContaining({
+        headers: {
+          authorization: `Bearer ${idToken}`,
+        },
+        credentials: "include",
+      }),
+    );
+  });
+
+  test("discards an expired stored Google login", async () => {
+    process.env.NEXT_PUBLIC_ENGAGEMENT_API_URL = "https://api.example.com";
+    process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID = "google-client-id";
+    const expiredIdToken = createGoogleIdToken({
+      email: "taro@example.com",
+      name: "太郎",
+      exp: Math.floor(Date.now() / 1000) - 60,
+    });
+    window.sessionStorage.setItem(
+      "himawari.google-id-token",
+      expiredIdToken,
+    );
+    fetchMock.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        slug: "sample-post",
+        likeCount: 0,
+        commentCount: 0,
+        viewerHasLiked: false,
+        comments: [],
+      }),
+    });
+
+    render(<ArticleEngagement slug="sample-post" />);
+
+    expect(await screen.findByText("Sign in with Google")).toBeInTheDocument();
+    expect(window.sessionStorage.getItem("himawari.google-id-token")).toBeNull();
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://api.example.com/articles/sample-post/engagement",
+      expect.objectContaining({
+        headers: undefined,
+        credentials: "include",
+      }),
+    );
+  });
 });
 
 function createGoogleIdToken(payload: {
   email: string;
   name: string;
   picture?: string;
+  exp?: number;
 }) {
   const header = encodeJwtPart({
     alg: "RS256",
@@ -218,7 +297,7 @@ function createGoogleIdToken(payload: {
     iss: "https://accounts.google.com",
     sub: "google-user-1",
     email_verified: true,
-    exp: Math.floor(Date.now() / 1000) + 3600,
+    exp: payload.exp ?? Math.floor(Date.now() / 1000) + 3600,
   });
   return `${header}.${body}.signature`;
 }

@@ -23,8 +23,11 @@ type GoogleCredentialResponse = {
 };
 
 type GoogleJwtPayload = {
+  aud?: string | string[];
+  iss?: string;
   name?: string;
   email?: string;
+  email_verified?: boolean;
   picture?: string;
   exp?: number;
 };
@@ -68,6 +71,12 @@ const EMPTY_ENGAGEMENT: EngagementResponse = {
   viewerHasLiked: false,
   comments: [],
 };
+const GOOGLE_AUTH_STORAGE_KEY = "himawari.google-id-token";
+const GOOGLE_TOKEN_EXPIRY_BUFFER_MS = 30_000;
+const GOOGLE_TOKEN_ISSUERS = new Set([
+  "accounts.google.com",
+  "https://accounts.google.com",
+]);
 
 function normalizeApiBaseUrl(value = "") {
   return value.replace(/\/$/, "");
@@ -90,12 +99,30 @@ export default function ArticleEngagement({ slug }: Props) {
   const [isSubmittingLike, setIsSubmittingLike] = useState(false);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [deletingCommentId, setDeletingCommentId] = useState("");
+  const [isAuthRestored, setIsAuthRestored] = useState(false);
   const [idToken, setIdToken] = useState("");
   const [authUser, setAuthUser] = useState<GoogleAuthUser | null>(null);
   const [commentName, setCommentName] = useState("");
   const [commentBody, setCommentBody] = useState("");
   const [commentNotice, setCommentNotice] = useState("");
   const isSignedIn = Boolean(idToken && authUser);
+
+  useEffect(() => {
+    const storedToken = getStoredGoogleCredential();
+    const storedUser = storedToken
+      ? getGoogleAuthUser(storedToken, googleClientId)
+      : null;
+
+    if (storedToken && storedUser) {
+      setIdToken(storedToken);
+      setAuthUser(storedUser);
+      setCommentName(storedUser.name);
+    } else {
+      clearStoredGoogleCredential();
+    }
+
+    setIsAuthRestored(true);
+  }, [googleClientId]);
 
   useEffect(() => {
     if (!googleClientId) {
@@ -133,7 +160,13 @@ export default function ArticleEngagement({ slug }: Props) {
   useEffect(() => {
     const googleId = window.google?.accounts?.id;
 
-    if (!googleClientId || !isGoogleReady || !googleId || !googleButtonRef.current) {
+    if (
+      !googleClientId ||
+      !isAuthRestored ||
+      !isGoogleReady ||
+      !googleId ||
+      !googleButtonRef.current
+    ) {
       return;
     }
 
@@ -145,21 +178,16 @@ export default function ArticleEngagement({ slug }: Props) {
           return;
         }
 
-        const payload = decodeGoogleCredential(response.credential);
-        if (!payload?.email) {
+        const user = getGoogleAuthUser(response.credential, googleClientId);
+        if (!user) {
           setError("Googleアカウントのメールアドレスを確認できませんでした。");
           return;
         }
 
-        const email = payload.email;
-        const displayName = payload.name || email;
+        storeGoogleCredential(response.credential);
         setIdToken(response.credential);
-        setAuthUser({
-          name: displayName,
-          email,
-          picture: payload.picture,
-        });
-        setCommentName((current) => current || displayName);
+        setAuthUser(user);
+        setCommentName((current) => current || user.name);
         setError("");
         setCommentNotice("");
       },
@@ -175,7 +203,7 @@ export default function ArticleEngagement({ slug }: Props) {
       shape: "rectangular",
       width: 240,
     });
-  }, [googleClientId, isGoogleReady]);
+  }, [googleClientId, isAuthRestored, isGoogleReady, isSignedIn]);
 
   useEffect(() => {
     if (!idToken) {
@@ -187,7 +215,8 @@ export default function ArticleEngagement({ slug }: Props) {
       return;
     }
 
-    const expiresInMs = payload.exp * 1000 - Date.now() - 30_000;
+    const expiresInMs =
+      payload.exp * 1000 - Date.now() - GOOGLE_TOKEN_EXPIRY_BUFFER_MS;
     if (expiresInMs <= 0) {
       handleSignOut();
       return;
@@ -198,7 +227,7 @@ export default function ArticleEngagement({ slug }: Props) {
   }, [idToken]);
 
   useEffect(() => {
-    if (!apiBaseUrl) {
+    if (!apiBaseUrl || !isAuthRestored) {
       return;
     }
 
@@ -247,7 +276,7 @@ export default function ArticleEngagement({ slug }: Props) {
     return () => {
       aborted = true;
     };
-  }, [apiBaseUrl, idToken, slug]);
+  }, [apiBaseUrl, idToken, isAuthRestored, slug]);
 
   async function handleToggleLike() {
     if (!apiBaseUrl || isSubmittingLike) {
@@ -422,6 +451,7 @@ export default function ArticleEngagement({ slug }: Props) {
   function handleSignOut() {
     window.google?.accounts?.id?.disableAutoSelect();
     window.google?.accounts?.id?.cancel();
+    clearStoredGoogleCredential();
     setIdToken("");
     setAuthUser(null);
     setCommentNotice("");
@@ -462,7 +492,7 @@ export default function ArticleEngagement({ slug }: Props) {
         )}
       </div>
 
-      {!signedInUser ? (
+      {!isAuthRestored ? null : !signedInUser ? (
         <div className="mt-5 flex flex-wrap items-center gap-3">
           <div ref={googleButtonRef} />
         </div>
@@ -652,6 +682,65 @@ function decodeGoogleCredential(token: string): GoogleJwtPayload | null {
     return JSON.parse(json) as GoogleJwtPayload;
   } catch {
     return null;
+  }
+}
+
+function getGoogleAuthUser(
+  token: string,
+  googleClientId: string,
+): GoogleAuthUser | null {
+  const payload = decodeGoogleCredential(token);
+  if (
+    !payload?.email ||
+    !payload.exp ||
+    !payload.aud ||
+    !payload.iss ||
+    payload.email_verified === false
+  ) {
+    return null;
+  }
+
+  const audienceMatches = Array.isArray(payload.aud)
+    ? payload.aud.includes(googleClientId)
+    : payload.aud === googleClientId;
+  const expiresAt = payload.exp * 1000;
+
+  if (
+    !audienceMatches ||
+    !GOOGLE_TOKEN_ISSUERS.has(payload.iss) ||
+    expiresAt <= Date.now() + GOOGLE_TOKEN_EXPIRY_BUFFER_MS
+  ) {
+    return null;
+  }
+
+  return {
+    name: payload.name || payload.email,
+    email: payload.email,
+    picture: payload.picture,
+  };
+}
+
+function getStoredGoogleCredential() {
+  try {
+    return window.sessionStorage.getItem(GOOGLE_AUTH_STORAGE_KEY) || "";
+  } catch {
+    return "";
+  }
+}
+
+function storeGoogleCredential(token: string) {
+  try {
+    window.sessionStorage.setItem(GOOGLE_AUTH_STORAGE_KEY, token);
+  } catch {
+    // Storage may be unavailable in privacy-restricted browser contexts.
+  }
+}
+
+function clearStoredGoogleCredential() {
+  try {
+    window.sessionStorage.removeItem(GOOGLE_AUTH_STORAGE_KEY);
+  } catch {
+    // Storage may be unavailable in privacy-restricted browser contexts.
   }
 }
 

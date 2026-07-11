@@ -35,9 +35,8 @@ export default function Page({ videoItems }: { videoItems: Video[] }) {
                 @at_himawari
               </p>
               <p>
-                雑談配信、AWS入門講座、飛行機の搭乗動画を撮ったり様々なジャンルでやってます。
+                AWS入門講座、飛行機の搭乗動画を撮ったり様々なジャンルでやってます。
               </p>
-              <p>コラボ･出演者絶賛募集中です！</p>
               <p>依頼は以下のアドレスまで！</p>
               <p>info.youtube[@]at-himawari.com</p>
             </div>

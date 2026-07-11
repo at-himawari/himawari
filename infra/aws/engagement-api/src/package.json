@@ -5,7 +5,7 @@
   "description": "Lambda runtime dependencies for Himawari engagement API",
   "license": "MIT",
   "scripts": {
-    "test": "node --test openai-moderation.node-test.js"
+    "test": "node --test *.node-test.js"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.916.0",

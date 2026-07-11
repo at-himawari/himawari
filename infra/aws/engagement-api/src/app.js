@@ -5,10 +5,15 @@ const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const {
   DynamoDBDocumentClient,
   GetCommand,
-  PutCommand,
   QueryCommand,
   TransactWriteCommand,
 } = require("@aws-sdk/lib-dynamodb");
+const {
+  createCommentAuditEvent,
+  createCommentDeletedAuditEvent,
+  getRequestAuditContext,
+  writeCommentAuditLog,
+} = require("./comment-audit");
 const { moderateComment } = require("./openai-moderation");
 
 const TABLE_NAME = process.env.TABLE_NAME;
@@ -80,14 +85,25 @@ exports.handler = async (event) => {
     if (route === `/articles/${slug}/comments` && method === "POST") {
       const user = await getAuthenticatedUser(event, { required: true });
       const payload = parseJson(event.body);
-      const body = await createComment(slug, visitorId, user, payload);
+      const body = await createComment(
+        slug,
+        visitorId,
+        user,
+        payload,
+        getRequestAuditContext(event),
+      );
       return response(201, body, { setVisitorCookie, visitorId });
     }
 
     const commentId = getCommentIdFromPath(route);
     if (commentId && method === "DELETE") {
       const user = await getAuthenticatedUser(event, { required: true });
-      const body = await deleteComment(slug, commentId, user);
+      const body = await deleteComment(
+        slug,
+        commentId,
+        user,
+        getRequestAuditContext(event),
+      );
       return response(200, body, { setVisitorCookie, visitorId });
     }
 
@@ -258,7 +274,7 @@ async function unlikeArticle(slug, user) {
   return getEngagement(slug, user.googleSub);
 }
 
-async function createComment(slug, visitorId, user, payload) {
+async function createComment(slug, visitorId, user, payload, requestAudit) {
   const name = String(payload?.name || "").trim();
   const body = String(payload?.body || "").trim();
   const website = String(payload?.website || "").trim();
@@ -298,52 +314,70 @@ async function createComment(slug, visitorId, user, payload) {
   const commentId = crypto.randomUUID();
   const status = COMMENT_AUTO_PUBLISH ? "published" : "pending";
 
-  await client.send(
-    new PutCommand({
-      TableName: TABLE_NAME,
-      Item: {
-        PK: articlePartitionKey(slug),
-        SK: `COMMENT#${now}#${commentId}`,
-        entityType: "comment",
-        articleSlug: slug,
-        commentId,
-        name,
-        body,
-        status,
-        createdAt: now,
-        visitorId,
-        googleSub: user.googleSub,
-        email: user.email,
-        emailVerified: user.emailVerified,
-        googleName: user.name,
-        picture: user.picture,
+  const transactionItems = [
+    {
+      Put: {
+        TableName: TABLE_NAME,
+        Item: {
+          PK: articlePartitionKey(slug),
+          SK: `COMMENT#${now}#${commentId}`,
+          entityType: "comment",
+          articleSlug: slug,
+          commentId,
+          name,
+          body,
+          status,
+          createdAt: now,
+          visitorId,
+          googleSub: user.googleSub,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          googleName: user.name,
+          picture: user.picture,
+        },
+        ConditionExpression:
+          "attribute_not_exists(PK) AND attribute_not_exists(SK)",
       },
+    },
+  ];
+
+  if (status === "published") {
+    transactionItems.push({
+      Update: {
+        TableName: TABLE_NAME,
+        Key: articleMetaKey(slug),
+        UpdateExpression:
+          "SET entityType = :entityType, articleSlug = :slug, updatedAt = :updatedAt, likeCount = if_not_exists(likeCount, :zero), commentCount = if_not_exists(commentCount, :zero) + :inc",
+        ExpressionAttributeValues: {
+          ":entityType": "article-meta",
+          ":slug": slug,
+          ":updatedAt": now,
+          ":zero": 0,
+          ":inc": 1,
+        },
+      },
+    });
+  }
+
+  await client.send(
+    new TransactWriteCommand({
+      TransactItems: transactionItems,
     }),
   );
 
-  if (status === "published") {
-    await client.send(
-      new TransactWriteCommand({
-        TransactItems: [
-          {
-            Update: {
-              TableName: TABLE_NAME,
-              Key: articleMetaKey(slug),
-              UpdateExpression:
-                "SET entityType = :entityType, articleSlug = :slug, updatedAt = :updatedAt, likeCount = if_not_exists(likeCount, :zero), commentCount = if_not_exists(commentCount, :zero) + :inc",
-              ExpressionAttributeValues: {
-                ":entityType": "article-meta",
-                ":slug": slug,
-                ":updatedAt": now,
-                ":zero": 0,
-                ":inc": 1,
-              },
-            },
-          },
-        ],
-      }),
-    );
-  }
+  writeCommentAuditLog(
+    createCommentAuditEvent({
+      slug,
+      commentId,
+      name,
+      body,
+      status,
+      createdAt: now,
+      visitorId,
+      user,
+      request: requestAudit,
+    }),
+  );
 
   return {
     accepted: true,
@@ -362,7 +396,7 @@ async function createComment(slug, visitorId, user, payload) {
   };
 }
 
-async function deleteComment(slug, commentId, user) {
+async function deleteComment(slug, commentId, user, requestAudit) {
   const comment = await findCommentById(slug, commentId);
 
   if (!comment) {
@@ -420,6 +454,16 @@ async function deleteComment(slug, commentId, user) {
     }
     throw error;
   }
+
+  writeCommentAuditLog(
+    createCommentDeletedAuditEvent({
+      slug,
+      comment,
+      deletedAt: now,
+      user,
+      request: requestAudit,
+    }),
+  );
 
   return getEngagement(slug, user.googleSub);
 }

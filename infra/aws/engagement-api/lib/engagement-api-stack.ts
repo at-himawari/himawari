@@ -5,6 +5,7 @@ import * as apigwv2 from "aws-cdk-lib/aws-apigatewayv2";
 import { HttpLambdaIntegration } from "aws-cdk-lib/aws-apigatewayv2-integrations";
 import * as dynamodb from "aws-cdk-lib/aws-dynamodb";
 import * as lambda from "aws-cdk-lib/aws-lambda";
+import * as logs from "aws-cdk-lib/aws-logs";
 
 export class EngagementApiStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -65,12 +66,23 @@ export class EngagementApiStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.RETAIN,
     });
 
+    const engagementLogGroup = new logs.LogGroup(this, "EngagementLogGroup", {
+      logGroupName: "/himawari/engagement-api",
+      retention: logs.RetentionDays.ONE_YEAR,
+      deletionProtectionEnabled: true,
+      removalPolicy: cdk.RemovalPolicy.RETAIN,
+    });
+
     const engagementFunction = new lambda.Function(this, "EngagementFunction", {
       runtime: lambda.Runtime.NODEJS_22_X,
       handler: "app.handler",
       code: lambda.Code.fromAsset(path.join(__dirname, "..", "src")),
       timeout: cdk.Duration.seconds(10),
       memorySize: 256,
+      logGroup: engagementLogGroup,
+      loggingFormat: lambda.LoggingFormat.JSON,
+      applicationLogLevelV2: lambda.ApplicationLogLevel.INFO,
+      systemLogLevelV2: lambda.SystemLogLevel.WARN,
       environment: {
         TABLE_NAME: engagementTable.tableName,
         FRONTEND_ORIGIN: frontendOrigin.valueAsString,
@@ -142,6 +154,11 @@ export class EngagementApiStack extends cdk.Stack {
     new cdk.CfnOutput(this, "EngagementTableName", {
       description: "DynamoDB table that stores likes and comments.",
       value: engagementTable.tableName,
+    });
+
+    new cdk.CfnOutput(this, "EngagementLogGroupName", {
+      description: "CloudWatch log group containing comment audit events.",
+      value: engagementLogGroup.logGroupName,
     });
   }
 }

@@ -4,8 +4,8 @@ import { data } from "../../views/privacy/+data";
 import { createPageMetadata } from "../../utils/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Privacy Policy",
-  description: "Himawari Projectのプライバシーポリシーです。",
+  title: "プライバシーポリシー",
+  description: "プライバシーポリシー。",
   path: "/privacy",
   noIndex: true,
 });

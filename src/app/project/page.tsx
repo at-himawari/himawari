@@ -4,8 +4,8 @@ import { data } from "../../views/project/+data";
 import { createPageMetadata } from "../../utils/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Project",
-  description: "Himawari Projectの活動、制作物、取り組みを紹介します。",
+  title: "プロジェクトポリシー",
+  description: "本プロジェクトのポリシー。",
   path: "/project",
 });
 

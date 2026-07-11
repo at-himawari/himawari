@@ -4,8 +4,8 @@ import { data } from "../../views/commercial/+data";
 import { createPageMetadata } from "../../utils/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Commercial",
-  description: "Himawari Projectへの制作依頼、商用利用、お仕事の相談について。",
+  title: "特定商取引法に基づく表記",
+  description: "特定商取引法に基づく表記",
   path: "/commercial",
 });
 

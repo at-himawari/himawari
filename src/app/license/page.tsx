@@ -4,8 +4,8 @@ import { data } from "../../views/license/+data";
 import { createPageMetadata } from "../../utils/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "License",
-  description: "Himawari Projectで公開しているコンテンツやソフトウェアのライセンス情報です。",
+  title: "ライセンス",
+  description: "コンテンツやソフトウェアのライセンス情報です。",
   path: "/license",
   noIndex: true,
 });

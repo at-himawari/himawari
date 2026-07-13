@@ -4,6 +4,8 @@ import BlogPage from "../../views/blog/+Page";
 import { data } from "../../views/blog/+data";
 import { absoluteUrl, createPageMetadata } from "../../utils/seo";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = createPageMetadata({
   title: "技術ブログ",
   description:

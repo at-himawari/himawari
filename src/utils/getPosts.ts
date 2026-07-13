@@ -60,7 +60,7 @@ async function fetchArticlePage(page: number): Promise<StrapiResponse> {
   });
 
   const response = await fetch(`${STRAPI_URL}/api/articles?${params}`, {
-    cache: "force-cache",
+    cache: "no-store",
   });
 
   if (!response.ok) {

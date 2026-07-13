@@ -15,7 +15,7 @@ const staticRoutes = [
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const posts = await getPosts();
+  const posts = await getPosts({ throwOnError: true });
 
   const staticItems = staticRoutes.map(({ path, priority }) => ({
     url: absoluteUrl(path),

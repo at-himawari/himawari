@@ -5,6 +5,8 @@ import { data } from "../views/index/+data";
 import { description, title } from "../const/pageConstants";
 import { absoluteUrl, createPageMetadata } from "../utils/seo";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = createPageMetadata({
   title,
   description,

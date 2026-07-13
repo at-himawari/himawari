@@ -14,15 +14,7 @@ type Params = {
   slug: string;
 };
 
-export const dynamicParams = false;
-
-export async function generateStaticParams(): Promise<Params[]> {
-  const posts = await getPosts({ throwOnError: true });
-  return posts
-    .map((post) => post.slug)
-    .filter((slug): slug is string => Boolean(slug))
-    .map((slug) => ({ slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,

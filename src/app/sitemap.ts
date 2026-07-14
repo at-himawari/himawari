@@ -1,10 +1,12 @@
 import type { MetadataRoute } from "next";
 import { getPosts } from "../utils/getPosts";
 import { absoluteUrl } from "../utils/seo";
+import { AWS_BEGINNER_COURSE_PATH } from "../utils/awsBeginnerCourse";
 
 const staticRoutes = [
   { path: "/", priority: 1 },
   { path: "/blog", priority: 0.9 },
+  { path: AWS_BEGINNER_COURSE_PATH, priority: 0.8 },
   { path: "/software", priority: 0.8 },
   { path: "/software/line_ai", priority: 0.8 },
   { path: "/project", priority: 0.7 },

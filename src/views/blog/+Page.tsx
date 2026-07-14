@@ -2,54 +2,15 @@
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import BlogPostGrid from "../../components/BlogPostGrid";
 import { useState, useMemo, useEffect } from "react";
 import { Post } from "../../types/Post";
-import { isAwsBeginnerCoursePost } from "../../utils/awsBeginnerCourse";
+import {
+  AWS_BEGINNER_COURSE_PATH,
+  isAwsBeginnerCoursePost,
+} from "../../utils/awsBeginnerCourse";
 
 type PostForList = Omit<Post, "content">;
-
-function PostGrid({ posts }: { posts: PostForList[] }) {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {posts.map((post) => (
-        <a
-          key={post.slug}
-          href={`/blog/${post.slug}`}
-          className="group block bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
-        >
-          <div className="h-48 overflow-hidden">
-            <img
-              src={
-                post.coverImage ||
-                "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/himawari.png"
-              }
-              alt={post.title}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-            />
-          </div>
-          <div className="p-6">
-            <p className="text-gray-500 text-sm mb-2">
-              {post.date ? post.date.split("T")[0].replace(/-/g, "/") : ""}
-            </p>
-            <h3 className="text-xl font-bold text-gray-800 group-hover:text-orange-500 transition-colors duration-300">
-              {post.title}
-            </h3>
-            <div className="mt-4">
-              {post.tags?.map((tag: string) => (
-                <span
-                  key={tag}
-                  className="inline-block bg-orange-100 text-orange-800 rounded-full px-3 py-1 text-xs font-semibold mr-2 mb-2"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        </a>
-      ))}
-    </div>
-  );
-}
 
 export default function Page({ posts: initialPosts }: { posts: PostForList[] }) {
 
@@ -177,38 +138,41 @@ export default function Page({ posts: initialPosts }: { posts: PostForList[] }) 
         </div>
 
         {awsBeginnerCoursePosts.length > 0 && (
-          <section
-            aria-labelledby="aws-beginner-course-heading"
-            className="mb-12 rounded-2xl border border-orange-200 bg-orange-50/70 p-5 sm:p-8"
-          >
-            <p className="mb-1 text-sm font-semibold tracking-wider text-orange-600">
-              SERIES
-            </p>
-            <h2
-              id="aws-beginner-course-heading"
-              className="mb-6 text-2xl font-bold text-gray-800"
-            >
-              AWS入門講座
+          <section aria-label="AWS入門講座" className="mb-8">
+            <h2 className="mb-2 inline-flex items-center gap-2 text-base font-extrabold tracking-wide text-orange-700 before:h-4 before:w-0.5 before:-rotate-[18deg] before:rounded-full before:bg-current before:content-[''] after:h-4 after:w-0.5 after:rotate-[18deg] after:rounded-full after:bg-current after:content-['']">
+              注目
             </h2>
-            <PostGrid posts={awsBeginnerCoursePosts} />
+            <a
+              href={AWS_BEGINNER_COURSE_PATH}
+              className="group flex max-w-xl items-center justify-between gap-4 rounded-xl border border-orange-200 bg-orange-50 px-4 py-3 transition-all hover:border-orange-300 hover:bg-orange-100/70 hover:shadow-md"
+              aria-label={`AWS入門講座の特設ページへ、全${awsBeginnerCoursePosts.length}記事`}
+            >
+              <span className="flex min-w-0 items-center gap-3">
+                <span
+                  aria-hidden="true"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange-500 text-xs font-bold text-white"
+                >
+                  AWS
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-xs font-semibold tracking-wider text-orange-600">
+                    SERIES
+                  </span>
+                  <span className="block truncate text-base font-bold text-gray-800 sm:text-lg">
+                    AWS入門講座
+                  </span>
+                </span>
+              </span>
+              <span className="shrink-0 text-sm font-semibold text-orange-700 transition-transform group-hover:translate-x-1">
+                全{awsBeginnerCoursePosts.length}記事 <span aria-hidden="true">→</span>
+              </span>
+            </a>
           </section>
         )}
 
         {otherPosts.length > 0 && (
-          <section
-            aria-label={
-              awsBeginnerCoursePosts.length > 0 ? "その他の記事" : "記事一覧"
-            }
-          >
-            {awsBeginnerCoursePosts.length > 0 && (
-              <h2
-                id="other-posts-heading"
-                className="mb-6 text-2xl font-bold text-gray-800"
-              >
-                その他の記事
-              </h2>
-            )}
-            <PostGrid posts={otherPosts} />
+          <section aria-label="記事一覧">
+            <BlogPostGrid posts={otherPosts} />
           </section>
         )}
 

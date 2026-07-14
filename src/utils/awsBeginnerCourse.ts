@@ -1,5 +1,7 @@
 import type { Post } from "../types/Post";
 
+export const AWS_BEGINNER_COURSE_PATH = "/blog/aws-beginner-course";
+
 export const isAwsBeginnerCoursePost = (
   post: Pick<Post, "slug" | "title">,
 ) =>

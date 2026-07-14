@@ -20,21 +20,25 @@ const posts = [
 ];
 
 describe("記事一覧ページ", () => {
-  it("AWS入門講座とその他の記事を別枠に表示する", () => {
+  it("AWS入門講座を特設ページへの案内として表示する", () => {
     render(<BlogPage posts={posts} />);
 
     const courseSection = screen.getByRole("region", { name: "AWS入門講座" });
-    const otherSection = screen.getByRole("region", { name: "その他の記事" });
+    const otherSection = screen.getByRole("region", { name: "記事一覧" });
 
     expect(
-      within(courseSection).getByRole("link", { name: /AWS 入門講座 7/ }),
-    ).toHaveAttribute("href", "/blog/aws-nyuumon-kouza-7");
+      within(courseSection).getByRole("heading", { name: "注目", level: 2 }),
+    ).toBeInTheDocument();
+    expect(
+      within(courseSection).getByRole("link", {
+        name: "AWS入門講座の特設ページへ、全1記事",
+      }),
+    ).toHaveAttribute("href", "/blog/aws-beginner-course");
     expect(
       within(otherSection).getByRole("link", {
         name: /Next\.js と Strapi のローカル検証/,
       }),
     ).toHaveAttribute("href", "/blog/nextjs-strapi-local-dev");
-    expect(within(courseSection).queryByText(/Next\.js と Strapi/)).toBeNull();
-    expect(within(otherSection).queryByText(/AWS 入門講座 7/)).toBeNull();
+    expect(screen.queryByRole("link", { name: /AWS 入門講座 7/ })).toBeNull();
   });
 });

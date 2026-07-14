@@ -4,6 +4,7 @@ import AwsBeginnerCoursePage from "../../../views/blog/aws-beginner-course/+Page
 import {
   AWS_BEGINNER_COURSE_PATH,
   isAwsBeginnerCoursePost,
+  sortAwsBeginnerCoursePosts,
 } from "../../../utils/awsBeginnerCourse";
 import { getPosts } from "../../../utils/getPosts";
 import { absoluteUrl, createPageMetadata } from "../../../utils/seo";
@@ -18,8 +19,8 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default async function Page() {
-  const posts = (await getPosts({ throwOnError: true })).filter(
-    isAwsBeginnerCoursePost,
+  const posts = sortAwsBeginnerCoursePosts(
+    (await getPosts({ throwOnError: true })).filter(isAwsBeginnerCoursePost),
   );
   const pageUrl = absoluteUrl(AWS_BEGINNER_COURSE_PATH);
   const jsonLd = {

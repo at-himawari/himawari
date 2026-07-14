@@ -4,8 +4,52 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useState, useMemo, useEffect } from "react";
 import { Post } from "../../types/Post";
+import { isAwsBeginnerCoursePost } from "../../utils/awsBeginnerCourse";
 
 type PostForList = Omit<Post, "content">;
+
+function PostGrid({ posts }: { posts: PostForList[] }) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {posts.map((post) => (
+        <a
+          key={post.slug}
+          href={`/blog/${post.slug}`}
+          className="group block bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+        >
+          <div className="h-48 overflow-hidden">
+            <img
+              src={
+                post.coverImage ||
+                "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/himawari.png"
+              }
+              alt={post.title}
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+          </div>
+          <div className="p-6">
+            <p className="text-gray-500 text-sm mb-2">
+              {post.date ? post.date.split("T")[0].replace(/-/g, "/") : ""}
+            </p>
+            <h3 className="text-xl font-bold text-gray-800 group-hover:text-orange-500 transition-colors duration-300">
+              {post.title}
+            </h3>
+            <div className="mt-4">
+              {post.tags?.map((tag: string) => (
+                <span
+                  key={tag}
+                  className="inline-block bg-orange-100 text-orange-800 rounded-full px-3 py-1 text-xs font-semibold mr-2 mb-2"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  );
+}
 
 export default function Page({ posts: initialPosts }: { posts: PostForList[] }) {
 
@@ -63,6 +107,15 @@ export default function Page({ posts: initialPosts }: { posts: PostForList[] }) 
       return matchesSearch && matchesCategory;
     });
   }, [initialPosts, allPosts, searchQuery, selectedCategory]);
+
+  const awsBeginnerCoursePosts = useMemo(
+    () => filteredPosts.filter(isAwsBeginnerCoursePost),
+    [filteredPosts],
+  );
+  const otherPosts = useMemo(
+    () => filteredPosts.filter((post) => !isAwsBeginnerCoursePost(post)),
+    [filteredPosts],
+  );
 
   if (!posts) {
     return (
@@ -123,44 +176,47 @@ export default function Page({ posts: initialPosts }: { posts: PostForList[] }) 
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredPosts.map((post) => (
-            <a
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="group block bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+        {awsBeginnerCoursePosts.length > 0 && (
+          <section
+            aria-labelledby="aws-beginner-course-heading"
+            className="mb-12 rounded-2xl border border-orange-200 bg-orange-50/70 p-5 sm:p-8"
+          >
+            <p className="mb-1 text-sm font-semibold tracking-wider text-orange-600">
+              SERIES
+            </p>
+            <h2
+              id="aws-beginner-course-heading"
+              className="mb-6 text-2xl font-bold text-gray-800"
             >
-              <div className="h-48 overflow-hidden">
-                <img
-                  src={
-                    post.coverImage ||
-                    "https://dq7c5b6uxkdk2.cloudfront.net/posts/images/himawari.png"
-                  }
-                  alt={post.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-              </div>
-              <div className="p-6">
-                <p className="text-gray-500 text-sm mb-2">
-                  {post.date ? post.date.split("T")[0].replace(/-/g, "/") : ""}
-                </p>
-                <h2 className="text-xl font-bold text-gray-800 group-hover:text-orange-500 transition-colors duration-300">
-                  {post.title}
-                </h2>
-                <div className="mt-4">
-                  {post.tags?.map((tag: string) => (
-                    <span
-                      key={tag}
-                      className="inline-block bg-orange-100 text-orange-800 rounded-full px-3 py-1 text-xs font-semibold mr-2 mb-2"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
+              AWS入門講座
+            </h2>
+            <PostGrid posts={awsBeginnerCoursePosts} />
+          </section>
+        )}
+
+        {otherPosts.length > 0 && (
+          <section
+            aria-label={
+              awsBeginnerCoursePosts.length > 0 ? "その他の記事" : "記事一覧"
+            }
+          >
+            {awsBeginnerCoursePosts.length > 0 && (
+              <h2
+                id="other-posts-heading"
+                className="mb-6 text-2xl font-bold text-gray-800"
+              >
+                その他の記事
+              </h2>
+            )}
+            <PostGrid posts={otherPosts} />
+          </section>
+        )}
+
+        {filteredPosts.length === 0 && (
+          <p className="py-12 text-center text-gray-600">
+            条件に一致する記事はありません。
+          </p>
+        )}
       </div>
       <Footer />
     </>

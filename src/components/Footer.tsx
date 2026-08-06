@@ -20,11 +20,11 @@ const Footer: React.FC = () => {
                 ソフトウェア開発
               </a>
             </li>
-            <li>
+            {/* <li>
               <a href="/video" className="hover:underline">
                 映像制作
               </a>
-            </li>
+            </li> */}
             <li>
               <a href="/blog">ブログ</a>
             </li>

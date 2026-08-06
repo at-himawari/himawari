@@ -176,8 +176,8 @@ function Page({ data }: { data: HomePageData }) {
               style={{ animationDelay: "2s" }}
             >
               <p className="text-gray-700 font-medium md:text-lg text-left">
-                映像制作とシステム開発の二刀流。
-                <br className="sm:hidden" />
+                {/* 映像制作とシステム開発の二刀流。
+                <br className="sm:hidden" /> */}
                 相談しやすさ No.1 のエンジニアが、
                 <br className="sm:hidden" />
                 あなたの想いをカタチにします。

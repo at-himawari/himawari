@@ -91,22 +91,22 @@ export default function RootLayout({
     <html lang="ja">
       <head>
         <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6651283997191475"
-          crossOrigin="anonymous"
-        ></script>
-        <Script
           id="site-json-ld"
           type="application/ld+json"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(siteJsonLd),
+            __html: JSON.stringify(siteJsonLd).replace(/</g, "\\u003c"),
           }}
         />
       </head>
       <body>
         <GoogleAnalytics />
         {children}
+        <Script
+          id="google-adsense"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6651283997191475"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
         <Script
           src="https://rubyful-v2.s3.ap-northeast-1.amazonaws.com/v2/rubyful.js?t=20250507022654"
           strategy="afterInteractive"
@@ -117,6 +117,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               window.addEventListener('load', () => {
+                if (document.querySelector('[data-disable-rubyful="true"]')) return;
                 if (typeof RubyfulV2 !== 'undefined') {
                   RubyfulV2.init({
                     selector: '${selector}',

@@ -9,7 +9,6 @@ import {
 import { getPosts } from "../../../utils/getPosts";
 import { absoluteUrl, createPageMetadata } from "../../../utils/seo";
 
-export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = createPageMetadata({
   title: "AWS入門講座",

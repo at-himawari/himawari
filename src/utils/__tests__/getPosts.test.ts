@@ -34,8 +34,7 @@ describe("getPosts", () => {
     expect(posts).toHaveLength(1);
     expect(posts[0]?.slug).toBe("new-article");
     expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringContaining("/api/articles?"),
-      { cache: "no-store" },
+      expect.stringContaining("/api/articles?")
     );
   });
 });

@@ -59,9 +59,7 @@ async function fetchArticlePage(page: number): Promise<StrapiResponse> {
     "pagination[pageSize]": String(ARTICLE_PAGE_SIZE),
   });
 
-  const response = await fetch(`${STRAPI_URL}/api/articles?${params}`, {
-    cache: "no-store",
-  });
+  const response = await fetch(`${STRAPI_URL}/api/articles?${params}`);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch posts: ${response.statusText}`);

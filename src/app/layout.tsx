@@ -120,7 +120,7 @@ export default function RootLayout({
                 if (document.querySelector('[data-disable-rubyful="true"]')) return;
                 if (typeof RubyfulV2 !== 'undefined') {
                   RubyfulV2.init({
-                    selector: '${selector}',
+                    selector: '${selector}', 
                     defaultDisplay: true
                   });
                 }

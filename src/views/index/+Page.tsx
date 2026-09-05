@@ -115,7 +115,11 @@ function Page({ data }: { data: HomePageData }) {
 
   return (
     <>
-      <div className="font-sans overflow-x-hidden">
+      <div
+        className="font-sans overflow-x-hidden"
+        data-disable-rubyful="true"
+        data-rubyful-ignore="true"
+      >
         <Header />
 
         {/* 検索ボックス風ヒーローセクション */}

@@ -32,7 +32,8 @@
 .heroCopy { position: relative; z-index: 1; min-width: 0; }
 .heroEyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.17em; margin-bottom: 28px; }
 .heroTitle { font-size: clamp(40px, 5vw, 72px); font-weight: 800; line-height: 1.35; letter-spacing: -0.06em; }
-.heroTitle > span { color: #3384b2; }
+.heroTitleLine { display: block; }
+.heroTitleAccent { color: #3384b2; }
 .heroDescription { margin-top: 24px; font-size: 15px; line-height: 2; color: #52646d; }
 .heroSearch { display: flex; align-items: center; gap: 12px; max-width: 470px; padding: 8px 8px 8px 20px; margin-top: 28px; border: 1px solid #e2e7e5; background: white; border-radius: 100px; box-shadow: 0 8px 24px #21384408; }
 .heroTyping { flex: 1; min-width: 0; font-size: 15px; white-space: nowrap; }
@@ -58,6 +59,24 @@
 .heroNote > span { font-size: 40px; line-height: 1.2; margin-bottom: 6px; }
 .heroScroll { grid-column: 1 / -1; justify-self: center; display: flex; align-items: center; gap: 20px; font-size: 11px; letter-spacing: 0.08em; margin-top: 16px; padding: 12px; }
 .hero a:focus-visible, .hero button:focus-visible { outline: 3px solid #3384b2; outline-offset: 5px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .heroCopy[data-visible="true"] .heroEyebrow,
+  .heroCopy[data-visible="true"] .heroTitleLine,
+  .heroCopy[data-visible="true"] .heroDescription,
+  .heroCopy[data-visible="true"] .heroSearch {
+    animation: hero-text-arrive 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .heroCopy[data-visible="true"] .heroTitleLine { animation-delay: 120ms; }
+  .heroCopy[data-visible="true"] .heroTitleAccent { animation-delay: 300ms; }
+  .heroCopy[data-visible="true"] .heroDescription { animation-delay: 480ms; }
+  .heroCopy[data-visible="true"] .heroSearch { animation-delay: 660ms; }
+}
+
+@keyframes hero-text-arrive {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 @media (max-width: 900px) {
   .hero { padding: 48px 24px 24px; }
@@ -117,7 +136,7 @@
 
 .profile {
   overflow: hidden;
-  background: #bddedf;
+  background: #f8c58a;
   color: #493b35;
   padding: 80px clamp(24px, 5vw, 96px);
 }

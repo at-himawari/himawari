@@ -111,11 +111,19 @@ const useTypewriter = (
   text: string,
   speed: number = 100,
   delay: number = 1000,
+  enabled: boolean = true,
 ) => {
   const [displayText, setDisplayText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
+    setDisplayText("");
+    setIsTyping(false);
+    if (!enabled) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDisplayText(text);
+      return;
+    }
     const characters = Array.from(text);
     let timeout: number | undefined;
 
@@ -141,17 +149,50 @@ const useTypewriter = (
         clearTimeout(timeout);
       }
     };
-  }, [text, speed, delay]);
+  }, [text, speed, delay, enabled]);
 
   return { displayText, isTyping };
 };
 
 function Page({ data }: { data: HomePageData }) {
   const { latestPosts, featuredPosts, newsItems, error } = data;
+  const heroCopyRef = useRef<HTMLDivElement>(null);
+  const [heroTextReady, setHeroTextReady] = useState(false);
+
+  useEffect(() => {
+    const element = heroCopyRef.current;
+    if (!element) return;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotion = () => {
+      if (element.dataset.visible === "true") {
+        setHeroTextReady(reducedMotion.matches);
+      }
+    };
+    reducedMotion.addEventListener("change", updateMotion);
+    if (!window.IntersectionObserver) {
+      element.dataset.visible = "true";
+      updateMotion();
+      return () => {
+        reducedMotion.removeEventListener("change", updateMotion);
+        delete element.dataset.visible;
+      };
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      element.dataset.visible = String(entry.isIntersecting);
+      if (!entry.isIntersecting) setHeroTextReady(false);
+      else if (reducedMotion.matches) setHeroTextReady(true);
+    }, { threshold: 0.1 });
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      reducedMotion.removeEventListener("change", updateMotion);
+      delete element.dataset.visible;
+    };
+  }, []);
 
   // キャッチコピーを設定
   const catchphrase = "あなたのとなりで、つくる技術。";
-  const { displayText, isTyping } = useTypewriter(catchphrase, 120, 500);
+  const { displayText, isTyping } = useTypewriter(catchphrase, 120, 0, heroTextReady);
 
   // 検索ボタンクリック時にプロフィールセクションへスクロール
   const handleSearchClick = () => {
@@ -173,22 +214,29 @@ function Page({ data }: { data: HomePageData }) {
 
         <section id="hero" className={styles.hero}>
           <div className={styles.heroLayout}>
-            <div className={styles.heroCopy}>
+            <div ref={heroCopyRef} className={styles.heroCopy}>
               <p className={styles.heroEyebrow}>Himawari Project</p>
               <h2 className={styles.heroTitle}>
-                想いを、<br />
-                <span>動くカタチに。</span>
+                <span className={styles.heroTitleLine}>想いを、</span>
+                <span className={`${styles.heroTitleLine} ${styles.heroTitleAccent}`}>動くカタチに。</span>
               </h2>
               <p className={styles.heroDescription}>
                 小さなアイデアから、毎日を変えるサービスまで。
                 <br className="hidden sm:block" />
                 技術と対話で、「つくりたい」に寄り添います。
               </p>
-              <div className={styles.heroSearch}>
+              <div
+                className={styles.heroSearch}
+                onAnimationEnd={(event) => {
+                  if (event.target === event.currentTarget && heroCopyRef.current?.dataset.visible === "true") {
+                    setHeroTextReady(true);
+                  }
+                }}
+              >
                 <FaSearch aria-hidden="true" className="shrink-0 text-gray-400" />
                 <span className={styles.heroTyping} aria-hidden="true">
-                  {displayText}
-                  <span className={isTyping ? styles.typingCursor : undefined}>|</span>
+                  {heroTextReady && displayText}
+                  {heroTextReady && <span className={isTyping ? styles.typingCursor : undefined}>|</span>}
                 </span>
                 <span className="sr-only">{catchphrase}</span>
                 <button
@@ -211,9 +259,6 @@ function Page({ data }: { data: HomePageData }) {
                 <a href="/software" className={styles.heroSecondary}>
                   サービス一覧 <span aria-hidden="true">→</span>
                 </a>
-              </div>
-              <div className={styles.heroTags} aria-label="制作分野">
-                <span>AI活用</span><span>Web・システム開発</span>
               </div>
             </div>
 
@@ -315,7 +360,7 @@ function Page({ data }: { data: HomePageData }) {
             </ProfileReveal>
             <ProfileReveal>
               <div className={styles.profileStory}>
-                <p className={styles.profileEyebrow}>ABOUT / プロフィール</p>
+                <p className={styles.profileEyebrow}>プロフィール</p>
                 <div className={styles.profileIdentity}>
                   <p className={styles.profileRole}>Full-stack engineer,<br />Creator</p>
                   <div>

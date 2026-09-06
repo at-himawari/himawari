@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, type ReactNode } from "react";
 import { FaSearch } from "react-icons/fa"; // 虫眼鏡アイコン
 import { FaXTwitter } from "react-icons/fa6";
 import Header from "../../components/Header";
@@ -10,6 +10,7 @@ import BlogSection from "../../components/BlogSection";
 import GoogleAd from "../../components/GoogleAd";
 import type { HomePageData } from "./+data";
 import { trackLead, trackSelectContent } from "../../utils/analytics";
+import styles from "./HomePage.module.css";
 
 const featuredProducts = [
   {
@@ -17,6 +18,7 @@ const featuredProducts = [
     description:
       "会議メモをすばやく整理して、共有しやすい形にまとめる議事録作成支援ツールです。",
     href: "https://gijiroku-maker.at-himawari.com/",
+    image: "https://gijiroku-maker.at-himawari.com/logo.png",
     badge: "Tool",
     accentClass: "from-amber-400 via-orange-500 to-rose-500",
     cta: "プロダクトを見る",
@@ -26,6 +28,7 @@ const featuredProducts = [
     description:
       "AIと対話して面接練習を行います。自身のレジュメをもとに、模擬面接やフィードバックを提供するサービスです。",
     href: "https://aimensetsu.at-himawari.com/",
+    image: "https://aimensetsu.at-himawari.com/ogp.png",
     badge: "Career",
     accentClass: "from-sky-500 via-cyan-500 to-emerald-500",
     cta: "プロダクトを見る",
@@ -44,13 +47,64 @@ const featuredProducts = [
     description:
       " 集中力を高めるためのタイマーツール。集中力を維持し、効率的な作業をサポートします。",
     href: "https://pomodoro.at-himawari.com/",
+    image: "https://pomodoro.at-himawari.com/og-image.jpg?v=3",
     badge: "Tool",
     accentClass: "from-rose-500 via-red-500 to-orange-500",
     cta: "プロダクトを見る",
   },
 ];
 
-const INITIAL_VISIBLE_PRODUCTS = 3;
+function GatheringProduct({ children }: { children: ReactNode }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || !window.IntersectionObserver) return;
+
+    // Observe the stationary wrapper so the animated card cannot retrigger itself.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        container.dataset.gather = entry.isIntersecting ? "visible" : "pending";
+      },
+      { threshold: 0.12 },
+    );
+    container.dataset.gather = "pending";
+    observer.observe(container);
+    return () => {
+      observer.disconnect();
+      delete container.dataset.gather;
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef} className={styles.productEntrance}>
+      <div className={styles.productMotion}>{children}</div>
+    </div>
+  );
+}
+
+function ProfileReveal({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || !window.IntersectionObserver) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        element.dataset.revealed = "true";
+        observer.disconnect();
+      }
+    }, { threshold: 0.1 });
+    element.dataset.revealed = "false";
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      delete element.dataset.revealed;
+    };
+  }, []);
+
+  return <div ref={ref} className={styles.profileReveal}>{children}</div>;
+}
 
 // タイプライター風アニメーションのカスタムフック
 const useTypewriter = (
@@ -94,7 +148,6 @@ const useTypewriter = (
 
 function Page({ data }: { data: HomePageData }) {
   const { latestPosts, featuredPosts, newsItems, error } = data;
-  const [showAllProducts, setShowAllProducts] = useState(false);
 
   // キャッチコピーを設定
   const catchphrase = "あなたのとなりで、つくる技術。";
@@ -109,182 +162,134 @@ function Page({ data }: { data: HomePageData }) {
     trackSelectContent("section", "profile", "プロフィール");
   };
 
-  const visibleProducts = showAllProducts
-    ? featuredProducts
-    : featuredProducts.slice(0, INITIAL_VISIBLE_PRODUCTS);
-
   return (
     <>
       <div
-        className="font-sans overflow-x-hidden"
+        className={`${styles.page} font-sans overflow-x-hidden`}
         data-disable-rubyful="true"
         data-rubyful-ignore="true"
       >
         <Header />
 
-        {/* 検索ボックス風ヒーローセクション */}
-        <section
-          id="hero"
-          className="relative h-[500px] flex items-center justify-center overflow-hidden bg-gray-100"
-        >
-          {/* 背景画像（お好みの画像に差し替えてください） */}
-          <div
-            className="absolute inset-0 z-0"
-            style={{
-              // カフェやデスクの画像など、温かみのある画像がおすすめです
-              backgroundImage:
-                "url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            {/* 白のオーバーレイを強めにかけて、清潔感と検索バーの視認性を高める */}
-            <div className="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
-          </div>
-
-          <div className="relative container mx-auto px-4 z-10 w-full max-w-3xl">
-            <div className="text-center mb-8">
-              <h2 className="text-xl md:text-2xl font-bold text-gray-700 mb-4 tracking-widest">
-                Himawari Project
+        <section id="hero" className={styles.hero}>
+          <div className={styles.heroLayout}>
+            <div className={styles.heroCopy}>
+              <p className={styles.heroEyebrow}>Himawari Project</p>
+              <h2 className={styles.heroTitle}>
+                想いを、<br />
+                <span>動くカタチに。</span>
               </h2>
-            </div>
-
-            {/* 検索バー本体 */}
-            <div className="bg-white rounded-full shadow-2xl p-2 flex items-center transform transition-all duration-300 hover:shadow-xl border border-gray-200">
-              <div className="pl-4 pr-2 text-gray-400">
-                <FaSearch size={20} />
-              </div>
-              <div className="flex-1 h-12 flex items-center px-2 overflow-hidden">
-                <span
-                  className="text-xl md:text-2xl text-gray-800 font-medium whitespace-nowrap"
-                  data-rubyful-ignore="true"
-                >
-                  {displayText}
-                  {/* 点滅するカーソル */}
-                  <span
-                    className={`inline-block w-[2px] h-6 bg-orange-500 ml-1 align-middle ${
-                      isTyping ? "animate-pulse" : "animate-bounce"
-                    }`}
-                  ></span>
-                </span>
-              </div>
-              <button
-                onClick={handleSearchClick}
-                className="bg-orange-500 hover:bg-orange-600 text-white rounded-full px-6 py-3 font-bold transition-colors duration-200 shadow-md hidden sm:block"
-              ></button>
-            </div>
-
-            {/* サブコピー / タグライン */}
-            <div
-              className="text-center mt-8 animate-fade-in"
-              style={{ animationDelay: "2s" }}
-            >
-              <p className="text-gray-700 font-medium md:text-lg text-left">
-                {/* 映像制作とシステム開発の二刀流。
-                <br className="sm:hidden" /> */}
-                相談しやすさ No.1 のエンジニアが、
-                <br className="sm:hidden" />
-                あなたの想いをカタチにします。
+              <p className={styles.heroDescription}>
+                小さなアイデアから、毎日を変えるサービスまで。
+                <br className="hidden sm:block" />
+                技術と対話で、「つくりたい」に寄り添います。
               </p>
-
-              {/* アクションボタン群 */}
-              <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <a
-                  href="/software"
-                  className="bg-white text-gray-700 border border-gray-300 px-6 py-2 rounded-full hover:bg-gray-50 transition-colors text-sm font-bold"
+              <div className={styles.heroSearch}>
+                <FaSearch aria-hidden="true" className="shrink-0 text-gray-400" />
+                <span className={styles.heroTyping} aria-hidden="true">
+                  {displayText}
+                  <span className={isTyping ? styles.typingCursor : undefined}>|</span>
+                </span>
+                <span className="sr-only">{catchphrase}</span>
+                <button
+                  type="button"
+                  onClick={handleSearchClick}
+                  aria-label="プロフィールを見る"
+                  className={styles.heroSearchButton}
                 >
-                  サービス一覧
-                </a>
+                  <span aria-hidden="true">↗</span>
+                </button>
+              </div>
+              <div className={styles.heroActions}>
                 <a
                   href="https://forms.gle/D8WSByjAnYGGtoGw9"
-                  className="bg-gray-800 text-white px-6 py-2 rounded-full hover:bg-gray-700 transition-colors text-sm font-bold shadow-lg"
-                  onClick={() =>
-                    trackLead(
-                      "home_contact",
-                      "https://forms.gle/D8WSByjAnYGGtoGw9",
-                    )
-                  }
+                  className={styles.heroPrimary}
+                  onClick={() => trackLead("home_contact", "https://forms.gle/D8WSByjAnYGGtoGw9")}
                 >
-                  相談してみる
+                  相談してみる <span aria-hidden="true">↗</span>
+                </a>
+                <a href="/software" className={styles.heroSecondary}>
+                  サービス一覧 <span aria-hidden="true">→</span>
                 </a>
               </div>
+              <div className={styles.heroTags} aria-label="制作分野">
+                <span>AI活用</span><span>Web・システム開発</span>
+              </div>
             </div>
+
+            <div className={styles.heroShowcase} aria-label="プロダクトの紹介">
+              <div className={styles.heroOrbit} aria-hidden="true" />
+              <a
+                href="https://aimensetsu.at-himawari.com/"
+                className={`${styles.heroPreview} ${styles.heroPreviewAi}`}
+                onClick={() => trackSelectContent("product", "https://aimensetsu.at-himawari.com/", "AI面接コーチ")}
+              >
+                <div className={styles.heroPreviewBar}><span>AI面接コーチ</span><span aria-hidden="true">↗</span></div>
+                <img src="https://aimensetsu.at-himawari.com/ogp.png" alt="AIと対話する面接練習サービス" width={1200} height={630} />
+              </a>
+              <a
+                href="https://pomodoro.at-himawari.com/"
+                className={`${styles.heroPreview} ${styles.heroPreviewTimer}`}
+                onClick={() => trackSelectContent("product", "https://pomodoro.at-himawari.com/", "ポモドーロタイマー")}
+              >
+                <div className={styles.heroPreviewBar}><span>毎日の集中をサポート</span><span aria-hidden="true">↗</span></div>
+                <img src="https://pomodoro.at-himawari.com/og-image.jpg?v=3" alt="ポモドーロタイマー" width={1200} height={630} />
+              </a>
+              <div className={styles.heroNote} aria-hidden="true">
+                <span>✳</span> つくる。その先まで。
+              </div>
+            </div>
+            <a href="#products" className={styles.heroScroll}>プロダクトを見てみる <span aria-hidden="true">↓</span></a>
           </div>
         </section>
 
         {/* プロダクトセクション */}
-        <section className="relative overflow-hidden bg-gradient-to-b from-gray-50 via-orange-50/50 to-white py-16">
-          <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(249,115,22,0.15),transparent_60%)]"></div>
-          <div className="container relative mx-auto px-4">
-            <div className="mx-auto max-w-6xl">
-              <div className="mx-auto mb-10 max-w-3xl text-center">
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-orange-500">
-                  Products
-                </p>
-                <h2 className="mt-4 text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
-                  課題に寄り添うプロダクトを、
-                  <br className="hidden sm:block" />
-                  <span className="sm:hidden"> </span>
-                  すぐ試せる形で。
-                </h2>
-                <p className="mt-4 text-base leading-relaxed text-gray-600 md:text-lg">
-                  Himawari
-                  Projectが手がける代表的なプロダクトです。業務効率化からAI活用まで、相談しやすく使いやすい体験を目指して制作しています。
-                </p>
+        <section id="products" className={`${styles.products} relative overflow-hidden py-16 md:py-24`}>
+          <div className="w-full px-5 md:px-8">
+            <div className="mb-12 flex flex-col gap-5 md:mb-16 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em]">Products</p>
+                <h2 className="text-3xl font-bold tracking-tight md:text-4xl">プロダクト</h2>
               </div>
+            </div>
 
-              <div className="grid gap-6 md:grid-cols-3">
-                {visibleProducts.map((product) => (
+            <div className="grid grid-cols-1 gap-x-6 gap-y-14 md:grid-cols-2 md:gap-y-20 lg:grid-cols-3">
+              {featuredProducts.map((product) => (
+                <GatheringProduct key={product.title}>
                   <a
-                    key={product.title}
                     href={product.href}
-                    className="group flex h-full flex-col rounded-3xl border border-white/70 bg-white p-7 shadow-lg shadow-orange-100/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                    className={styles.productLink}
                     onClick={() =>
                       trackSelectContent("product", product.href, product.title)
                     }
                   >
-                    <div
-                      className={`mb-6 h-2 w-24 rounded-full bg-gradient-to-r ${product.accentClass}`}
-                    ></div>
-                    <div className="mb-4 inline-flex w-fit rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
-                      {product.badge}
+                    <div className={styles.productVisual}>
+                      {product.image ? (
+                        <img
+                          src={product.image}
+                          alt=""
+                          width={1200}
+                          height={630}
+                          loading="lazy"
+                          className={styles.productImage}
+                        />
+                      ) : (
+                        <div className={styles.linePreview} aria-hidden="true">
+                          <span className={styles.lineLabel}>LINE AI</span>
+                          <span className={styles.lineTitle}>あなたのとなりのAI</span>
+                          <span className={styles.lineBubble}>アイデアを一緒に考えよう。</span>
+                          <span className={styles.lineReply}>いつものLINEから、気軽に。</span>
+                        </div>
+                      )}
+                      <span className={styles.productOverlay} aria-hidden="true">プロダクトを見る ↗</span>
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900">
-                      {product.title}
-                    </h3>
-                    <p className="mt-4 flex-1 text-sm leading-7 text-gray-600">
-                      {product.description}
-                    </p>
-                    <div className="mt-8 flex items-center justify-between border-t border-gray-100 pt-5 text-sm font-semibold text-orange-500">
-                      <span>{product.cta}</span>
-                      <span className="transition-transform duration-300 group-hover:translate-x-1">
-                        →
-                      </span>
+                    <div className="mt-5 md:mt-6">
+                      <p className="mb-2 text-xs tracking-wider"># {product.badge}</p>
+                      <h3 className="text-lg font-semibold tracking-wide">{product.title}</h3>
                     </div>
                   </a>
-                ))}
-              </div>
-
-              {featuredProducts.length > INITIAL_VISIBLE_PRODUCTS && (
-                <div className="mt-10 text-center">
-                  <button
-                    type="button"
-                    onClick={() => setShowAllProducts((current) => !current)}
-                    className="inline-flex items-center gap-3 rounded-full border border-orange-200 bg-white px-6 py-3 text-sm font-bold text-orange-500 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-orange-300 hover:shadow-md"
-                  >
-                    <span>
-                      {showAllProducts ? "表示を減らす" : "もっとみる"}
-                    </span>
-                    <span
-                      className={`transition-transform duration-300 ${
-                        showAllProducts ? "rotate-180" : ""
-                      }`}
-                    >
-                      ↓
-                    </span>
-                  </button>
-                </div>
-              )}
+                </GatheringProduct>
+              ))}
             </div>
           </div>
         </section>
@@ -316,9 +321,9 @@ function Page({ data }: { data: HomePageData }) {
                   </p>
                   <p className="mt-1 text-orange-500 flex items-center justify-center md:justify-start text-sm">
                     <FaXTwitter className="mr-2" /> @at_himawari
-                  </p>
+                </p>
                   <p className="mt-4 text-gray-600 leading-relaxed">
-                    2022年に法政大学理工学部を卒業後、ITコンサルティング会社に新卒入社。
+                  2022年に法政大学理工学部を卒業後、ITコンサルティング会社に新卒入社。
                     <br />
                     フロントエンドからバックエンド、クラウドまで幅広く扱い、技術と対話の両面から課題解決を支えるフルスタックエンジニアです。
                     <br />
@@ -328,7 +333,7 @@ function Page({ data }: { data: HomePageData }) {
                   <p className="mt-2 text-gray-500 text-sm">
                     趣味：飛行機、カメラ、旅行、映像編集
                   </p>
-                </div>
+                  </div>
               </div>
             </div>
           </div>

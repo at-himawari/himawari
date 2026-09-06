@@ -116,58 +116,63 @@
 }
 
 .profile {
-  position: relative;
   overflow: hidden;
-  padding: 96px 28px;
-  background: radial-gradient(ellipse at 10% 40%, #3384b230, transparent 55%), #173744;
-  color: #f6f6ef;
+  background: #bddedf;
+  color: #493b35;
+  padding: 80px clamp(24px, 5vw, 96px);
 }
-.profileLayout { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 80px; width: 100%; max-width: 1160px; margin: auto; align-items: center; }
-.profileEyebrow { font-size: 11px; letter-spacing: 0.18em; color: #aacddc; }
-.profilePortrait { position: relative; display: grid; place-items: center; width: min(100%, 350px); aspect-ratio: 1; margin: 36px 0 28px; }
-.profilePortrait img { position: relative; width: 76%; height: 76%; border-radius: 50%; object-fit: cover; border: 8px solid #ffffff0d; }
-.profileRing { position: absolute; inset: 0; border: 1px solid #94c3d666; border-radius: 50%; }
-.profileRing::before { content: ""; position: absolute; inset: 12px -14px; border: 1px dashed #94c3d644; border-radius: 50%; transform: rotate(-30deg); }
-.profileRing::after { content: ""; position: absolute; top: 12%; right: 12%; width: 18px; height: 18px; border-radius: 50%; background: #f3ce69; box-shadow: 0 0 30px #f3ce6944; }
-.profilePortraitLabel { position: absolute; bottom: 4%; right: -3%; padding: 12px 18px; background: #f3ce69; color: #263d42; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; transform: rotate(-7deg); }
-.profileName { font-size: 24px; font-weight: 700; }
-.profileSocial { display: inline-flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 14px; color: #aacddc; }
-.profileInterests { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
-.profileInterests > span { padding: 6px 12px; border: 1px solid #aacddc40; border-radius: 100px; font-size: 11px; color: #cee0e6; }
-.profileTitle { font-size: clamp(30px, 3.3vw, 46px); font-weight: 700; line-height: 1.5; letter-spacing: -0.04em; }
-.profileTitle > span { color: #aad7ec; }
-.profileLead { margin-top: 24px; font-size: 16px; line-height: 1.9; }
-.profileBody { margin-top: 16px; font-size: 14px; line-height: 2; color: #bfd0d7; }
-.profileSkills { margin-top: 28px; }
-.profileSkill { display: flex; align-items: baseline; gap: 20px; padding: 18px 0; border-top: 1px solid #aacddc33; }
-.profileSkillNumber { font-size: 12px; color: #f3ce69; font-variant-numeric: tabular-nums; }
-.profileSkill h3 { font-size: 16px; font-weight: 600; }
-.profileSkill p { margin-top: 6px; font-size: 12px; line-height: 1.8; color: #bfd0d7; }
-.profileContact { display: inline-flex; gap: 28px; align-items: center; padding: 15px 22px; margin-top: 20px; border-radius: 100px; background: #f3ce69; color: #203c47; font-size: 13px; font-weight: 700; }
-.profile a:focus-visible { outline: 2px solid #f3ce69; outline-offset: 6px; }
-.profileSocial:hover { color: white; }
-.profileContact:hover { background: #ffe19a; }
+
+.profileLayout {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(40px, 6vw, 120px);
+}
+
+.profilePortrait {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.profilePortrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.profileStory { padding: 0; }
+.profileEyebrow { margin-bottom: 36px; font-size: 10px; letter-spacing: 0.16em; }
+.profileIdentity { display: grid; grid-template-columns: auto 1fr; gap: 20px 28px; align-items: start; }
+.profileRole { font-size: 12px; line-height: 1.8; letter-spacing: 0.04em; }
+.profileName { font-size: 18px; font-weight: 600; }
+.profileProject { margin-top: 8px; font-size: 11px; letter-spacing: 0.08em; }
+.profileSocial { grid-column: 2; display: inline-flex; align-items: center; gap: 8px; width: fit-content; font-size: 11px; text-decoration: underline; text-underline-offset: 4px; }
+.profileBody { max-width: 570px; margin: 40px 0 0 auto; font-size: 14px; line-height: 2.2; }
+.profileBody p + p { margin-top: 18px; }
+.profileContact { display: flex; align-items: center; justify-content: space-between; width: fit-content; gap: 40px; margin-top: 28px; padding: 10px 0; border-bottom: 1px solid currentColor; font-size: 13px; }
+.profile a:hover { color: #236285; }
+.profile a:focus-visible { outline: 2px solid #236285; outline-offset: 6px; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .profileReveal { transition: opacity 850ms ease, transform 850ms cubic-bezier(0.2, 0.65, 0.3, 1); }
+  .profileReveal { transition: opacity 1100ms ease, transform 1100ms cubic-bezier(0.2, 0.65, 0.3, 1); }
   .profileReveal[data-revealed="false"] { opacity: 0; transform: translateY(36px); }
-  .profileReveal[data-revealed="true"] { opacity: 1; transform: none; }
-  .profileReveal:focus-within { opacity: 1; transform: none; }
-  .profileSkills > :nth-child(2) { transition-delay: 120ms; }
-  .profileSkills > :nth-child(3) { transition-delay: 240ms; }
-  .profileReveal[data-revealed="true"] .profileRing { animation: profile-orbit-arrive 1600ms ease-out both; }
+  .profileReveal[data-revealed="true"], .profileReveal:focus-within { opacity: 1; transform: none; }
+  .profileLayout > .profileReveal:nth-child(2) { transition-delay: 180ms; }
 }
-@keyframes profile-orbit-arrive {
-  from { transform: rotate(-80deg) scale(0.85); opacity: 0; }
-  to { transform: rotate(0) scale(1); opacity: 1; }
-}
+
 @media (max-width: 800px) {
-  .profile { padding: 64px 24px; }
-  .profileLayout { grid-template-columns: 1fr; gap: 48px; max-width: 600px; }
-  .profilePortrait { width: min(80%, 300px); margin: 28px auto; }
-  .profileName, .profileEyebrow { text-align: center; }
-  .profileSocial { display: flex; width: fit-content; margin: 12px auto 0; }
-  .profileInterests { justify-content: center; }
+  .profile { padding: 48px 24px; }
+  .profileLayout { grid-template-columns: 1fr; gap: 36px; }
+  .profilePortrait { width: 100%; }
+  .profileBody { max-width: none; margin-top: 32px; }
+  .profileEyebrow { margin-bottom: 24px; }
+  .profileIdentity { gap: 16px; }
+  .profileRole { font-size: 11px; }
+  .profileName { font-size: 17px; }
 }
 
 .productLink {

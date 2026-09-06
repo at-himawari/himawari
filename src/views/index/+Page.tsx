@@ -300,42 +300,46 @@ function Page({ data }: { data: HomePageData }) {
           featuredPosts={featuredPosts}
           error={error}
         />
-        <section id="profile" className="py-12">
-          {/* プロフィールセクション（既存のコード） */}
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl text-center font-bold text-gray-800 mb-3 sm:mb-4">
-              プロフィール
-            </h2>
-            <div className="w-16 h-1 bg-orange-500 mx-auto mt-4 rounded-full"></div>
-            <div className="mt-6 flex items-start justify-center">
-              <div className="flex flex-col md:flex-row items-center md:items-start gap-6 max-w-3xl">
+        <section id="profile" className={styles.profile} aria-labelledby="profile-title">
+          <div className={styles.profileLayout}>
+            <ProfileReveal>
+              <div className={styles.profilePortrait}>
                 <img
-                  src="https://dq7c5b6uxkdk2.cloudfront.net/posts/images/avatar.jpg"
-                  alt="Avatar"
-                  className="h-24 w-24"
+                  src="/images/profile.png"
+                  alt="羽ばたくエンジニアのプロフィール写真"
+                  width={400}
+                  height={400}
                   loading="lazy"
                 />
-                <div>
-                  <p className="text-xl font-bold text-gray-800 text-center md:text-left">
-                    羽ばたくエンジニア
-                  </p>
-                  <p className="mt-1 text-orange-500 flex items-center justify-center md:justify-start text-sm">
-                    <FaXTwitter className="mr-2" /> @at_himawari
-                </p>
-                  <p className="mt-4 text-gray-600 leading-relaxed">
-                  2022年に法政大学理工学部を卒業後、ITコンサルティング会社に新卒入社。
-                    <br />
-                    フロントエンドからバックエンド、クラウドまで幅広く扱い、技術と対話の両面から課題解決を支えるフルスタックエンジニアです。
-                    <br />
-                    Himawari
-                    Projectでは、AWS・GCP・Azureを活用したプロダクト開発や、React+VikeによるWebサイト制作に取り組んでいます。
-                  </p>
-                  <p className="mt-2 text-gray-500 text-sm">
-                    趣味：飛行機、カメラ、旅行、映像編集
-                  </p>
-                  </div>
               </div>
-            </div>
+            </ProfileReveal>
+            <ProfileReveal>
+              <div className={styles.profileStory}>
+                <p className={styles.profileEyebrow}>ABOUT / プロフィール</p>
+                <div className={styles.profileIdentity}>
+                  <p className={styles.profileRole}>Full-stack engineer,<br />Creator</p>
+                  <div>
+                    <h2 id="profile-title" className={styles.profileName}>羽ばたくエンジニア</h2>
+                    <p className={styles.profileProject}>Himawari Project</p>
+                  </div>
+                  <a href="https://x.com/at_himawari" className={styles.profileSocial} aria-label="羽ばたくエンジニアのXアカウント">
+                    <FaXTwitter aria-hidden="true" /><span>@at_himawari</span>
+                  </a>
+                </div>
+                <div className={styles.profileBody}>
+                  <p>技術と対話で、想いをカタチにする。そんなものづくりに取り組む、フルスタックエンジニアです。</p>
+                  <p>2022年に法政大学理工学部を卒業後、ITコンサルティング会社に新卒入社。フロントエンドからバックエンド、クラウドまで、幅広い領域を扱っています。</p>
+                  <p>Himawari Projectでは、AIを活用したサービスやWebサイト、日々の作業を支えるツールを制作しています。React・Next.jsによるWeb制作や、AWS・GCP・Azureを活用したプロダクト開発に取り組んでいます。</p>
+                  <p>大切にしているのは、つくりたいものの背景にある想いに耳を傾けること。技術と対話の両面から、課題の解決を支えたいと考えています。</p>
+                  <p>好きなものは、飛行機、カメラ、旅行、映像編集。ものをつくることと同じくらい、知らない景色に出会うことにも惹かれます。</p>
+                </div>
+                <a
+                  href="https://forms.gle/D8WSByjAnYGGtoGw9"
+                  className={styles.profileContact}
+                  onClick={() => trackLead("profile_contact", "https://forms.gle/D8WSByjAnYGGtoGw9")}
+                >相談してみる <span aria-hidden="true">↗</span></a>
+              </div>
+            </ProfileReveal>
           </div>
         </section>
         <MainPageAd compact />

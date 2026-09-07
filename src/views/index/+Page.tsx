@@ -157,7 +157,6 @@ const useTypewriter = (
 function Page({ data }: { data: HomePageData }) {
   const { latestPosts, featuredPosts, newsItems, error } = data;
   const heroCopyRef = useRef<HTMLDivElement>(null);
-  const [heroTextReady, setHeroTextReady] = useState(false);
 
   useEffect(() => {
     const element = heroCopyRef.current;
@@ -190,18 +189,6 @@ function Page({ data }: { data: HomePageData }) {
     };
   }, []);
 
-  // キャッチコピーを設定
-  const catchphrase = "あなたのとなりで、つくる技術。";
-  const { displayText, isTyping } = useTypewriter(catchphrase, 120, 0, heroTextReady);
-
-  // 検索ボタンクリック時にプロフィールセクションへスクロール
-  const handleSearchClick = () => {
-    const profileSection = document.getElementById("profile");
-    if (profileSection) {
-      profileSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    trackSelectContent("section", "profile", "プロフィール");
-  };
 
   return (
     <>
@@ -217,37 +204,15 @@ function Page({ data }: { data: HomePageData }) {
             <div ref={heroCopyRef} className={styles.heroCopy}>
               <p className={styles.heroEyebrow}>Himawari Project</p>
               <h2 className={styles.heroTitle}>
-                <span className={styles.heroTitleLine}>想いを、</span>
-                <span className={`${styles.heroTitleLine} ${styles.heroTitleAccent}`}>動くカタチに。</span>
+                <span className={styles.heroTitleLine}>アイデアを、</span>
+                <span className={`${styles.heroTitleLine} ${styles.heroTitleAccent}`}>動くサービスに。</span>
               </h2>
               <p className={styles.heroDescription}>
-                小さなアイデアから、毎日を変えるサービスまで。
+                Webサイト、業務システム、AI活用まで。
                 <br className="hidden sm:block" />
-                技術と対話で、「つくりたい」に寄り添います。
+                企画から開発まで、一緒に伴奏します。
               </p>
-              <div
-                className={styles.heroSearch}
-                onAnimationEnd={(event) => {
-                  if (event.target === event.currentTarget && heroCopyRef.current?.dataset.visible === "true") {
-                    setHeroTextReady(true);
-                  }
-                }}
-              >
-                <FaSearch aria-hidden="true" className="shrink-0 text-gray-400" />
-                <span className={styles.heroTyping} aria-hidden="true">
-                  {heroTextReady && displayText}
-                  {heroTextReady && <span className={isTyping ? styles.typingCursor : undefined}>|</span>}
-                </span>
-                <span className="sr-only">{catchphrase}</span>
-                <button
-                  type="button"
-                  onClick={handleSearchClick}
-                  aria-label="プロフィールを見る"
-                  className={styles.heroSearchButton}
-                >
-                  <span aria-hidden="true">↗</span>
-                </button>
-              </div>
+
               <div className={styles.heroActions}>
                 <a
                   href="https://forms.gle/D8WSByjAnYGGtoGw9"
@@ -255,9 +220,6 @@ function Page({ data }: { data: HomePageData }) {
                   onClick={() => trackLead("home_contact", "https://forms.gle/D8WSByjAnYGGtoGw9")}
                 >
                   相談してみる <span aria-hidden="true">↗</span>
-                </a>
-                <a href="/software" className={styles.heroSecondary}>
-                  サービス一覧 <span aria-hidden="true">→</span>
                 </a>
               </div>
             </div>

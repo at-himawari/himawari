@@ -3,18 +3,19 @@ services:
     image: node:22-bookworm
     init: true
     working_dir: /workspace/himawari
-    command: sleep infinity
+    command: sh -c "npm ci --no-audit --no-fund && npm run dev -- --hostname 0.0.0.0"
     environment:
       NEXT_PUBLIC_STRAPI_URL: http://strapi:1337
       VITE_STRAPI_URL: http://strapi:1337
     volumes:
       - ..:/workspace/himawari:cached
       - app-node-modules:/workspace/himawari/node_modules
+      - app-next:/workspace/himawari/.next
     depends_on:
       strapi:
-        condition: service_started
+        condition: service_healthy
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3001:3000"
 
   strapi:
     build:
@@ -37,11 +38,17 @@ services:
       DATABASE_PASSWORD: strapi
     volumes:
       - strapi-uploads:/opt/app/public/uploads
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:1337/_health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
     depends_on:
       strapi-db:
         condition: service_healthy
     ports:
-      - "1337:1337"
+      - "127.0.0.1:1337:1337"
 
   strapi-db:
     image: postgres:16-bookworm
@@ -59,5 +66,6 @@ services:
 
 volumes:
   app-node-modules:
+  app-next:
   strapi-db-data:
   strapi-uploads:

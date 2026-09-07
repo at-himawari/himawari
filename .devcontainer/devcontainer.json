@@ -14,7 +14,6 @@
       "onAutoForward": "notify"
     }
   },
-  "postCreateCommand": "npm install",
   "customizations": {
     "vscode": {
       "extensions": [

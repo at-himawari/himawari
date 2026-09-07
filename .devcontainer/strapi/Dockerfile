@@ -9,6 +9,7 @@ RUN npm install
 
 COPY config ./config
 COPY src ./src
+COPY tsconfig.json ./
 
 EXPOSE 1337
 

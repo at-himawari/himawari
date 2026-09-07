@@ -44,10 +44,11 @@ npm install
 
 ### Dev Container で Strapi を含めて起動
 
-VS Code または Dev Containers 対応環境でこのリポジトリを開くと、Next.js 用コンテナ、Strapi、PostgreSQL が同じ Compose 構成で起動します。
+Podmanの仮想マシンを起動して、リポジトリのルートで次を実行します。Next.js、Strapi、PostgreSQLが起動し、Next.jsの依存関係のインストールと開発サーバーの起動も自動で行います。
 
 ```bash
-npm run dev
+podman machine start # 既に起動中の場合は不要
+podman compose -f .devcontainer/docker-compose.yml up -d --build
 ```
 
 Dev Container 内では `NEXT_PUBLIC_STRAPI_URL=http://strapi:1337` が設定されます。Strapi は起動時に、このフロントエンドが参照する `articles`、`news-items`、`video-items`、`fixed-pages` の Content Type、公開読み取り権限、サンプルデータを用意します。
@@ -55,10 +56,23 @@ Dev Container 内では `NEXT_PUBLIC_STRAPI_URL=http://strapi:1337` が設定さ
 主な確認 URL:
 
 ```text
-http://localhost:3000/blog
-http://localhost:3000/blog/aws-nyuumon-kouza-7
+http://localhost:3001/#home-blog
+http://localhost:3001/blog
+http://localhost:3001/blog/aws-nyuumon-kouza-7
 http://localhost:1337/admin
 http://localhost:1337/api/articles?sort=date:desc&populate=*
+```
+
+ホスト側の開発サーバー（3000番）と併用できます。コンテナの`node_modules`と`.next`は専用ボリュームに分離しています。VS Codeではユーザー設定の`dev.containers.dockerPath`を`podman`に設定し、「Dev Containers: Reopen in Container」で接続します。`podman compose`は外部Composeプロバイダーを利用しますが、コンテナはPodman上で動作します。コンテナ内のNext.jsは3000番、ホスト側の公開ポートは3001番です。
+
+```bash
+# 起動状態・ログ
+podman compose -f .devcontainer/docker-compose.yml ps
+podman compose -f .devcontainer/docker-compose.yml logs --tail=80 app strapi
+# コンテナ内での検証（依存関係のインストール完了後）
+podman compose -f .devcontainer/docker-compose.yml exec app npm run test:run -- src/test/HomePageRuby.test.tsx src/test/NewsSection.test.tsx
+# 停止（データは残ります）
+podman compose -f .devcontainer/docker-compose.yml stop
 ```
 
 ### 環境変数

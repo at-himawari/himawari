@@ -106,53 +106,6 @@ function ProfileReveal({ children }: { children: ReactNode }) {
   return <div ref={ref} className={styles.profileReveal}>{children}</div>;
 }
 
-// タイプライター風アニメーションのカスタムフック
-const useTypewriter = (
-  text: string,
-  speed: number = 100,
-  delay: number = 1000,
-  enabled: boolean = true,
-) => {
-  const [displayText, setDisplayText] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-
-  useEffect(() => {
-    setDisplayText("");
-    setIsTyping(false);
-    if (!enabled) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setDisplayText(text);
-      return;
-    }
-    const characters = Array.from(text);
-    let timeout: number | undefined;
-
-    // 開始遅延
-    const startTimeout = window.setTimeout(() => {
-      setIsTyping(true);
-
-      const typeChar = (currentIndex: number) => {
-        if (currentIndex < characters.length) {
-          setDisplayText(characters.slice(0, currentIndex + 1).join(""));
-          timeout = window.setTimeout(() => typeChar(currentIndex + 1), speed);
-        } else {
-          setIsTyping(false);
-        }
-      };
-
-      typeChar(0);
-    }, delay);
-
-    return () => {
-      clearTimeout(startTimeout);
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-    };
-  }, [text, speed, delay, enabled]);
-
-  return { displayText, isTyping };
-};
 
 function Page({ data }: { data: HomePageData }) {
   const { latestPosts, featuredPosts, newsItems, error } = data;
@@ -162,29 +115,19 @@ function Page({ data }: { data: HomePageData }) {
     const element = heroCopyRef.current;
     if (!element) return;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateMotion = () => {
-      if (element.dataset.visible === "true") {
-        setHeroTextReady(reducedMotion.matches);
-      }
-    };
-    reducedMotion.addEventListener("change", updateMotion);
+    
     if (!window.IntersectionObserver) {
       element.dataset.visible = "true";
-      updateMotion();
       return () => {
-        reducedMotion.removeEventListener("change", updateMotion);
         delete element.dataset.visible;
       };
     }
     const observer = new IntersectionObserver(([entry]) => {
       element.dataset.visible = String(entry.isIntersecting);
-      if (!entry.isIntersecting) setHeroTextReady(false);
-      else if (reducedMotion.matches) setHeroTextReady(true);
     }, { threshold: 0.1 });
     observer.observe(element);
     return () => {
       observer.disconnect();
-      reducedMotion.removeEventListener("change", updateMotion);
       delete element.dataset.visible;
     };
   }, []);

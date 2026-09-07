@@ -185,9 +185,6 @@ function Page({ data }: { data: HomePageData }) {
                 <div className={styles.heroPreviewBar}><span>毎日の集中をサポート</span><span aria-hidden="true">↗</span></div>
                 <img src="https://pomodoro.at-himawari.com/og-image.jpg?v=3" alt="ポモドーロタイマー" width={1200} height={630} />
               </a>
-              <div className={styles.heroNote} aria-hidden="true">
-                <span>✳</span> つくる。その先まで。
-              </div>
             </div>
             <a href="#products" className={styles.heroScroll}>プロダクトを見てみる <span aria-hidden="true">↓</span></a>
           </div>

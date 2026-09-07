@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, type ReactNode } from "react";
-import { FaSearch } from "react-icons/fa"; // 虫眼鏡アイコン
+import { useEffect, useRef, type ReactNode } from "react";
 import { FaXTwitter } from "react-icons/fa6";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -114,7 +113,6 @@ function Page({ data }: { data: HomePageData }) {
   useEffect(() => {
     const element = heroCopyRef.current;
     if (!element) return;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     
     if (!window.IntersectionObserver) {
       element.dataset.visible = "true";

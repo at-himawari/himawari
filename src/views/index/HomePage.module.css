@@ -163,8 +163,30 @@
   height: auto;
 }
 
+.profileHeading {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  color: #171717;
+}
+
+.profileHeadingEn {
+  font-size: clamp(16px, 1.6vw, 22px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+.profileHeadingJa {
+  font-size: clamp(42px, 6vw, 50px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+}
+
 .profileStory { padding: 0; }
-.profileEyebrow { margin-bottom: 36px; font-size: 10px; letter-spacing: 0.16em; }
 .profileIdentity { display: grid; grid-template-columns: auto 1fr; gap: 20px 28px; align-items: start; }
 .profileRole { font-size: 12px; line-height: 1.8; letter-spacing: 0.04em; }
 .profileName { font-size: 18px; font-weight: 600; }
@@ -188,10 +210,16 @@
   .profileLayout { grid-template-columns: 1fr; gap: 36px; }
   .profilePortrait { width: 100%; }
   .profileBody { max-width: none; margin-top: 32px; }
-  .profileEyebrow { margin-bottom: 24px; }
+  .profileHeading { gap: 12px; }
+  .profileHeadingEn { font-size: 16px; }
+  .profileHeading h2 { font-size: 48px; }
   .profileIdentity { gap: 16px; }
   .profileRole { font-size: 11px; }
   .profileName { font-size: 17px; }
+}
+
+@media (max-width: 420px) {
+  .profileHeading h2 { font-size: 40px; }
 }
 
 .productLink {

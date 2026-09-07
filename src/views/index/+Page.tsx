@@ -247,6 +247,12 @@ function Page({ data }: { data: HomePageData }) {
         />
         <section id="profile" className={styles.profile} aria-labelledby="profile-title">
           <div className={styles.profileLayout}>
+            <header className={styles.profileHeading}>
+              <p className={styles.profileHeadingEn}>Profile</p>
+              <h2 id="profile-title" className={styles.profileHeadingJa}>
+                プロフィール
+              </h2>
+            </header>
             <ProfileReveal>
               <div className={styles.profilePortrait}>
                 <img
@@ -260,11 +266,10 @@ function Page({ data }: { data: HomePageData }) {
             </ProfileReveal>
             <ProfileReveal>
               <div className={styles.profileStory}>
-                <p className={styles.profileEyebrow}>プロフィール</p>
                 <div className={styles.profileIdentity}>
                   <p className={styles.profileRole}>Full-stack engineer,<br />Creator</p>
                   <div>
-                    <h2 id="profile-title" className={styles.profileName}>羽ばたくエンジニア</h2>
+                    <h3 className={styles.profileName}>羽ばたくエンジニア</h3>
                     <p className={styles.profileProject}>Himawari Project</p>
                   </div>
                   <a href="https://x.com/at_himawari" className={styles.profileSocial} aria-label="羽ばたくエンジニアのXアカウント">
@@ -273,9 +278,9 @@ function Page({ data }: { data: HomePageData }) {
                 </div>
                 <div className={styles.profileBody}>
                   <p>技術と対話で、想いをカタチにする。そんなものづくりに取り組む、フルスタックエンジニアです。</p>
-                  <p>2022年に法政大学理工学部を卒業後、ITコンサルティング会社に新卒入社。フロントエンドからバックエンド、クラウドまで、幅広い領域を扱っています。</p>
-                  <p>Himawari Projectでは、AIを活用したサービスやWebサイト、日々の作業を支えるツールを制作しています。React・Next.jsによるWeb制作や、AWS・GCP・Azureを活用したプロダクト開発に取り組んでいます。</p>
-                  <p>大切にしているのは、つくりたいものの背景にある想いに耳を傾けること。技術と対話の両面から、課題の解決を支えたいと考えています。</p>
+                  <p>2022年に法政大学理工学部を卒業後、ITコンサルティング会社に入社。フロントエンドからバックエンド、クラウドまで、幅広い領域を扱っています。</p>
+                  <p>Himawari Projectでは、AIを活用したサービスやWebサイト、日々の作業を支えるツールを制作しています。React・Next.jsによるWeb制作や、Amazon Web Services・Google Cloud Platform・Microsoft Azureを活用したプロダクト開発に取り組んでいます。</p>
+                  <p>大切にしているのは、つくりたいものの背景にある想いに耳を傾けること。技術先行ではなく、本当に実現したいことは何かを追求し、課題の解決を支えたいと考えています。</p>
                   <p>好きなものは、飛行機、カメラ、旅行、映像編集。ものをつくることと同じくらい、知らない景色に出会うことにも惹かれます。</p>
                 </div>
                 <a

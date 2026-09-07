@@ -82,7 +82,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ newsItems = [] }) => {
     <section ref={sectionRef} id="news" className={styles.section} aria-labelledby="news-title">
       <div className={styles.layout}>
         <header className={styles.heading}>
-          <p>( News )</p>
+          <p>News</p>
           <h2 id="news-title">お知らせ</h2>
           <span>Himawari Projectの最新情報。</span>
         </header>

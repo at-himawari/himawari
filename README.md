@@ -226,10 +226,10 @@ GitHub Actions の CI は `.github/workflows/ci.yml` で管理しています。
 pnpm install --frozen-lockfile
 pnpm run lint
 pnpm run test:run
-pnpm run build
+pnpm run build:ci
 ```
 
-Node.js 20 と pnpm store のキャッシュを使用します。pnpm は `packageManager` に固定したバージョンをセットアップし、`pnpm-lock.yaml` を変更せずに依存関係をインストールします。CMS 接続失敗によるビルドエラーは、パッケージ管理の移行とは別に確認が必要です。
+Node.js 20 と pnpm store のキャッシュを使用します。pnpm は `packageManager` に固定したバージョンをセットアップし、`pnpm-lock.yaml` を変更せずに依存関係をインストールします。`build:ci` は一時的なローカルHTTPサーバーでStrapi形式の固定データを返し、通常の本番ビルドを実行します。外部CMSや認証情報は不要で、サーバーはビルド終了時に停止します。このビルド成果物はCI検証専用です。本番用の `pnpm run build`・デプロイでは実際のStrapiを使用します。
 
 ## ビルドとデプロイ
 

@@ -9,6 +9,16 @@ import { getFeaturedPosts } from "../featuredPosts";
 import type { Post } from "../../types/Post";
 
 describe("getFeaturedPosts", () => {
+  beforeEach(() => {
+    // 記事の鮮度判定を固定し、実行日にかかわらず同じ条件で検証する。
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2025-08-26T00:00:00Z"));
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   // Mock posts for testing
   const mockPosts: Post[] = [
     {

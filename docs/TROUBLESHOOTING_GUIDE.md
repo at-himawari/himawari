@@ -376,7 +376,7 @@ export default {
 
 ```bash
 # ビルドキャッシュの活用
-npm run build -- --cache
+pnpm run build --cache
 ```
 
 ## CMS 関連の問題
@@ -451,7 +451,7 @@ CMS.registerPreviewStyle("/styles/index.css");
 
 ```bash
 # 開発サーバー起動
-npm run dev
+pnpm run dev
 
 # ブラウザの開発者ツールでコンソールを確認
 # セキュリティ警告やエラーメッセージを探す
@@ -481,10 +481,10 @@ npm run dev
 
 ```bash
 # ビルド時のエラーを確認
-npm run build 2>&1 | grep -i error
+pnpm run build 2>&1 | grep -i error
 
 # 詳細なビルドログ
-npm run build -- --verbose
+pnpm run build --verbose
 ```
 
 2. **静的ファイルの確認**
@@ -548,11 +548,11 @@ cat dist/blog/your-post/index.html
 # Node.js バージョン
 node --version
 
-# npm バージョン
-npm --version
+# pnpm バージョン
+pnpm --version
 
 # パッケージバージョン
-npm list react-markdown rehype-raw rehype-sanitize
+pnpm list react-markdown rehype-raw rehype-sanitize
 ```
 
 ### 追加リソース

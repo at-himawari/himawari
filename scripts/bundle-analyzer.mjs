@@ -176,7 +176,7 @@ function checkOptimizations() {
 
   // Check for code splitting opportunities
   try {
-    const buildLog = execSync("npm run build 2>&1", { encoding: "utf8" });
+    const buildLog = execSync("pnpm run build 2>&1", { encoding: "utf8" });
 
     if (buildLog.includes("Large chunk sizes")) {
       opportunities.push({
@@ -397,7 +397,7 @@ async function main() {
     statSync("dist");
   } catch (e) {
     console.log("📦 Building project first...");
-    execSync("npm run build", { stdio: "inherit" });
+    execSync("pnpm run build", { stdio: "inherit" });
     console.log("");
   }
 

@@ -140,12 +140,12 @@ All performance tests pass with the following benchmarks:
 
 ## Performance Scripts
 
-New npm scripts added for performance monitoring:
+New package scripts added for performance monitoring:
 
 ```bash
-npm run perf:benchmark  # Run build time and bundle size benchmark
-npm run perf:bundle     # Analyze bundle composition and dependencies
-npm run perf:test       # Run performance tests
+pnpm run perf:benchmark  # Run build time and bundle size benchmark
+pnpm run perf:bundle     # Analyze bundle composition and dependencies
+pnpm run perf:test       # Run performance tests
 ```
 
 ## Impact Assessment

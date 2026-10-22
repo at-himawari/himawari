@@ -1,0 +1,10 @@
+packages:
+  - '.'
+
+overrides:
+  minimatch: ^10.2.1
+
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - workerd

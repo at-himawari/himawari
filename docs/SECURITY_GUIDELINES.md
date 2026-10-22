@@ -349,10 +349,10 @@ grep -E "(script|javascript:|on[a-z]+)" logs/content.log
 
 ```bash
 # セキュリティテストの実行
-npm run test:security
+pnpm run test:security
 
 # XSS防止テストの実行
-npm run test:xss
+pnpm run test:xss
 ```
 
 ## まとめ

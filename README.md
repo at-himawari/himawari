@@ -33,14 +33,17 @@ Himawari は、Next.js App Router、React、TypeScript で構築されたポー�
 
 ### 必要なもの
 
-- Node.js 18 以上
-- npm
+- Node.js 20.19 以上（Dev Container は Node.js 22）
+- pnpm 10.34.7（`package.json` の `packageManager` で固定）
 
 ### インストール
 
 ```bash
-npm install
+corepack enable
+pnpm install --frozen-lockfile
 ```
+
+Webアプリ本体は pnpm で管理します。独立した `infra/aws/engagement-api`（Lambda を含む）と `.devcontainer/strapi` は、既存の npm 管理を継続します。
 
 ### Dev Container で Strapi を含めて起動
 
@@ -70,7 +73,7 @@ http://localhost:1337/api/articles?sort=date:desc&populate=*
 podman compose -f .devcontainer/docker-compose.yml ps
 podman compose -f .devcontainer/docker-compose.yml logs --tail=80 app strapi
 # コンテナ内での検証（依存関係のインストール完了後）
-podman compose -f .devcontainer/docker-compose.yml exec app npm run test:run -- src/test/HomePageRuby.test.tsx src/test/NewsSection.test.tsx
+podman compose -f .devcontainer/docker-compose.yml exec app pnpm run test:run src/test/HomePageRuby.test.tsx src/test/NewsSection.test.tsx
 # 停止（データは残ります）
 podman compose -f .devcontainer/docker-compose.yml stop
 ```
@@ -95,15 +98,15 @@ Cloudflare では、これらの `NEXT_PUBLIC_*` 変数をビルド時環境変�
 ## 開発コマンド
 
 ```bash
-npm run dev          # 開発サーバーを起動
-npm run build        # 本番ビルド
-npm run preview      # next start でビルド済みアプリを起動
-npm run lint         # ESLint
-npm run test         # Vitest の watch モード
-npm run test:run     # 全テストを一度だけ実行
-npm run perf:test    # パフォーマンステスト
-npm run perf:benchmark
-npm run perf:bundle
+pnpm run dev          # 開発サーバーを起動
+pnpm run build        # 本番ビルド
+pnpm run preview      # Cloudflare 向けビルドとローカルプレビュー
+pnpm run lint         # ESLint
+pnpm run test         # Vitest の watch モード
+pnpm run test:run     # 全テストを一度だけ実行
+pnpm run perf:test    # パフォーマンステスト
+pnpm run perf:benchmark
+pnpm run perf:bundle
 ```
 
 ## ルート
@@ -206,7 +209,7 @@ src/
 全テストは次で実行します。
 
 ```bash
-npm run test:run
+pnpm run test:run
 ```
 
 現在のテスト対象には、Markdown/HTML レンダリング、セキュリティ、CMS 互換性、レスポンシブ、パフォーマンス、ニュースページネーションが含まれます。
@@ -220,18 +223,18 @@ CMS 互換テストは、過去の Decap CMS 用ファイルがリポジトリ�
 GitHub Actions の CI は `.github/workflows/ci.yml` で管理しています。`main` への push と pull request で次を実行します。
 
 ```bash
-npm ci
-npm run lint
-npm run test:run
-npm run build
+pnpm install --frozen-lockfile
+pnpm run lint
+pnpm run test:run
+pnpm run build
 ```
 
-Node.js 20 と npm cache を使用します。Strapi に接続できない CI 環境でも、データ取得関数のフォールバックによりビルドは継続できます。
+Node.js 20 と pnpm store のキャッシュを使用します。pnpm は `packageManager` に固定したバージョンをセットアップし、`pnpm-lock.yaml` を変更せずに依存関係をインストールします。CMS 接続失敗によるビルドエラーは、パッケージ管理の移行とは別に確認が必要です。
 
 ## ビルドとデプロイ
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 Next.js の通常ビルドを行います。`next.config.ts` では `trailingSlash: true` と `images.unoptimized: true` を設定しています。

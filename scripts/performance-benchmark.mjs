@@ -31,7 +31,7 @@ function measureBuildTime() {
 
     const startTime = Date.now();
     try {
-      execSync("npm run build", { stdio: "pipe" });
+      execSync("pnpm run build", { stdio: "pipe" });
       const endTime = Date.now();
       const buildTime = endTime - startTime;
       times.push(buildTime);
@@ -129,7 +129,7 @@ function checkOptimizations() {
 
   // Check if rehype plugins are tree-shaken properly
   try {
-    const buildOutput = execSync("npm run build", {
+    const buildOutput = execSync("pnpm run build", {
       encoding: "utf8",
       stdio: "pipe",
     });

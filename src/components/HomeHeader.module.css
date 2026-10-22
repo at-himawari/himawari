@@ -1,0 +1,28 @@
+.spacer { height: var(--home-header-height, 72px); }
+.header { position: fixed; inset: 0 0 auto; z-index: 50; background: #fff; border-bottom: 1px solid #e5e7eb; }
+.inner { max-width: 1440px; min-height: 72px; margin: auto; padding: 12px 28px; display: flex; align-items: center; gap: 28px; }
+.brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.brand img { width: 32px; height: 32px; object-fit: contain; }
+.brand h1 { color: #6b7280; font-size: 22px; line-height: 1.4; }
+.brand h1 span { color: #f97316; font-weight: 700; }
+.navigation { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px 24px; margin-left: auto; font-size: 14px; color: #213844; }
+.navigation a { position: relative; padding: 10px 0; transition: color 250ms ease; }
+.navigation a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 5px; height: 2px; background: currentColor; opacity: 0; transition: opacity 250ms ease; }
+.navigation a:hover::after, .navigation a[aria-current="location"]::after { opacity: 1; }
+.navigation a[aria-current="location"] { color: #c2410c; }
+.contact { display: inline-flex; align-items: center; justify-content: center; gap: 14px; flex-shrink: 0; padding: 12px 18px; background: #213844; color: #fff; font-size: 14px; border-radius: 4px; }
+.contact:hover { background: #345364; }
+.header a:focus-visible { outline: 3px solid #3384b2; outline-offset: 4px; }
+@media (max-width: 900px) {
+  .spacer { height: var(--home-header-height, 112px); }
+  .inner { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 10px 20px 4px; }
+  .brand { min-width: 0; gap: 8px; }
+  .brand h1 { font-size: clamp(14px, 3.8vw, 22px); }
+  .brand img { width: 26px; height: 26px; }
+  .contact { grid-column: 2; grid-row: 1; padding: 10px 12px; gap: 8px; font-size: 12px; }
+  .navigation { grid-column: 1 / -1; margin: 0; justify-content: space-between; gap: 0 12px; font-size: 12px; }
+  .navigation a { padding: 12px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :global(html):has(.spacer) { scroll-behavior: auto; }
+}

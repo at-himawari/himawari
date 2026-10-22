@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import { FaXTwitter } from "react-icons/fa6";
-import Header from "../../components/Header";
+import HomeHeader from "../../components/HomeHeader";
 import Footer from "../../components/Footer";
 import NewsSection from "../../components/NewsSection";
 import BlogSection from "../../components/BlogSection";
@@ -138,7 +138,7 @@ function Page({ data }: { data: HomePageData }) {
         data-disable-rubyful="true"
         data-rubyful-ignore="true"
       >
-        <Header />
+        <HomeHeader />
 
         <section id="hero" className={styles.hero}>
           <div className={styles.heroLayout}>

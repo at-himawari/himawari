@@ -3,16 +3,10 @@
 }
 
 .page > section {
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: calc(95vh - var(--home-header-height, 72px));
+  min-height: calc(95dvh - var(--home-header-height, 72px));
   display: flex;
-  align-items: center;
-}
-
-/* The header's 32px content and 16px vertical padding share the first screen. */
-.page > .hero {
-  min-height: calc(100vh - 64px);
-  min-height: calc(100dvh - 64px);
+  align-items: start;
 }
 
 .hero {

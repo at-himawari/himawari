@@ -190,7 +190,7 @@ function Page({ data }: { data: HomePageData }) {
 
         {/* プロダクトセクション */}
         <section id="products" className={`${styles.products} relative overflow-hidden py-16 md:py-24`}>
-          <div className="w-full px-5 md:px-8">
+          <div className="w-full pt-5 px-5 md:px-8">
             <div className="mb-12 flex flex-col gap-5 md:mb-16 md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em]">Products</p>

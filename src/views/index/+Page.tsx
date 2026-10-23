@@ -174,12 +174,12 @@ function Page({ data }: { data: HomePageData }) {
 
               <div className={styles.heroActions}>
                 <a
-                  href="https://forms.gle/D8WSByjAnYGGtoGw9"
+                  href="/submit"
                   className={styles.heroPrimary}
                   onClick={() =>
                     trackLead(
                       "home_contact",
-                      "https://forms.gle/D8WSByjAnYGGtoGw9",
+                      "/submit",
                     )
                   }
                 >
@@ -336,12 +336,12 @@ function Page({ data }: { data: HomePageData }) {
                   </p>
                 </div>
                 <a
-                  href="https://forms.gle/D8WSByjAnYGGtoGw9"
+                  href="/submit"
                   className={styles.profileContact}
                   onClick={() =>
                     trackLead(
                       "profile_contact",
-                      "https://forms.gle/D8WSByjAnYGGtoGw9",
+                      "/submit",
                     )
                   }
                 >

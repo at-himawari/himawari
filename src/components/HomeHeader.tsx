@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { trackLead } from "../utils/analytics";
 import styles from "./HomeHeader.module.css";
 
-const contactUrl = "https://forms.gle/D8WSByjAnYGGtoGw9";
+const contactUrl = "/submit";
 const sections = [
   ["products", "プロダクト"],
   ["news", "お知らせ"],

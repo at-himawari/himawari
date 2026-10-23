@@ -20,7 +20,8 @@
   "vars": {
     "NEXT_PUBLIC_ENGAGEMENT_API_URL": "https://0evribwgf4.execute-api.ap-northeast-1.amazonaws.com",
     "NEXT_PUBLIC_GOOGLE_CLIENT_ID": "800070127554-q7624lojembrp40ssuba3dmnavbral4e.apps.googleusercontent.com",
-    "NEXT_PUBLIC_STRAPI_URL":"https://strapi-88618746452.asia-northeast1.run.app"
+    "NEXT_PUBLIC_STRAPI_URL": "https://strapi-88618746452.asia-northeast1.run.app",
+    "NEXT_PUBLIC_SUBMISSION_API_URL": "https://eym33237t1.execute-api.ap-northeast-1.amazonaws.com"
   },
   "assets": {
     "directory": ".open-next/assets",

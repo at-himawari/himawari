@@ -54,7 +54,7 @@ npm install
 cd ..
 export OPENAI_API_KEY='YOUR_OPENAI_API_KEY'
 npx cdk bootstrap
-npx cdk deploy \
+npx cdk deploy HimawariEngagementApiStack \
   --parameters FrontendOrigin=https://yourdomain.com \
   --parameters CommentAutoPublish=true \
   --parameters ModerationSexualScoreThreshold=0.25 \
@@ -89,3 +89,7 @@ fields @timestamp, message.articleSlug, message.email, message.sourceIp,
 監査ログには個人情報とコメント本文が含まれるため、CloudWatch Logsの閲覧権限は運用上必要な担当者だけに制限してください。サイト上のプライバシーポリシーはStrapiで管理されているため、IPアドレス、メールアドレス、投稿内容、利用目的、保持期間を収集前に反映してください。
 
 デプロイ後に出力される `EngagementApiUrl` を、フロント側の `NEXT_PUBLIC_ENGAGEMENT_API_URL` に設定します。フロント側の `NEXT_PUBLIC_GOOGLE_CLIENT_ID` と、このスタックの `GoogleClientId` には同じ Google OAuth 2.0 Web クライアント ID を設定してください。
+
+## 投稿フォーム
+
+独自の投稿・問い合わせフォームは別スタックです。[設定と運用手順](./SUBMISSIONS.md)を参照してください。

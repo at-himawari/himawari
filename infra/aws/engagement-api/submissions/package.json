@@ -1,0 +1,10 @@
+{
+  "name": "himawari-submissions",
+  "private": true,
+  "scripts": { "test": "node --test *.node-test.js" },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.916.0",
+    "@aws-sdk/lib-dynamodb": "^3.916.0",
+    "@aws-sdk/client-sns": "^3.916.0"
+  }
+}

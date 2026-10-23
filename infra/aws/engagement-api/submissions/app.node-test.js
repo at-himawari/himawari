@@ -3,7 +3,7 @@ const assert = require("node:assert/strict");
 const { DynamoDBDocumentClient } = require("@aws-sdk/lib-dynamodb");
 const { SNSClient } = require("@aws-sdk/client-sns");
 const { handler, notify } = require("./app");
-const body = { type: "idea", radioName: "読者", email: "reader@example.com", content: "提案", captchaToken: "token" };
+const body = { type: "idea", radioName: "読者", email: "reader@example.com", content: "あ".repeat(20), captchaToken: "token" };
 const event = () => ({ rawPath: "/submissions", headers: { origin: "https://example.com", "content-type": "application/json" }, requestContext: { http: { method: "POST", sourceIp: "192.0.2.1" } }, body: JSON.stringify(body) });
 beforeEach(() => {
   mock.restoreAll();

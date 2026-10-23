@@ -20,7 +20,7 @@ afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 /** 必須項目と認証を入力する。 */
 function fill() {
   fireEvent.change(screen.getByLabelText(/ラジオネーム/), { target: { value: "読者" } });
-  fireEvent.change(screen.getByLabelText(/^内容.*必須/), { target: { value: "新しい提案" } });
+  fireEvent.change(screen.getByLabelText(/^内容.*必須/), { target: { value: "あ".repeat(20) } });
   fireEvent.change(screen.getByLabelText(/メールアドレス（非公開）/), { target: { value: "reader@example.com" } });
   fireEvent.click(screen.getByRole("checkbox"));
   act(() => captchaCallback("verified-token"));
@@ -31,7 +31,7 @@ test("CAPTCHA未認証時は送信不可で、本文の上限超過も送信を�
   fill();
   expect(screen.getByRole("button", { name: "送信する" })).toBeEnabled();
   fireEvent.change(screen.getByLabelText(/^内容.*必須/), { target: { value: "🌻".repeat(2001) } });
-  expect(screen.getByText("2001 / 2000文字")).toBeInTheDocument();
+  expect(screen.getByText("2001 / 2000文字（20文字以上）")).toBeInTheDocument();
   expect(screen.getByRole("button", { name: "送信する" })).toBeDisabled();
 });
 test("正常送信時に専用APIへ送信し、完了表示に切り替える", async () => {
@@ -41,14 +41,14 @@ test("正常送信時に専用APIへ送信し、完了表示に切り替える",
   await screen.findByText("投稿を受け付けました");
   const [url, request] = fetchMock.mock.calls[0];
   expect(url).toBe("https://api.example.com/submissions");
-  expect(JSON.parse(request.body)).toMatchObject({ radioName: "読者", content: "新しい提案", captchaToken: "verified-token" });
+  expect(JSON.parse(request.body)).toMatchObject({ radioName: "読者", content: "あ".repeat(20), captchaToken: "verified-token" });
 });
 test("API失敗時は入力を保持し、認証をリセットする", async () => {
   fetchMock.mockResolvedValue({ ok: false, json: async () => ({ message: "連続投稿はできません。" }) });
   render(<SubmissionForm />); fill();
   fireEvent.submit(screen.getByRole("button", { name: "送信する" }).closest("form")!);
   await screen.findByRole("alert");
-  expect(screen.getByLabelText(/^内容.*必須/)).toHaveValue("新しい提案");
+  expect(screen.getByLabelText(/^内容.*必須/)).toHaveValue("あ".repeat(20));
   await waitFor(() => expect(screen.getByRole("button", { name: "送信する" })).toBeDisabled());
 });
 
@@ -79,4 +79,12 @@ test.each(["サイトに対する意見", "業務委託等"])("%sでは氏名を
   const body = JSON.parse(fetchMock.mock.calls[0][1].body);
   expect(body.name).toBe("担当者");
   expect(body).not.toHaveProperty("radioName");
+});
+
+test("内容が19文字では送信不可、20文字で送信可能となる", () => {
+  render(<SubmissionForm />); fill();
+  fireEvent.change(screen.getByLabelText(/^内容.*必須/), { target: { value: "あ".repeat(19) } });
+  expect(screen.getByRole("button", { name: "送信する" })).toBeDisabled();
+  fireEvent.change(screen.getByLabelText(/^内容.*必須/), { target: { value: "あ".repeat(20) } });
+  expect(screen.getByRole("button", { name: "送信する" })).toBeEnabled();
 });

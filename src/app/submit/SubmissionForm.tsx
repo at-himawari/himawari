@@ -17,6 +17,8 @@ export default function SubmissionForm() {
   const [token, setToken] = useState("");
   const [type, setType] = useState("idea");
   const [content, setContent] = useState("");
+  const contentLength = Array.from(content.trim()).length;
+  const contentInvalid = contentLength < 20 || Array.from(content).length > 2000;
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
@@ -42,7 +44,7 @@ export default function SubmissionForm() {
     if (inFlight.current || !token || !apiUrl) return;
     const form = event.currentTarget;
     const values = Object.fromEntries(new FormData(form));
-    if (Array.from(content).length > 2000) { setError("内容は2000文字以内で入力してください。"); return; }
+    if (contentInvalid) { setError("内容は20文字以上2000文字以内で入力してください。"); return; }
     inFlight.current = true;
     setBusy(true); setError("");
     try {
@@ -71,14 +73,14 @@ export default function SubmissionForm() {
       {type === "idea" && <label className="block font-medium">ラジオネーム（公開） <span className="text-sm text-rose-700">必須</span><input className={inputClass} name="radioName" required maxLength={80} autoComplete="nickname" /><span className="mt-1 block text-sm font-normal text-slate-600">投稿を紹介する際に使用します。</span></label>}
       {type !== "idea" && <label className="block font-medium">氏名（非公開） <span className="text-sm text-rose-700">必須</span><input className={inputClass} name="name" required maxLength={100} autoComplete="name" /></label>}
       <label className="block font-medium">メールアドレス（非公開） <span className="text-sm text-rose-700">必須</span><input className={inputClass} name="email" required type="email" maxLength={254} autoComplete="email" /><span className="mt-1 block text-sm font-normal text-slate-600">ご連絡が必要な場合に使用します。</span></label>
-      <label className="block font-medium">内容 <span className="text-sm text-rose-700">必須</span><textarea className={inputClass} name="content" rows={9} required value={content} onChange={(event) => setContent(event.target.value)} aria-describedby="content-count" /><span id="content-count" className={`mt-1 block text-right text-sm ${Array.from(content).length > 2000 ? "text-rose-700" : "text-slate-600"}`}>{Array.from(content).length} / 2000文字</span></label>
+      <label className="block font-medium">内容 <span className="text-sm text-rose-700">必須</span><textarea className={inputClass} name="content" rows={9} required minLength={20} value={content} onChange={(event) => setContent(event.target.value)} aria-describedby="content-count" /><span id="content-count" className={`mt-1 block text-right text-sm ${contentInvalid && content.length > 0 ? "text-rose-700" : "text-slate-600"}`}>{Array.from(content).length} / 2000文字（20文字以上）</span></label>
       <div aria-hidden="true" className="hidden"><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
       <p className="text-sm leading-6 text-slate-600">氏名とメールアドレスは公開しません。投稿内容は確認・返信のために保存し、管理者へメールで通知します。ネタ投稿はラジオネームと内容をサイトや配信等で紹介する場合があります。</p>
       <label className="flex items-start gap-2 text-sm leading-6"><input type="checkbox" required className="mt-1" /> <span>上記の利用目的と<a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-amber-800 underline">プライバシーポリシー（別タブ）</a>を確認しました。 <span className="text-sm text-rose-700">必須</span></span></label>
       <div ref={captchaElement} />
       <p className="text-xs text-slate-500">スパム対策にhCaptchaを利用します。<a href="https://www.hcaptcha.com/privacy" className="underline">プライバシーポリシー</a>・<a href="https://www.hcaptcha.com/terms" className="underline">利用規約</a></p>
       {error && <p role="alert" className="rounded-lg bg-rose-50 p-4 text-sm text-rose-800">{error}</p>}
-      <button type="submit" disabled={busy || !token || !apiUrl || Array.from(content).length > 2000} className="w-full rounded-xl bg-amber-500 px-5 py-3 font-bold text-slate-950 transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50">{busy ? "送信中…" : "送信する"}</button>
+      <button type="submit" disabled={busy || !token || !apiUrl || contentInvalid} className="w-full rounded-xl bg-amber-500 px-5 py-3 font-bold text-slate-950 transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50">{busy ? "送信中…" : "送信する"}</button>
     </fieldset>
   </form>;
 }

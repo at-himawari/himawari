@@ -11,7 +11,7 @@ function validate(body) {
     result[key] = value.trim();
   }
   if (!Object.hasOwn(TYPES, body.type)) throw new Error("投稿の種類を選択してください。");
-  if (!result.content) throw new Error("内容を入力してください。");
+  if (Array.from(result.content).length < 20) throw new Error("内容は20文字以上2000文字以内で入力してください。");
   if (body.type === "idea" && !result.radioName) throw new Error("ラジオネームを入力してください。");
   if (!result.email) throw new Error("メールアドレスを入力してください。");
   if (body.type !== "idea" && !result.name) throw new Error("氏名を入力してください。");

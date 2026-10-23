@@ -84,6 +84,7 @@ export async function data(): Promise<HomePageData> {
       newsItems,
     };
   } catch (error) {
+    if (process.env.NEXT_PHASE === "phase-production-build") throw error;
     const message = error instanceof Error ? error.message : "unknown error";
     console.warn("Homepage blog data is unavailable:", message);
 

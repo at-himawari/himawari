@@ -1,3 +1,4 @@
+import { fetchCms } from "./fetchCms";
 const STRAPI_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ||
   process.env.VITE_STRAPI_URL ||
@@ -35,7 +36,7 @@ interface StrapiResponse {
 export async function getVideos(): Promise<Video[]> {
   try {
     // StrapiのContent Typeが "video-items" であると仮定
-    const response = await fetch(`${STRAPI_URL}/api/video-items`);
+    const response = await fetchCms(`${STRAPI_URL}/api/video-items`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch videos: ${response.statusText}`);
@@ -56,6 +57,8 @@ export async function getVideos(): Promise<Video[]> {
       };
     });
   } catch (error) {
+    // CMSの取得失敗時に不完全な本番ページを生成しない。
+    if (process.env.NEXT_PHASE === "phase-production-build") throw error;
     const message = error instanceof Error ? error.message : "unknown error";
     console.warn("Videos are unavailable from Strapi:", message);
     return [];

@@ -53,15 +53,12 @@ const server = createServer((request, response) => {
 
 /** 外部CMSに依存せず通常の本番ビルドを検証し、終了時にサーバーを停止する。 */
 async function main() {
-  const packageManager = process.env.npm_execpath;
-  if (!packageManager) throw new Error("pnpm run build:ci から実行してください。");
-
   server.listen(0, "127.0.0.1");
   await once(server, "listening");
   try {
     const origin = `http://127.0.0.1:${server.address().port}`;
     console.info("CI用CMSの固定データを使用してビルドを検証します。");
-    const child = spawn(process.execPath, [packageManager, "run", "build"], {
+    const child = spawn(process.execPath, ["scripts/build.mjs"], {
       stdio: "inherit",
       env: { ...process.env, NEXT_PUBLIC_STRAPI_URL: origin, VITE_STRAPI_URL: origin },
     });

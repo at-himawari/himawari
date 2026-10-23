@@ -1,3 +1,4 @@
+import { fetchCms } from "./fetchCms";
 // src/utils/getPages.ts
 
 const STRAPI_URL =
@@ -7,7 +8,7 @@ const STRAPI_URL =
 
 export async function getPageContent(slug: string): Promise<string> {
   try {
-    const response = await fetch(
+    const response = await fetchCms(
       `${STRAPI_URL}/api/fixed-pages?filters[slug][$eq]=${slug}`
     );
     if (!response.ok) throw new Error(`Fetch error: ${response.statusText}`);
@@ -16,6 +17,8 @@ export async function getPageContent(slug: string): Promise<string> {
     // 該当するslugのデータがあればそのcontentを返す
     return data[0]?.attributes?.content || data[0]?.content || "内容がありません。";
   } catch (error) {
+    // CMSの取得失敗時に不完全な本番ページを生成しない。
+    if (process.env.NEXT_PHASE === "phase-production-build") throw error;
     const message = error instanceof Error ? error.message : "unknown error";
     console.warn(`Page "${slug}" is unavailable from Strapi:`, message);
     return "データの取得に失敗しました。";

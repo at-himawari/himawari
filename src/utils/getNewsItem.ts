@@ -1,3 +1,4 @@
+import { fetchCms } from "./fetchCms";
 import type { NewsItem } from "../components/NewsSection";
 
 const STRAPI_URL =
@@ -62,7 +63,7 @@ function optionalString(value: unknown): string | undefined {
 export async function getNewsItem(): Promise<NewsItem[]> {
   try {
     // コレクション名が「news」の場合（環境に合わせて変更してください）
-    const response = await fetch(`${STRAPI_URL}/api/news-items?sort=date:desc`);
+    const response = await fetchCms(`${STRAPI_URL}/api/news-items?sort=date:desc`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch news: ${response.statusText}`);
@@ -86,6 +87,8 @@ export async function getNewsItem(): Promise<NewsItem[]> {
       };
     });
   } catch (error) {
+    // CMSの取得失敗時に不完全な本番ページを生成しない。
+    if (process.env.NEXT_PHASE === "phase-production-build") throw error;
     const message = error instanceof Error ? error.message : "unknown error";
     console.warn("News items are unavailable from Strapi:", message);
     return [];

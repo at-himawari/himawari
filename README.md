@@ -237,14 +237,24 @@ Node.js 20 と pnpm store のキャッシュを使用します。pnpm は `packa
 pnpm run build
 ```
 
+Cloudflare Workers（OpenNext）のビルド時にCMSのデータを取得し、ページ、全ブログ記事、検索用JSON、サイトマップを静的生成します。公開後のアクセスでは生成済みデータを配信し、CMSへ接続しません。定期的な再検証は行わず、CMSの変更や新規記事は次のビルド・デプロイで反映します。未生成の記事URLは404になります。
+
+Cloudflareのビルド設定では次を使用してください。
+
+- ビルド時環境変数：`NEXT_PUBLIC_STRAPI_URL=https://your-strapi.example.com`
+- ビルドコマンド：`pnpm exec opennextjs-cloudflare build`
+- デプロイコマンド：`pnpm exec opennextjs-cloudflare deploy`
+- 一括で実行する場合：`pnpm run deploy`
+
+CMSのURLはCloudflareの**ビルド時環境変数**に設定してください。Worker実行時のVariablesだけでは不足します。OpenNextは`pnpm run build`を呼び出し、前回のCMS取得キャッシュを削除して最新データを取得します。CMSへの接続・HTTPエラーが発生した場合はビルドを失敗させます。GitHub Actionsの`build:ci`は引き続き検証用CMSを使用し、Cloudflareの公開用ビルドには使用しません。
+
+`open-next.config.ts`の読み取り専用Static Assetsキャッシュを使用します。配信時のCMS取得は禁止しています。
+
+<出典 [OpenNext SSG site](https://opennext.js.org/cloudflare/caching#ssg-site)、[Cloudflare Next.js](https://developers.cloudflare.com/workers/framework-guides/web-apps/nextjs/)>
+
 Next.js の通常ビルドを行います。`next.config.ts` では `trailingSlash: true` と `images.unoptimized: true` を設定しています。
 
-デプロイ先は Next.js に対応したホスティングを想定しています。
-
-- Vercel
-- Netlify
-- Cloudflare Pages
-- Node.js で `next start` を実行できる環境
+デプロイ先は既存のCloudflare Workersです。OpenNextが生成したWorkerとStatic Assetsを配信します。
 
 ## LINE AI 決済関連ページ
 

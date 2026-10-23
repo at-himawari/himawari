@@ -1,3 +1,4 @@
+import { fetchCms } from "./fetchCms";
 // src/utils/getPosts.ts (Strapi v4/v5 リレーション対応・認証なし版)
 import type { Post } from "../types/Post";
 
@@ -59,7 +60,7 @@ async function fetchArticlePage(page: number): Promise<StrapiResponse> {
     "pagination[pageSize]": String(ARTICLE_PAGE_SIZE),
   });
 
-  const response = await fetch(`${STRAPI_URL}/api/articles?${params}`);
+  const response = await fetchCms(`${STRAPI_URL}/api/articles?${params}`);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch posts: ${response.statusText}`);
@@ -123,6 +124,8 @@ export async function getPosts(options: GetPostsOptions = {}): Promise<Post[]> {
       };
     });
   } catch (error) {
+    // CMSの取得失敗時に不完全な本番ページを生成しない。
+    if (process.env.NEXT_PHASE === "phase-production-build") throw error;
     if (options.throwOnError) {
       throw error;
     }

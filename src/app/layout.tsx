@@ -13,6 +13,10 @@ import {
 import GoogleAnalytics from "../components/GoogleAnalytics";
 import { absoluteUrl } from "../utils/seo";
 
+// 全ページをビルド時に生成し、時間経過による再生成は行わない。
+export const dynamic = "error";
+export const revalidate = false;
+
 const siteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",

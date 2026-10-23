@@ -6,7 +6,7 @@ describe("getPosts", () => {
     vi.unstubAllGlobals();
   });
 
-  test("Strapi の記事をキャッシュせずに取得する", async () => {
+  test("Strapi の記事をビルド用キャッシュに保存して取得する", async () => {
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
@@ -34,7 +34,8 @@ describe("getPosts", () => {
     expect(posts).toHaveLength(1);
     expect(posts[0]?.slug).toBe("new-article");
     expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringContaining("/api/articles?")
+      expect.stringContaining("/api/articles?"),
+      { cache: "force-cache" }
     );
   });
 });

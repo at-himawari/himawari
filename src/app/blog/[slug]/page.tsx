@@ -15,6 +15,14 @@ type Params = {
 };
 
 
+export const dynamicParams = false;
+
+/** CMSに存在する記事のURLをビルド時に確定する。 */
+export async function generateStaticParams(): Promise<Params[]> {
+  const posts = await getPosts({ throwOnError: true });
+  return posts.filter((post) => post.slug).map((post) => ({ slug: post.slug }));
+}
+
 export async function generateMetadata({
   params,
 }: {

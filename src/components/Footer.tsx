@@ -148,7 +148,8 @@ const Footer: React.FC = () => {
         </a>
       </div>
       <div className="mt-8 text-center text-sm text-gray-400">
-        © 2024-2026 Himawari Project
+        <p>© 2024-2026 Himawari Project</p>
+        <p className="mt-2">法律に定めがある場合を除いて、無断転載を禁じます</p>
       </div>
     </footer>
   );

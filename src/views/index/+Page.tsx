@@ -3,6 +3,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { FaXTwitter } from "react-icons/fa6";
 import HomeHeader from "../../components/HomeHeader";
+import HeroProductSlideshow from "../../components/HeroProductSlideshow";
 import Footer from "../../components/Footer";
 import NewsSection from "../../components/NewsSection";
 import BlogSection from "../../components/BlogSection";
@@ -145,13 +146,14 @@ function Page({ data }: { data: HomePageData }) {
             <div ref={heroCopyRef} className={styles.heroCopy}>
               <p className={styles.heroEyebrow}>Himawari Project</p>
               <h2 className={styles.heroTitle}>
-                <span className={styles.heroTitleLine}>アイデアを、</span>
-                <span className={`${styles.heroTitleLine} ${styles.heroTitleAccent}`}>動くサービスに。</span>
+                <span className={styles.heroTitleLine}>
+                  <span className={styles.heroTitleRed}>ワ</span>ク<span className={styles.heroTitleBlue}>ワ</span>ク<span className={styles.heroTitleGreen}>ラ</span>ボ<span className={styles.heroTitlePlus}>＋</span>
+                </span>
               </h2>
               <p className={styles.heroDescription}>
-                Webサイト、業務システム、AI活用まで。
+                面白いことを楽しくやる
                 <br className="hidden sm:block" />
-                企画から開発まで、一緒に伴奏します。
+                システム開発、Web制作、AIサービスの開発などを共に楽しくやっていきましょう
               </p>
 
               <div className={styles.heroActions}>
@@ -165,25 +167,7 @@ function Page({ data }: { data: HomePageData }) {
               </div>
             </div>
 
-            <div className={styles.heroShowcase} aria-label="プロダクトの紹介">
-              <div className={styles.heroOrbit} aria-hidden="true" />
-              <a
-                href="https://aimensetsu.at-himawari.com/"
-                className={`${styles.heroPreview} ${styles.heroPreviewAi}`}
-                onClick={() => trackSelectContent("product", "https://aimensetsu.at-himawari.com/", "AI面接コーチ")}
-              >
-                <div className={styles.heroPreviewBar}><span>AI面接コーチ</span><span aria-hidden="true">↗</span></div>
-                <img src="https://aimensetsu.at-himawari.com/ogp.png" alt="AIと対話する面接練習サービス" width={1200} height={630} />
-              </a>
-              <a
-                href="https://pomodoro.at-himawari.com/"
-                className={`${styles.heroPreview} ${styles.heroPreviewTimer}`}
-                onClick={() => trackSelectContent("product", "https://pomodoro.at-himawari.com/", "ポモドーロタイマー")}
-              >
-                <div className={styles.heroPreviewBar}><span>毎日の集中をサポート</span><span aria-hidden="true">↗</span></div>
-                <img src="https://pomodoro.at-himawari.com/og-image.jpg?v=3" alt="ポモドーロタイマー" width={1200} height={630} />
-              </a>
-            </div>
+            <HeroProductSlideshow products={featuredProducts} />
             <a href="#products" className={styles.heroScroll}>プロダクトを見てみる <span aria-hidden="true">↓</span></a>
           </div>
         </section>
@@ -277,11 +261,10 @@ function Page({ data }: { data: HomePageData }) {
                   </a>
                 </div>
                 <div className={styles.profileBody}>
-                  <p>技術と対話で、想いをカタチにする。そんなものづくりに取り組む、フルスタックエンジニアです。</p>
-                  <p>2022年に法政大学理工学部を卒業後、ITコンサルティング会社に入社。フロントエンドからバックエンド、クラウドまで、幅広い領域を扱っています。</p>
+                  <p>とにかく面白いことを真面目にだけど楽しくやるがモットーです。</p>
+                  <p>2022年に法政大学理工学部を卒業後、ITコンサルティング会社に入社。金融業・製造業・通信キャリア等の分野で、フロントエンドからバックエンド、クラウドまで、幅広い領域の開発を経験しています。</p>
                   <p>Himawari Projectでは、AIを活用したサービスやWebサイト、日々の作業を支えるツールを制作しています。React・Next.jsによるWeb制作や、Amazon Web Services・Google Cloud Platform・Microsoft Azureを活用したプロダクト開発に取り組んでいます。</p>
-                  <p>大切にしているのは、つくりたいものの背景にある想いに耳を傾けること。技術先行ではなく、本当に実現したいことは何かを追求し、課題の解決を支えたいと考えています。</p>
-                  <p>好きなものは、飛行機、カメラ、旅行、映像編集。ものをつくることと同じくらい、知らない景色に出会うことにも惹かれます。</p>
+                  <p>何かを作ることが好きです。プロダクト開発以外にも、YouTube動画制作や一眼レフカメラでの撮影・現像なども行なっています。</p>
                 </div>
                 <a
                   href="https://forms.gle/D8WSByjAnYGGtoGw9"

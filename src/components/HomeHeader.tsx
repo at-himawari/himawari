@@ -74,7 +74,7 @@ export default function HomeHeader() {
             ))}
           </nav>
           <a href={contactUrl} className={styles.contact} onClick={() => trackLead("home_header_contact", contactUrl)}>
-            相談する <span aria-hidden="true">↗</span>
+            ネタを投稿する <span aria-hidden="true">↗</span>
           </a>
         </div>
       </header>

@@ -144,12 +144,14 @@ function Page({ data }: { data: HomePageData }) {
         <section id="hero" className={styles.hero}>
           <div className={styles.heroLayout}>
             <div ref={heroCopyRef} className={styles.heroCopy}>
-              <p className={styles.heroEyebrow}>Himawari Project</p>
-              <h2 className={styles.heroTitle}>
-                <span className={styles.heroTitleLine}>
-                  <span className={styles.heroTitleRed}>ワ</span>ク<span className={styles.heroTitleBlue}>ワ</span>ク<span className={styles.heroTitleGreen}>ラ</span>ボ<span className={styles.heroTitlePlus}>＋</span>
-                </span>
-              </h2>
+              <div className={styles.heroHeading}>
+                <h2 className={styles.heroTitle}>
+                  <span className={styles.heroTitleLine}>
+                    <span className={styles.heroTitleRed}>ワ</span>ク<span className={styles.heroTitleBlue}>ワ</span>ク<span className={styles.heroTitleGreen}>ラ</span>ボ<span className={styles.heroTitlePlus}>＋</span>
+                  </span>
+                </h2>
+                <p className={styles.heroEyebrow}>Himawari Project</p>
+              </div>
               <p className={styles.heroDescription}>
                 面白いことを楽しくやる
                 <br className="hidden sm:block" />

@@ -31,6 +31,12 @@ npx cdk deploy HimawariSubmissionsStack \
   --parameters HcaptchaSecret="$HCAPTCHA_SECRET" \
   --parameters NotificationTo=recipient@example.com
 ```
+環境変数の上書きなし
+```
+npx --yes --package=aws-cdk@latest cdk deploy \
+  HimawariSubmissionsStack \
+  --previous-parameters true
+```
 
 5. フロントエンドの環境変数 `NEXT_PUBLIC_SUBMISSION_API_URL` に出力された `SubmissionApiUrl`、`NEXT_PUBLIC_HCAPTCHA_SITE_KEY` に同じサイトキーを設定し、フロントエンドを再ビルド・デプロイする。シークレットはフロントエンドへ渡さない。
 6. 本番ホストでCAPTCHAを完了し、受付→DynamoDB保存→メール受信、本文内の返信先メールアドレス、連続投稿制限、公開APIから個人情報を取得できないことを確認する。

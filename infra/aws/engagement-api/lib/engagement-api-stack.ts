@@ -74,7 +74,7 @@ export class EngagementApiStack extends cdk.Stack {
     });
 
     const engagementFunction = new lambda.Function(this, "EngagementFunction", {
-      runtime: lambda.Runtime.NODEJS_22_X,
+      runtime: lambda.Runtime.NODEJS_24_X,
       handler: "app.handler",
       code: lambda.Code.fromAsset(path.join(__dirname, "..", "src")),
       timeout: cdk.Duration.seconds(10),

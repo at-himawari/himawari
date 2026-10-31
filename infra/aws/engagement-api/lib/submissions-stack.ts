@@ -34,13 +34,13 @@ export class SubmissionsStack extends cdk.Stack {
     const failures = new sqs.Queue(this, "NotificationFailures", { encryption: sqs.QueueEncryption.SQS_MANAGED, retentionPeriod: cdk.Duration.days(14) });
     const code = lambda.Code.fromAsset(path.join(__dirname, "..", "submissions"), { exclude: ["*.node-test.js"] });
     const receiver = new lambda.Function(this, "Receiver", {
-      runtime: lambda.Runtime.NODEJS_22_X, code, handler: "app.handler", timeout: cdk.Duration.seconds(15), memorySize: 256,
+      runtime: lambda.Runtime.NODEJS_24_X, code, handler: "app.handler", timeout: cdk.Duration.seconds(15), memorySize: 256,
       logGroup: new logs.LogGroup(this, "ReceiverLogs", { retention: logs.RetentionDays.ONE_MONTH }),
       environment: { TABLE_NAME: table.tableName, FRONTEND_ORIGIN: origin.valueAsString, HCAPTCHA_SECRET: secret.valueAsString, HCAPTCHA_SITE_KEY: siteKey.valueAsString },
     });
     table.grantWriteData(receiver);
     const notifier = new lambda.Function(this, "Notifier", {
-      runtime: lambda.Runtime.NODEJS_22_X, code, handler: "app.notify", timeout: cdk.Duration.seconds(30), memorySize: 256,
+      runtime: lambda.Runtime.NODEJS_24_X, code, handler: "app.notify", timeout: cdk.Duration.seconds(30), memorySize: 256,
       logGroup: new logs.LogGroup(this, "NotifierLogs", { retention: logs.RetentionDays.ONE_MONTH }),
       environment: { TABLE_NAME: table.tableName, NOTIFICATION_TOPIC_ARN: topic.topicArn },
     });

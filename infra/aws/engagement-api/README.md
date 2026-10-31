@@ -62,6 +62,15 @@ npx cdk deploy HimawariEngagementApiStack \
   --parameters GoogleClientId=your-google-oauth-client-id.apps.googleusercontent.com
 ```
 
+環境変数上書きなし
+
+```
+npx --yes --package=aws-cdk@latest cdk deploy \
+  HimawariEngagementApiStack \
+  --previous-parameters true \
+  --region ap-northeast-1
+```
+
 OpenAI APIキーは、`NoEcho`を設定したCloudFormationパラメータを経由してLambdaの `OPENAI_API_KEY` 環境変数へ設定します。審査のため表示名とコメント本文がOpenAIへ送信されますが、Googleアカウントのメールアドレスなどは送信しません。
 
 `ModerationSexualScoreThreshold` は `0` から `1` の範囲で指定します。値を小さくすると性的表現を厳しく判定します。OpenAIのモデル更新によりスコア傾向が変わる可能性があるため、CloudWatch Logsに記録される判定結果とスコアを確認しながら調整してください。通常のモデレーション判定ログには本文や表示名を含めませんが、下記の監査イベントには記録します。
